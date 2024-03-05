@@ -10,7 +10,6 @@
     // Finding specific category
     function findCategory($categ_id){
         global $connection;
-        echo $categ_id;
         $query = "SELECT * FROM categories WHERE cat_id = $categ_id";
         $select_categ = mysqli_query($connection, $query);
          // Checking if category is found
