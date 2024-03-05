@@ -96,6 +96,8 @@
                     <td>{$post_tags}</td>
                     <td>{$post_status}</td>
                     <td>{$post_comment_count}</td>
+                    <td><a href='posts.php?edit={$post_id}'>Edit</a></td>
+                    <td><a href='posts.php?delete={$post_id}'>Delete</a></td>
                 </tr>";
         }
     }
@@ -141,5 +143,18 @@
                 checkQuery($create_post_query);
             }
         }
+    }
+
+    // Deleting posts
+    function deletePost(){
+        global $connection;
+        if(isset($_GET['delete'])){
+            $delete_id =  $_GET['delete'];
+            var_dump($delete_id);
+            $query = "DELETE FROM posts WHERE post_id = {$delete_id}";
+            $delete_post_query = mysqli_query($connection, $query);
+            // Refresh the page
+            header("Location: posts.php");
+        }  
     }
 ?>
