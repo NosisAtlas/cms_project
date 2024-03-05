@@ -7,8 +7,24 @@
     </div>
     <!-- Post category -->
     <div class="form-group">
-        <label for="post_category_id">Post Category Id</label>
-        <input class="form-control" type="text" name="post_category_id">
+        <label for="post_category">Post Category</label><br>
+        <select class="form-select" name="post_category_id" id="post_category">
+            <?php 
+                $query = "SELECT * FROM categories";
+                $select_categs = mysqli_query($connection, $query);
+                checkQuery($select_categs);
+                // Displaying categ data
+                while($row = mysqli_fetch_assoc($select_categs)){
+                    $cat_id = $row['cat_id'];
+                    $cat_title = $row['cat_title'];
+            ?>
+                <option value="<?php echo $cat_id; ?>">
+                    <?php echo $cat_title; ?>
+                </option>
+
+
+            <?php } ?>
+        </select>
     </div>
     <!-- Post author -->
     <div class="form-group">
