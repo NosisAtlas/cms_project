@@ -1,5 +1,13 @@
 <?php 
-    // Insertin categs
+    // Checking if the query had been executed
+    function checkQuery($result){
+        global $connection;
+        if(!$result){
+            die('QUERY FAILED !' . mysqli_error($connection));
+        }
+    }
+    
+    // Adding categs
     function insertCategories(){
         global $connection;
         // Adding categ data to db
@@ -12,9 +20,7 @@
                 $query .= "VALUES('{$cat_title}')";
 
                 $create_category_query = mysqli_query($connection, $query);
-                if(!$create_category_query){
-                    die('QUERY FAILED !' . mysqli_error($connection));
-                }
+                checkQuery($create_category_query);
             }
         }
     }
@@ -91,6 +97,49 @@
                     <td>{$post_status}</td>
                     <td>{$post_comment_count}</td>
                 </tr>";
+        }
+    }
+
+    // Adding posts
+    function insertPosts(){
+        global $connection;
+        // Adding categ data to db
+        if(isset($_POST['create_post'])){
+            $post_author = $_POST['post_author'];
+            $post_title = $_POST['post_title'];
+            $post_date = date('d-m-y');
+
+            // Getting image
+            $post_img = $_FILES['image']['name'];
+            $post_img_temp = $_FILES['image']['tmp_name'];
+
+            $post_content = $_POST['post_content'];
+            $post_tags = $_POST['post_tags'];
+            $post_status = $_POST['post_status'];
+            $post_comment_count = 7;
+            $post_category_id = $_POST['post_category_id'];
+
+            // Processing img
+            move_uploaded_file($post_img_temp, "../imgs/$post_img");
+
+            if($post_title == "" || empty($post_title) ||
+                $post_author == "" || empty($post_author) ||
+                $post_date == "" || empty($post_date) ||
+                $post_img == "" || empty($post_img) ||
+                $post_content == "" || empty($post_content) ||
+                $post_tags == "" || empty($post_tags) ||
+                $post_status == "" || empty($post_status) ||
+                $post_comment_count == "" || empty($post_comment_count) ||
+                $post_category_id == "" || empty($post_category_id)
+            ){
+                echo "The fields should not be empty";
+            }else{
+                $query = "INSERT INTO posts(post_category_id, post_title, post_author, post_date, post_img, post_content, post_tags, post_comment_count, post_status)";
+                $query .= "VALUES({$post_category_id},'{$post_title}','{$post_author}',now(),'{$post_img}','{$post_content}','{$post_tags}','{$post_comment_count}','{$post_status}')";
+
+                $create_post_query = mysqli_query($connection, $query);
+                checkQuery($create_post_query);
+            }
         }
     }
 ?>

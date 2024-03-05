@@ -28,9 +28,8 @@
                                             }else{
                                                 $query = "UPDATE categories SET cat_title = '{$update_cat_title}' WHERE cat_id = {$cat_id}";
                                                 $update_categ_query = mysqli_query($connection, $query);
-                                                if(!$update_categ_query){
-                                                    die("QUERY FAILED !". mysqli_error($connection));
-                                                }
+                                                checkQuery($update_categ_query);
+
                                             }
                                         }
                                     ?>
