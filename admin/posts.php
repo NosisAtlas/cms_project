@@ -13,7 +13,7 @@
                 <div class="row">
                     <div class="col-lg-12">
                         <h1 class="page-header">
-                            Welcome to admin DASHBOARD
+                            Welcome to admin Posts
                             <small>John</small>
                         </h1>
                         <?php 
@@ -27,8 +27,9 @@
                                 case 'add_post':
                                     include "includes/add_post.php";
                                     break;
-                                case '99':
-                                    echo "Nice 99";
+                                case 'edit_post':
+                                    // Form for Editing the posts
+                                    updatePost();
                                     break;
                                 case '509':
                                     echo "Nice 509";

@@ -48,7 +48,6 @@
     function updateCategory(){
         global $connection;
         if(isset($_GET["edit"])){
-            $cat_id = $_GET["edit"];
             include "includes/update_categories.php";
         }
     }
@@ -67,7 +66,7 @@
 
     ////////////////////////////////////////////////////////////////////////
 
-    // Displaying Categs
+    // Displaying Posts
     function findAllPosts(){
         global $connection;
         $query = "SELECT * FROM posts";
@@ -96,7 +95,7 @@
                     <td>{$post_tags}</td>
                     <td>{$post_status}</td>
                     <td>{$post_comment_count}</td>
-                    <td><a href='posts.php?edit={$post_id}'>Edit</a></td>
+                    <td><a href='posts.php?source=edit_post&post_id={$post_id}'>Edit</a></td>
                     <td><a href='posts.php?delete={$post_id}'>Delete</a></td>
                 </tr>";
         }
@@ -142,6 +141,15 @@
                 $create_post_query = mysqli_query($connection, $query);
                 checkQuery($create_post_query);
             }
+        }
+    }
+
+    // Editing Posts
+    function updatePost(){
+        global $connection;
+        if(isset($_GET['post_id'])){
+            $post_id = $_GET['post_id'];
+            include "includes/update_posts.php";
         }
     }
 
