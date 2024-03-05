@@ -8,7 +8,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="index.html">CMS Admin</a>
+                <a class="navbar-brand" href="../admin/index.PHP">CMS Admin</a>
             </div>
 
             
@@ -39,8 +39,8 @@
                     <li>
                         <a href="javascript:;" data-toggle="collapse" data-target="#posts_dropdown"><i class="fa fa-fw fa-arrows-v"></i> Posts <i class="fa fa-fw fa-caret-down"></i></a>
                         <ul id="posts_dropdown" class="collapse">
-                            <li>
-                                <a href="#">View All Posts</a>
+                            <li class="active">
+                                <a href="./posts.php">View All Posts</a>
                             </li>
                             <li>
                                 <a href="#">Add Posts</a>
@@ -48,9 +48,9 @@
                         </ul>
                     </li>
                     <li>
-                        <a href="categories.php"><i class="fa fa-fw fa-wrench"></i> Categories</a>
+                        <a href="./categories.php"><i class="fa fa-fw fa-wrench"></i> Categories</a>
                     </li>
-                    <li class="active">
+                    <li class="">
                         <a href="blank-page.html"><i class="fa fa-fw fa-file"></i> Comments</a>
                     </li>
                     <li>
