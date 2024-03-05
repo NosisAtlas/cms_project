@@ -16,26 +16,28 @@
                             Welcome to admin DASHBOARD
                             <small>John</small>
                         </h1>
-                        <table class="table table-bordered table-hover">
-                            <thead>
-                                <tr>
-                                    <th>Id</th>
-                                    <th>Image</th>
-                                    <th>Title</th>
-                                    <th>Author</th>
-                                    <th>Category</th>
-                                    <td>Content</td>
-                                    <th>Date</th>
-                                    <th>Tags</th>
-                                    <th>Status</th>
-                                    <th>Comments</th>                                    
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <?php findAllPosts(); ?>
-                                
-                            </tbody>
-                        </table>
+                        <?php 
+                            if(isset($_GET['source'])){
+                                $source = $_GET['source'];
+                            }else{
+                                $source = '';
+                            }
+
+                            switch($source){
+                                case '34':
+                                    echo "Nice 34";
+                                    break;
+                                case '99':
+                                    echo "Nice 99";
+                                    break;
+                                case '509':
+                                    echo "Nice 509";
+                                    break;
+                                default:
+                                    include "includes/view_all_posts.php";
+                                    break;
+                            }
+                        ?>
                     </div>
                 </div>
                 <!-- /.row -->
