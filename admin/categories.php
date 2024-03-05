@@ -19,6 +19,23 @@
 
                         <!-- Form for adding categs -->
                         <div class="col-xs-6">
+                            <?php 
+                                // Adding categ data to db
+                                if(isset($_POST['submit'])){
+                                    $cat_title = $_POST['cat_title'];
+                                    if($cat_title == "" || empty($cat_title)){
+                                        echo "This field should not be empty";
+                                    }else{
+                                        $query = "INSERT INTO categories(cat_title)";
+                                        $query .= "VALUES('{$cat_title}')";
+
+                                        $create_category_query = mysqli_query($connection, $query);
+                                        if(!$create_category_query){
+                                            die('QUERY FAILED !' . mysqli_error($connection));
+                                        }
+                                    }
+                                }
+                            ?>
                             <form action="" method="post">
                                 <div class="form-group">
                                     <label for="cat-title">Add Category</label>
@@ -33,7 +50,8 @@
                         <!--  -->
                         <div class="col-xs-6">
                         <?php 
-                            $query = "SELECT * FROM categories LIMIT 4";
+                            // Selecting categ data
+                            $query = "SELECT * FROM categories";
                             $select_categs_admin = mysqli_query($connection, $query);
                         ?>  
                             <table class="table table-bordered table-hover">
@@ -45,6 +63,7 @@
                                 </thead>
                                 <tbody>
                                 <?php 
+                                    // Displaying categ data
                                     while($row = mysqli_fetch_assoc($select_categs_admin)){
                                         $cat_id = $row['cat_id'];
                                         $cat_title = $row['cat_title'];
