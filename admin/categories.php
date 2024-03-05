@@ -1,9 +1,9 @@
-<?php include 'includes/header.php' ?>
+<?php include 'includes/admin_header.php' ?>
 
     <div id="wrapper">
 
         <!-- Navigation -->
-        <?php include 'includes/navigation.php' ?>
+        <?php include 'includes/admin_navigation.php' ?>
 
         <div id="page-wrapper">
 
@@ -32,6 +32,10 @@
 
                         <!--  -->
                         <div class="col-xs-6">
+                        <?php 
+                            $query = "SELECT * FROM categories LIMIT 4";
+                            $select_categs_admin = mysqli_query($connection, $query);
+                        ?>  
                             <table class="table table-bordered table-hover">
                                 <thead>
                                     <tr>
@@ -40,10 +44,17 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr>
-                                        <td>1</td>
-                                        <td>PHP</td>
-                                    </tr>
+                                <?php 
+                                    while($row = mysqli_fetch_assoc($select_categs_admin)){
+                                        $cat_id = $row['cat_id'];
+                                        $cat_title = $row['cat_title'];
+                                        echo "
+                                        <tr>
+                                            <td>{$cat_id}</td>
+                                            <td>{$cat_title}</td>
+                                        </tr>";
+                                    }
+                                ?>
                                 </tbody>
                             </table>
                         </div>
@@ -57,4 +68,4 @@
         </div>
         <!-- /#page-wrapper -->
 
-  <?php include "includes/footer.php" ?>
+  <?php include "includes/admin_footer.php" ?>
