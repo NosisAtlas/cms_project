@@ -6,6 +6,21 @@
             die('QUERY FAILED !' . mysqli_error($connection));
         }
     }
+
+    // Finding specific category
+    function findCategory($categ_id){
+        global $connection;
+        echo $categ_id;
+        $query = "SELECT * FROM categories WHERE cat_id = $categ_id";
+        $select_categ = mysqli_query($connection, $query);
+         // Checking if category is found
+        if(mysqli_num_rows($select_categ) > 0) {
+            $row = mysqli_fetch_assoc($select_categ);
+            return $categ_title = $row['cat_title'];
+        } else {
+            return "Category Not Found";
+        }
+    }
     
     // Adding categs
     function insertCategories(){
@@ -89,7 +104,7 @@
                     <td><img class='img-fluid img-thumbnail' width='100' src='../imgs/{$post_img}' alt='post img'></td>
                     <td>{$post_title}</td>
                     <td>{$post_author}</td>
-                    <td>{$post_category_id}</td>
+                    <td>" . findCategory($post_category_id) . "</td>
                     <td>{$post_content}</td>
                     <td>{$post_date}</td>
                     <td>{$post_tags}</td>
