@@ -48,21 +48,20 @@
                         </div>
 
                         <!--  -->
-                        <div class="col-xs-6">
-                        <?php 
-                            // Selecting categ data
-                            $query = "SELECT * FROM categories";
-                            $select_categs_admin = mysqli_query($connection, $query);
-                        ?>  
+                        <div class="col-xs-6"> 
                             <table class="table table-bordered table-hover">
                                 <thead>
                                     <tr>
                                         <th>Id</th>
                                         <th>Category Title</th>
+                                        <th>Actions</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                 <?php 
+                                    // Finding all categs query
+                                    $query = "SELECT * FROM categories";
+                                    $select_categs_admin = mysqli_query($connection, $query);
                                     // Displaying categ data
                                     while($row = mysqli_fetch_assoc($select_categs_admin)){
                                         $cat_id = $row['cat_id'];
@@ -71,9 +70,20 @@
                                         <tr>
                                             <td>{$cat_id}</td>
                                             <td>{$cat_title}</td>
+                                            <td><a href='categories.php?delete={$cat_id}'>Delete</a></td>
                                         </tr>";
                                     }
                                 ?>
+
+                            <?php 
+                                if(isset($_GET['delete'])){
+                                    $delete_id =  $_GET['delete'];
+                                    $query = "DELETE FROM categories WHERE cat_id = {$delete_id}";
+                                    $delete_categ_query = mysqli_query($connection, $query);
+                                    // Refresh the page
+                                    header("Location: categories.php");
+                                }                    
+                            ?> 
                                 </tbody>
                             </table>
                         </div>
