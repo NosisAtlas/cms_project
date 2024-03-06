@@ -247,7 +247,7 @@
     function displayAllCommentsPost(){
         global $connection;
         $post_id_url = $_GET['post_id'];
-        $query = "SELECT * FROM comments WHERE comment_post_id = $post_id_url";
+        $query = "SELECT * FROM comments WHERE comment_post_id = $post_id_url AND comment_status = 'approved'";
         $select_comments_home = mysqli_query($connection, $query);
         
         // Checking if there are comments
