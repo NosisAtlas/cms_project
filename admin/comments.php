@@ -24,15 +24,15 @@
                             }
 
                             switch($source){
-                                case 'add_post':
+                                case 'add_comment':
                                     include "includes/add_post.php";
                                     break;
-                                case 'edit_post':
+                                case 'edit_comment':
                                     // Form for Editing the posts
                                     updatePost();
                                     break;
-                                case '509':
-                                    echo "Nice 509";
+                                case 'delete':
+                                    deleteComment();
                                     break;
                                 default:
                                     include "includes/view_all_comments.php";

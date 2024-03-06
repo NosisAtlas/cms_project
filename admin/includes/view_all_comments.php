@@ -16,11 +16,15 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <?php findAllComments(); ?>
+                                <?php findAllCommentsAndDisplayInAdmin(); ?>
                                 <?php 
-                                // Deleting posts
-                                deletePost();                 
-                            ?>
+                                // Deleting comments
+                                deleteComment();  
+                                // Approving comments
+                                approveComment();              
+                                // Unapproving comments 
+                                unapproveComment();
+                                ?>
                             </tbody>
     </table>
 </div>

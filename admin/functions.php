@@ -191,9 +191,9 @@
         global $connection;
         if(isset($_GET['delete'])){
             $delete_id =  $_GET['delete'];
-            var_dump($delete_id);
             $query = "DELETE FROM posts WHERE post_id = {$delete_id}";
             $delete_post_query = mysqli_query($connection, $query);
+            checkQuery($delete_post_query);
             // Refresh the page
             header("Location: posts.php");
         }  
@@ -203,7 +203,7 @@
     ///////////////////////////////////////////////////////////////////////
 
     // Displaying All Comments in admin
-    function findAllComments(){
+    function findAllCommentsAndDisplayInAdmin(){
         global $connection;
         $query = "SELECT * FROM comments";
         $select_comments_admin = mysqli_query($connection, $query);
@@ -230,8 +230,8 @@
                         <td>{$comment_status}</td>
                         <td><a href='../post.php?post_id={$comment_post['id']}'>{$comment_post['title']}</a></td>
                         <td>{$comment_date}</td>
-                        <td><a href='comments.php?source=approve_comment&comment_id={$comment_id}'>Approve</a></td>
-                        <td><a href='comments.php?source=unapprove_comment&comment_id={$comment_id}'>Unapprove</a></td>
+                        <td><a href='comments.php?approve_comment={$comment_id}'>Approve</a></td>
+                        <td><a href='comments.php?unapprove_comment={$comment_id}'>Unapprove</a></td>
                         <td><a href='comments.php?source=edit_comment&comment_id={$comment_id}'>Edit</a></td>
                         <td><a href='comments.php?delete={$comment_id}'>Delete</a></td>
                     </tr>";
@@ -292,7 +292,7 @@
             $comment_author = $_POST['comment_author'];
             $comment_content = $_POST['comment_content'];
             $comment_email = $_POST['comment_email'];
-            $comment_status = "Unapproved";
+            $comment_status = "unapproved";
             $comment_date = date('d-m-y');
 
             // Validating data
@@ -310,6 +310,43 @@
                 header("Location: post.php?post_id={$post_id_url}");
                 exit();            
             }
+        }
+    }
+
+    // Deleting posts
+    function deleteComment(){
+        global $connection;
+        if(isset($_GET['delete'])){
+            $delete_id =  $_GET['delete'];
+            $query = "DELETE FROM comments WHERE comment_id = {$delete_id}";
+            $delete_comment_query = mysqli_query($connection, $query);
+            checkQuery($delete_comment_query);
+            // Refresh the page
+            header("Location: comments.php");
+        }  
+    }
+
+    // Unapproving comments
+    function approveComment(){
+        global $connection;
+        if(isset($_GET['approve_comment'])){
+            $approve_comment_id =  $_GET['approve_comment'];
+            $query = "UPDATE comments SET comment_status = 'approve' WHERE comment_id = $approve_comment_id";
+            $approve_comment_query = mysqli_query($connection, $query);
+            checkQuery($approve_comment_query);
+            header("Location: comments.php");
+        }
+    }
+
+    // Unapproving comments
+    function unapproveComment(){
+        global $connection;
+        if(isset($_GET['unapprove_comment'])){
+            $unapprove_comment_id =  $_GET['unapprove_comment'];
+            $query = "UPDATE comments SET comment_status = 'unapprove' WHERE comment_id = $unapprove_comment_id";
+            $unapprove_comment_query = mysqli_query($connection, $query);
+            checkQuery($unapprove_comment_query);
+            header("Location: comments.php");
         }
     }
 
