@@ -3,7 +3,6 @@
 
 <!-- Blog Search Well -->
 <div class="well">
-    
     <h4>Blog Search</h4>
     <!-- Search form -->
     <form action="search.php" method="post">
@@ -13,6 +12,25 @@
                 <button class="btn btn-default" type="submit" name="submit">
                     <span class="glyphicon glyphicon-search"></span>
             </button>
+            </span>
+        </div>
+        <!-- /.input-group -->
+    </form>
+    <!-- Search form -->
+</div>
+
+<!-- Login form -->
+<div class="well">
+    <h4>Login</h4>
+    <!-- Search form -->
+    <form action="includes/login.php" method="post">
+        <div class="form-group">
+            <input type="text" class="form-control" name="username" placeholder="Enter username...">
+        </div>
+        <div class="input-group">
+            <input type="text" class="form-control" name="password" placeholder="************">
+            <span class="input-group-btn">
+                <button class="btn btn-primary" name="login" type="submit">Submit</button>
             </span>
         </div>
         <!-- /.input-group -->
