@@ -354,4 +354,56 @@
         }
     }
 
+
+    ///////////////////////////////////////////////////////////////////////////////////////
+
+    // Displaying All Users in admin
+    function findAllUsers(){
+        global $connection;
+        $query = "SELECT * FROM users";
+        $select_comments_admin = mysqli_query($connection, $query);
+        // Checking if there are comments
+        if(mysqli_num_rows($select_comments_admin) > 0) {
+            // Displaying comment data
+            while($row = mysqli_fetch_assoc($select_comments_admin)){
+                $user_id = $row['user_id'];
+                $user_img = $row['user_img'];
+                $username = $row['username'];
+                $user_firstname = $row['user_firstname'];
+                $user_lastname = $row['user_lastname'];
+                $user_email = $row['user_email'];
+                $user_role = $row['user_role'];
+            
+                // Displaying the table
+                echo "<tr>
+                        <td>{$user_id}</td>
+                        <td>{$user_img}</td>
+                        <td>{$username}</td>
+                        <td>{$user_firstname}</td>
+                        <td>{$user_lastname}</td>
+                        <td>{$user_email}</td>
+                        <td>{$user_role}</td>
+                        <td><a href='users.php?source=edit_user&user_id={$user_id}'>Edit</a></td>
+                        <td><a href='users.php?delete={$user_id}'>Delete</a></td>
+                    </tr>";
+
+            }
+        }else {
+            // Displaying message if no comments found
+            echo "<tr><td colspan='11'>No users found.</td></tr>"; 
+        }
+    }
+
+    // Deleting users
+    function deleteUser(){
+        global $connection;
+        if(isset($_GET['delete'])){
+            $delete_id =  $_GET['delete'];
+            $query = "DELETE FROM users WHERE user_id = {$delete_id}";
+            $delete_user_query = mysqli_query($connection, $query);
+            checkQuery($delete_user_query);
+            // Refresh the page
+            header("Location: users.php");
+        }  
+    }
 ?>

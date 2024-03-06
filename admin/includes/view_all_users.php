@@ -14,10 +14,10 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <?php findAllCommentsAndDisplayInAdmin(); ?>
+                                <?php findAllUsers(); ?>
                                 <?php 
                                 // Deleting comments
-                                deleteComment();  
+                                deleteUser();  
                                 // Approving comments
                                 approveComment();              
                                 // Unapproving comments 
