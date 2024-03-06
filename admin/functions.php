@@ -180,4 +180,40 @@
             header("Location: posts.php");
         }  
     }
+
+
+    ///////////////////////////////////////////////////////////////////////
+
+    // Displaying Posts
+    function findAllComments(){
+        global $connection;
+        $query = "SELECT * FROM comments";
+        $select_comments_admin = mysqli_query($connection, $query);
+        // Displaying categ data
+        while($row = mysqli_fetch_assoc($select_comments_admin)){
+            $comment_id = $row['comment_id'];
+            $comment_post_id = $row['comment_post_id'];
+            $comment_author = $row['comment_author'];
+            $comment_content = $row['comment_content'];
+            $comment_email = $row['comment_email'];
+            $comment_status = $row['comment_status'];
+            $comment_date = $row['comment_date'];
+      
+        
+            echo "<tr>
+                    <td>{$comment_id}</td>
+                    <td>{$comment_author}</td>
+                    <td>{$comment_content}</td>
+                    <td>{$comment_email}</td>
+                    <td>{$comment_status}</td>
+                    <td>{$comment_post_id}</td>
+                    <td>{$comment_date}</td>
+                    <td><a href='comments.php?source=approve_comment&comment_id={$comment_id}'>Approve</a></td>
+                    <td><a href='comments.php?source=unapprove_comment&comment_id={$comment_id}'>Unapprove</a></td>
+                    <td><a href='comments.php?source=edit_comment&comment_id={$comment_id}'>Edit</a></td>
+                    <td><a href='comments.php?delete={$comment_id}'>Delete</a></td>
+                </tr>";
+        }
+    }
+
 ?>
