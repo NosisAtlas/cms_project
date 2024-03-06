@@ -376,21 +376,76 @@
             
                 // Displaying the table
                 echo "<tr>
-                        <td>{$user_id}</td>
-                        <td>{$user_img}</td>
-                        <td>{$username}</td>
-                        <td>{$user_firstname}</td>
-                        <td>{$user_lastname}</td>
-                        <td>{$user_email}</td>
-                        <td>{$user_role}</td>
-                        <td><a href='users.php?source=edit_user&user_id={$user_id}'>Edit</a></td>
-                        <td><a href='users.php?delete={$user_id}'>Delete</a></td>
-                    </tr>";
+                    <td>{$user_id}</td>
+                    <td><img class='img-fluid img-thumbnail' width='100' src='../imgs/{$user_img}' alt='post img'>
+                    </td>
+                    <td>{$username}</td>
+                    <td>{$user_firstname}</td>
+                    <td>{$user_lastname}</td>
+                    <td>{$user_email}</td>
+                    <td>{$user_role}</td>
+                    <td><a href='users.php?source=edit_user&user_id={$user_id}'>Edit</a></td>
+                    <td><a href='users.php?delete={$user_id}'>Delete</a></td>
+                </tr>";
+
 
             }
         }else {
             // Displaying message if no comments found
             echo "<tr><td colspan='11'>No users found.</td></tr>"; 
+        }
+    }
+
+    // Inserting comments
+    function insertUsers(){
+        global $connection;
+
+        // Adding users data to db
+        if(isset($_POST['create_user'])){
+            $username = $_POST['username'];
+            $user_password = $_POST['user_password'];
+            $user_firstname = $_POST['user_firstname'];
+            $user_lastname = $_POST['user_lastname'];
+            $user_email = $_POST['user_email'];
+            // Getting image
+            $user_img = $_FILES['image']['name'];
+            $user_img_temp = $_FILES['image']['tmp_name'];
+            $user_role = $_POST['user_role'];
+            $user_randSalt = '';
+
+            // Check if user selected an image
+            if(empty($user_img) || $user_img == '') {
+                // If no image selected, set default image
+                $user_img = "default_image.webp";
+            } else {
+                // move image to
+                move_uploaded_file($user_img_temp, "../admin/imgs/$user_img");
+            }
+
+            // Validating data
+            if($username == "" || empty($username) ||
+                $user_password == "" || empty($user_password) ||
+                $user_email == "" || empty($user_email) 
+            ){
+                echo "The fields should not be empty. You must at least insert username, password and email!";
+            }else{
+                // Validating pass
+                if(strlen($user_password)<= 6 || strlen($user_password) > 15){
+                    echo "<p>Password must not be less than 6 or more than 15</p>";
+                }else{
+                    $hashFormat = "$2y$10$";
+	                $salt = "iusesomeordinarypasss24";
+                    $hashFandSalt = $hashFormat . $salt;
+                    $encriptPassword = crypt($user_password, $hashFandSalt);
+
+                    //Query for insert users
+                    $query = "INSERT INTO users(username, user_password, user_firstname, user_lastname, user_email, user_img, user_role, randSalt)";
+                    $query .= "VALUES('{$username}','{$encriptPassword}','{$user_firstname}','{$user_lastname}','{$user_email}','{$user_img}','{$user_role}','{$user_randSalt}')";
+                    $create_user_query = mysqli_query($connection, $query);
+                    checkQuery($create_user_query);                
+                    header("Location: users.php");
+                }
+            }
         }
     }
 
