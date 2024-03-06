@@ -12,7 +12,8 @@
         global $connection;
         $query = "SELECT * FROM categories WHERE cat_id = $categ_id";
         $select_categ = mysqli_query($connection, $query);
-         // Checking if category is found
+
+        // Checking if category is found
         if(mysqli_num_rows($select_categ) > 0) {
             $row = mysqli_fetch_assoc($select_categ);
             return $categ_title = $row['cat_title'];
@@ -20,6 +21,23 @@
             return "Category Not Found";
         }
     }
+
+    // Finding specific post from comment
+    function findPost($post_id){
+        global $connection;
+        $query = "SELECT * FROM posts WHERE post_id = $post_id";
+        $select_post = mysqli_query($connection, $query);
+
+        // Checking if category is found
+        if(mysqli_num_rows($select_post) > 0) {
+            $row = mysqli_fetch_assoc($select_post);
+            return $post_title = substr($row['post_title'], 0, 25);
+        } else {
+            return "Category Not Found";
+        }
+    }
+
+    //////////////////////////////////////////////////////////////////
     
     // Adding categs
     function insertCategories(){
@@ -206,7 +224,7 @@
                     <td>{$comment_content}</td>
                     <td>{$comment_email}</td>
                     <td>{$comment_status}</td>
-                    <td>{$comment_post_id}</td>
+                    <td>" . findPost($comment_post_id) . "</td>
                     <td>{$comment_date}</td>
                     <td><a href='comments.php?source=approve_comment&comment_id={$comment_id}'>Approve</a></td>
                     <td><a href='comments.php?source=unapprove_comment&comment_id={$comment_id}'>Unapprove</a></td>
