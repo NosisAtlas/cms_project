@@ -331,7 +331,7 @@
         global $connection;
         if(isset($_GET['approve_comment'])){
             $approve_comment_id =  $_GET['approve_comment'];
-            $query = "UPDATE comments SET comment_status = 'approve' WHERE comment_id = $approve_comment_id";
+            $query = "UPDATE comments SET comment_status = 'approved' WHERE comment_id = $approve_comment_id";
             $approve_comment_query = mysqli_query($connection, $query);
             checkQuery($approve_comment_query);
             header("Location: comments.php");
@@ -343,7 +343,7 @@
         global $connection;
         if(isset($_GET['unapprove_comment'])){
             $unapprove_comment_id =  $_GET['unapprove_comment'];
-            $query = "UPDATE comments SET comment_status = 'unapprove' WHERE comment_id = $unapprove_comment_id";
+            $query = "UPDATE comments SET comment_status = 'unapproved' WHERE comment_id = $unapprove_comment_id";
             $unapprove_comment_query = mysqli_query($connection, $query);
             checkQuery($unapprove_comment_query);
             header("Location: comments.php");
