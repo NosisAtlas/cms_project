@@ -50,7 +50,10 @@
                 ?>
 
                  <!-- Blog Comments -->
-
+                 <?php
+                    // Inserting Comments 
+                    insertComments(); 
+                 ?>
                 <!-- Comments Form -->
                 <div class="well">
                     <h4>Leave a Comment:</h4>
@@ -65,7 +68,7 @@
                         </div>
                         <div class="form-group">
                             <label for="comment_content">Content</label>
-                            <textarea class="form-control" rows="3"></textarea>
+                            <textarea class="form-control" rows="3" name="comment_content"></textarea>
                         </div>
                         <button type="submit" class="btn btn-primary" name="create_comment">Comment</button>
                     </form>
@@ -80,6 +83,7 @@
                         $post_id_url = $_GET['post_id']; 
                     }
                     displayAllCommentsPost($post_id_url); 
+                    // var_dump(displayAllCommentsPost());
                 ?>
                 
                

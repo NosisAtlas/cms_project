@@ -207,61 +207,106 @@
         global $connection;
         $query = "SELECT * FROM comments";
         $select_comments_admin = mysqli_query($connection, $query);
-        // Displaying categ data
-        while($row = mysqli_fetch_assoc($select_comments_admin)){
-            $comment_id = $row['comment_id'];
-            $comment_post_id = $row['comment_post_id'];
-            $comment_author = $row['comment_author'];
-            $comment_content = $row['comment_content'];
-            $comment_email = $row['comment_email'];
-            $comment_status = $row['comment_status'];
-            $comment_date = $row['comment_date'];
-      
+        // Checking if there are comments
+        if(mysqli_num_rows($select_comments_admin) > 0) {
+            // Displaying comment data
+            while($row = mysqli_fetch_assoc($select_comments_admin)){
+                $comment_id = $row['comment_id'];
+                $comment_post_id = $row['comment_post_id'];
+                $comment_author = $row['comment_author'];
+                $comment_content = $row['comment_content'];
+                $comment_email = $row['comment_email'];
+                $comment_status = $row['comment_status'];
+                $comment_date = $row['comment_date'];
         
-            echo "<tr>
-                    <td>{$comment_id}</td>
-                    <td>{$comment_author}</td>
-                    <td>{$comment_content}</td>
-                    <td>{$comment_email}</td>
-                    <td>{$comment_status}</td>
-                    <td>" . findPost($comment_post_id) . "</td>
-                    <td>{$comment_date}</td>
-                    <td><a href='comments.php?source=approve_comment&comment_id={$comment_id}'>Approve</a></td>
-                    <td><a href='comments.php?source=unapprove_comment&comment_id={$comment_id}'>Unapprove</a></td>
-                    <td><a href='comments.php?source=edit_comment&comment_id={$comment_id}'>Edit</a></td>
-                    <td><a href='comments.php?delete={$comment_id}'>Delete</a></td>
-                </tr>";
+            
+                echo "<tr>
+                        <td>{$comment_id}</td>
+                        <td>{$comment_author}</td>
+                        <td>{$comment_content}</td>
+                        <td>{$comment_email}</td>
+                        <td>{$comment_status}</td>
+                        <td>" . findPost($comment_post_id) . "</td>
+                        <td>{$comment_date}</td>
+                        <td><a href='comments.php?source=approve_comment&comment_id={$comment_id}'>Approve</a></td>
+                        <td><a href='comments.php?source=unapprove_comment&comment_id={$comment_id}'>Unapprove</a></td>
+                        <td><a href='comments.php?source=edit_comment&comment_id={$comment_id}'>Edit</a></td>
+                        <td><a href='comments.php?delete={$comment_id}'>Delete</a></td>
+                    </tr>";
+            }
+        }else {
+            // Displaying message if no comments found
+            echo "<tr><td colspan='11'>No comments found.</td></tr>"; 
         }
     }
 
-    // Displaying All Comments in home related to the specific post
+    // Displaying All Comments in post page related to the specific post
     function displayAllCommentsPost(){
         global $connection;
         $post_id_url = $_GET['post_id'];
-        $query = "SELECT * FROM comments where comment_post_id = $post_id_url";
+        $query = "SELECT * FROM comments WHERE comment_post_id = $post_id_url";
         $select_comments_home = mysqli_query($connection, $query);
-        // Displaying categ data
-        while($row = mysqli_fetch_assoc($select_comments_home)){
-            $comment_id = $row['comment_id'];
-            $comment_post_id = $row['comment_post_id'];
-            $comment_author = $row['comment_author'];
-            $comment_content = $row['comment_content'];
-            $comment_email = $row['comment_email'];
-            $comment_status = $row['comment_status'];
-            $comment_date = $row['comment_date'];
-      
         
-            echo "<div class='media'>
-                    <a class='pull-left' href='#'>
-                        <img class='media-object img-fluid image-thumbnail' width='70' src='imgs/avatar_1.webp' alt=''>
-                    </a>
-                    <div class='media-body'>
-                        <h4 class='media-heading'>{$comment_author}
-                            <small>{$comment_date}</small>
-                        </h4>
-                        {$comment_content}
-                    </div>
-                </div>";
+        // Checking if there are comments
+        if(mysqli_num_rows($select_comments_home) > 0) {
+            // Displaying comment data
+            while($row = mysqli_fetch_assoc($select_comments_home)){
+                $comment_id = $row['comment_id'];
+                $comment_post_id = $row['comment_post_id'];
+                $comment_author = $row['comment_author'];
+                $comment_content = $row['comment_content'];
+                $comment_email = $row['comment_email'];
+                $comment_status = $row['comment_status'];
+                $comment_date = $row['comment_date'];
+
+                echo "<div class='media'>
+                        <a class='pull-left' href='#'>
+                            <img class='media-object img-fluid image-thumbnail' width='70' src='imgs/avatar_1.webp' alt=''>
+                        </a>
+                        <div class='media-body'>
+                            <h4 class='media-heading'>{$comment_author}
+                                <small>{$comment_date}</small>
+                            </h4>
+                            {$comment_content}
+                        </div>
+                    </div>";
+            }
+        } else {
+            // Displaying a message if no comments are found
+            echo "<h4>No comments found. Be the first to comment above!</h4>";
+        }
+    }
+
+
+    // Inserting comments
+    function insertComments(){
+        global $connection;
+        $post_id_url = $_GET['post_id'];
+        // Adding comments data to db
+        if(isset($_POST['create_comment'])){
+            $comment_author = $_POST['comment_author'];
+            $comment_post_id = $post_id_url;
+            $comment_author = $_POST['comment_author'];
+            $comment_content = $_POST['comment_content'];
+            $comment_email = $_POST['comment_email'];
+            $comment_status = "Unapproved";
+            $comment_date = date('d-m-y');
+
+            // Validating data
+            if($comment_author == "" || empty($comment_author) ||
+                $comment_content == "" || empty($comment_content) ||
+                $comment_email == "" || empty($comment_email)
+            ){
+                echo "The fields should not be empty";
+            }else{
+                $query = "INSERT INTO comments(comment_post_id, comment_author, comment_content, comment_email, comment_status, comment_date)";
+                $query .= "VALUES({$comment_post_id},'{$comment_author}','{$comment_content}','{$comment_email}','{$comment_status}',now())";
+
+                $create_comment_query = mysqli_query($connection, $query);
+                checkQuery($create_comment_query);
+                header("Location: post.php?post_id={$post_id_url}");
+                exit();            
+            }
         }
     }
 
