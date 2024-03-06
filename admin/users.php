@@ -13,7 +13,7 @@
                 <div class="row">
                     <div class="col-lg-12">
                         <h1 class="page-header">
-                            Welcome to admin Comments
+                            Welcome to admin Users
                             <small>John</small>
                         </h1>
                         <?php 
@@ -25,9 +25,9 @@
 
                             switch($source){
                                 case 'add_comment':
-                                    include "includes/add_post.php";
+                                    include "includes/add_user.php";
                                     break;
-                                case 'edit_comment':
+                                case 'edit_user':
                                     // Form for Editing the posts
                                     updatePost();
                                     break;
@@ -35,7 +35,7 @@
                                     deleteComment();
                                     break;
                                 default:
-                                    include "includes/view_all_comments.php";
+                                    include "includes/view_all_users.php";
                                     break;
                             }
                         ?>
