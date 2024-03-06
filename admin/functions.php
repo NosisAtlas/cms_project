@@ -28,12 +28,12 @@
         $query = "SELECT * FROM posts WHERE post_id = $post_id";
         $select_post = mysqli_query($connection, $query);
 
-        // Checking if category is found
+        // Checking if post is found
         if(mysqli_num_rows($select_post) > 0) {
             $row = mysqli_fetch_assoc($select_post);
-            return $post_title = substr($row['post_title'], 0, 25);
-        } else {
-            return "Category Not Found";
+            return array('id' => $post_id, 'title' => $row['post_title']);
+        }else {
+            return array('id' => 0, 'title' => "Post Not Found");
         }
     }
 
@@ -218,6 +218,8 @@
                 $comment_email = $row['comment_email'];
                 $comment_status = $row['comment_status'];
                 $comment_date = $row['comment_date'];
+                $comment_post = findPost($comment_post_id);
+
         
             
                 echo "<tr>
@@ -226,13 +228,14 @@
                         <td>{$comment_content}</td>
                         <td>{$comment_email}</td>
                         <td>{$comment_status}</td>
-                        <td>" . findPost($comment_post_id) . "</td>
+                        <td><a href='../post.php?post_id={$comment_post['id']}'>{$comment_post['title']}</a></td>
                         <td>{$comment_date}</td>
                         <td><a href='comments.php?source=approve_comment&comment_id={$comment_id}'>Approve</a></td>
                         <td><a href='comments.php?source=unapprove_comment&comment_id={$comment_id}'>Unapprove</a></td>
                         <td><a href='comments.php?source=edit_comment&comment_id={$comment_id}'>Edit</a></td>
                         <td><a href='comments.php?delete={$comment_id}'>Delete</a></td>
                     </tr>";
+
             }
         }else {
             // Displaying message if no comments found
