@@ -34,7 +34,10 @@
     <!-- Post status -->
     <div class="form-group">
         <label for="post_status">Post Status</label>
-        <input class="form-control" type="text" name="post_status">
+        <select class="form-select form-control" name="post_status" id="post_status">
+            <option value="draft">draft</option>
+            <option value="published">published</option>
+        </select>
     </div>
     <!-- Post image -->
     <div class="form-group">

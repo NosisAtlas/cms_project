@@ -50,7 +50,10 @@
     <!-- Post status -->
     <div class="form-group">
         <label for="post_status">Post Status</label>
-        <input class="form-control" type="text" value="<?php echo $post_status; ?>" name="post_status">
+        <select class="form-select form-control" name="post_status" id="post_status">
+            <option value="draft">draft</option>
+            <option value="published">published</option>
+        </select>
     </div>
     <!-- Post old image preview -->
     <div class="form-group">
