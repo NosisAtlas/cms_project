@@ -31,9 +31,6 @@
                                     // Form for Editing the posts
                                     updatePost();
                                     break;
-                                case '509':
-                                    echo "Nice 509";
-                                    break;
                                 default:
                                     include "includes/view_all_posts.php";
                                     break;

@@ -23,7 +23,7 @@
     <!-- Post category -->
     <div class="form-group">
         <label for="post_category">Post Category</label><br>
-        <select class="form-select" name="post_category" id="post_category">
+        <select class="form-select form-control" name="post_category" id="post_category">
             <?php 
                 $query = "SELECT * FROM categories";
                 $select_categs = mysqli_query($connection, $query);
