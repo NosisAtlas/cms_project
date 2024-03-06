@@ -9,6 +9,8 @@
                                     <td>Last Name</td>
                                     <th>Email</th>
                                     <th>Role</th>   
+                                    <th>Role Admin</th>   
+                                    <th>Role User</th>   
                                     <th>Update</th>
                                     <th>Actions</th>                                    
                                 </tr>
@@ -18,10 +20,10 @@
                                 <?php 
                                 // Deleting comments
                                 deleteUser();  
-                                // Approving comments
-                                approveComment();              
-                                // Unapproving comments 
-                                unapproveComment();
+                                // Change role to admin
+                                changeRoleToAdmin();              
+                                // Change role to user 
+                                changeRoleToUser();
                                 ?>
                             </tbody>
     </table>

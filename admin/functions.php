@@ -384,6 +384,8 @@
                     <td>{$user_lastname}</td>
                     <td>{$user_email}</td>
                     <td>{$user_role}</td>
+                    <td><a href='users.php?assign_admin={$user_id}'>Make admin</a></td>
+                    <td><a href='users.php?assign_user={$user_id}'>Make user</a></td>
                     <td><a href='users.php?source=edit_user&user_id={$user_id}'>Edit</a></td>
                     <td><a href='users.php?delete={$user_id}'>Delete</a></td>
                 </tr>";
@@ -461,4 +463,29 @@
             header("Location: users.php");
         }  
     }
+
+    // Change role to admin
+    function changeRoleToAdmin(){
+        global $connection;
+        if(isset($_GET['assign_admin'])){
+            $assign_admin_id =  $_GET['assign_admin'];
+            $query = "UPDATE users SET user_role = 'admin' WHERE user_id = $assign_admin_id ";
+            $assign_admin_query = mysqli_query($connection, $query);
+            checkQuery($assign_admin_query);
+            header("Location: users.php");
+        }
+    }
+
+    // Change role to admin
+    function changeRoleToUser(){
+        global $connection;
+        if(isset($_GET['assign_user'])){
+            $assign_user_id =  $_GET['assign_user'];
+            $query = "UPDATE users SET user_role = 'user' WHERE user_id = $assign_user_id ";
+            $assign_user_query = mysqli_query($connection, $query);
+            checkQuery($assign_user_query);
+            header("Location: users.php");
+        }
+    }
+
 ?>

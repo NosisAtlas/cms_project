@@ -31,9 +31,6 @@
                                     // Form for Editing the posts
                                     updatePost();
                                     break;
-                                case 'delete':
-                                    deleteComment();
-                                    break;
                                 default:
                                     include "includes/view_all_comments.php";
                                     break;
