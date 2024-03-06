@@ -149,7 +149,7 @@
             $post_content = $_POST['post_content'];
             $post_tags = $_POST['post_tags'];
             $post_status = $_POST['post_status'];
-            $post_comment_count = 7;
+            // $post_comment_count = 7;
             $post_category_id = $_POST['post_category_id'];
 
             // Processing img
@@ -162,13 +162,12 @@
                 $post_content == "" || empty($post_content) ||
                 $post_tags == "" || empty($post_tags) ||
                 $post_status == "" || empty($post_status) ||
-                $post_comment_count == "" || empty($post_comment_count) ||
                 $post_category_id == "" || empty($post_category_id)
             ){
                 echo "The fields should not be empty";
             }else{
                 $query = "INSERT INTO posts(post_category_id, post_title, post_author, post_date, post_img, post_content, post_tags, post_comment_count, post_status)";
-                $query .= "VALUES({$post_category_id},'{$post_title}','{$post_author}',now(),'{$post_img}','{$post_content}','{$post_tags}','{$post_comment_count}','{$post_status}')";
+                $query .= "VALUES({$post_category_id},'{$post_title}','{$post_author}',now(),'{$post_img}','{$post_content}','{$post_tags}','{$post_status}')";
 
                 $create_post_query = mysqli_query($connection, $query);
                 checkQuery($create_post_query);
@@ -304,11 +303,15 @@
             }else{
                 $query = "INSERT INTO comments(comment_post_id, comment_author, comment_content, comment_email, comment_status, comment_date)";
                 $query .= "VALUES({$comment_post_id},'{$comment_author}','{$comment_content}','{$comment_email}','{$comment_status}',now())";
-
                 $create_comment_query = mysqli_query($connection, $query);
                 checkQuery($create_comment_query);
+                // Update comments count
+                $query = "UPDATE posts SET post_comment_count = post_comment_count + 1 ";
+                $query .= "WHERE post_id = $comment_post_id";
+                $update_comment_count_query = mysqli_query($connection, $query);
+                checkQuery($update_comment_count_query);
                 header("Location: post.php?post_id={$post_id_url}");
-                exit();            
+                // exit();
             }
         }
     }
