@@ -202,7 +202,7 @@
 
     ///////////////////////////////////////////////////////////////////////
 
-    // Displaying Posts
+    // Displaying All Comments in admin
     function findAllComments(){
         global $connection;
         $query = "SELECT * FROM comments";
@@ -231,6 +231,37 @@
                     <td><a href='comments.php?source=edit_comment&comment_id={$comment_id}'>Edit</a></td>
                     <td><a href='comments.php?delete={$comment_id}'>Delete</a></td>
                 </tr>";
+        }
+    }
+
+    // Displaying All Comments in home related to the specific post
+    function displayAllCommentsPost(){
+        global $connection;
+        $post_id_url = $_GET['post_id'];
+        $query = "SELECT * FROM comments where comment_post_id = $post_id_url";
+        $select_comments_home = mysqli_query($connection, $query);
+        // Displaying categ data
+        while($row = mysqli_fetch_assoc($select_comments_home)){
+            $comment_id = $row['comment_id'];
+            $comment_post_id = $row['comment_post_id'];
+            $comment_author = $row['comment_author'];
+            $comment_content = $row['comment_content'];
+            $comment_email = $row['comment_email'];
+            $comment_status = $row['comment_status'];
+            $comment_date = $row['comment_date'];
+      
+        
+            echo "<div class='media'>
+                    <a class='pull-left' href='#'>
+                        <img class='media-object img-fluid image-thumbnail' width='70' src='imgs/avatar_1.webp' alt=''>
+                    </a>
+                    <div class='media-body'>
+                        <h4 class='media-heading'>{$comment_author}
+                            <small>{$comment_date}</small>
+                        </h4>
+                        {$comment_content}
+                    </div>
+                </div>";
         }
     }
 
