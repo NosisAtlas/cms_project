@@ -49,7 +49,7 @@
                         }
                     }else {
                         // Displaying message if no posts found
-                        echo "<h4>No posts found.</h4>"; 
+                        echo "<h4>No published posts were found.</h4>"; 
                     }
                 ?>
                 
