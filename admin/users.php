@@ -29,7 +29,7 @@
                                     break;
                                 case 'edit_user':
                                     // Form for Editing the posts
-                                    updatePost();
+                                    updateUser();
                                     break;
                                 default:
                                     include "includes/view_all_users.php";

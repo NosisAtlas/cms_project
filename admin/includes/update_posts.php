@@ -79,7 +79,7 @@
 ?>
     <!-- Submit btn -->
     <div class="form-group">
-        <input class="btn btn-primary" type="submit" value="Update" name="update_post">
+        <input class="btn btn-primary" type="submit" value="Update" name="update_user">
     </div>
 </form>
 
@@ -111,34 +111,29 @@
             }
         }
 
-        if($post_title == "" || empty($post_title) ||
-                $post_author == "" || empty($post_author) ||
-                $post_date == "" || empty($post_date) ||
-                // $post_img == "" || empty($post_img) ||
-                $post_content == "" || empty($post_content) ||
-                $post_tags == "" || empty($post_tags) ||
-                $post_status == "" || empty($post_status) ||
-                $post_comment_count == "" || empty($post_comment_count) ||
-                $post_category_id == "" || empty($post_category_id)
-            ){
-                echo "The fields should not be empty";
-            }else{
-                $query = "UPDATE posts SET ";
-                $query .= "post_title = '{$post_title}', ";
-                $query .= "post_category_id = '{$post_category_id}', ";
-                $query .= "post_date = now(), ";
-                $query .= "post_author = '{$post_author}', ";
-                $query .= "post_status = '{$post_status}', ";
-                $query .= "post_tags = '{$post_tags}', ";
-                $query .= "post_content = '{$post_content}', ";
-                $query .= "post_img = '{$post_img}' ";
-                $query .= "WHERE post_id = {$post_id}";
+        // Validating data
+        if($username == "" || empty($username) ||
+        $user_password == "" || empty($user_password) ||
+        $user_email == "" || empty($user_email) 
+        ){
+        echo "The fields should not be empty. You must at least insert username, password and email!";
+    }else{
+        // Validating pass
+        if(strlen($user_password)<= 6 || strlen($user_password) > 15){
+            echo "<p>Password must not be less than 6 or more than 15</p>";
+        }else{
+            $hashFormat = "$2y$10$";
+            $salt = "iusesomeordinarypasss24";
+            $hashFandSalt = $hashFormat . $salt;
+            $encriptPassword = crypt($user_password, $hashFandSalt);
 
-
-                $update_post_query = mysqli_query($connection, $query);
-                checkQuery($update_post_query);
-                header("Location: posts.php");
-            }
-
+            //Query for insert users
+            $query = "INSERT INTO users(username, user_password, user_firstname, user_lastname, user_email, user_img, user_role, randSalt)";
+            $query .= "VALUES('{$username}','{$encriptPassword}','{$user_firstname}','{$user_lastname}','{$user_email}','{$user_img}','{$user_role}','{$user_randSalt}')";
+            $create_user_query = mysqli_query($connection, $query);
+            checkQuery($create_user_query);                
+            header("Location: users.php");
+        }
+    }
     }
 ?>

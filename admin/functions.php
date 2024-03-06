@@ -428,7 +428,7 @@
             if($username == "" || empty($username) ||
                 $user_password == "" || empty($user_password) ||
                 $user_email == "" || empty($user_email) 
-            ){
+                ){
                 echo "The fields should not be empty. You must at least insert username, password and email!";
             }else{
                 // Validating pass
@@ -448,6 +448,15 @@
                     header("Location: users.php");
                 }
             }
+        }
+    }
+
+     // Editing Posts
+     function updateUser(){
+        global $connection;
+        if(isset($_GET['user_id'])){
+            $user_id = $_GET['user_id'];
+            include "includes/update_users.php";
         }
     }
 
