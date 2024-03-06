@@ -16,15 +16,16 @@
                 </h1>
                 <!-- Displaying posts from Db -->
                 <?php 
-                    $query = "SELECT * FROM posts";
+                    $query = "SELECT * FROM posts WHERE post_status = 'published'";
                     $select_all_posts_query = mysqli_query($connection, $query);
-                    while($row = mysqli_fetch_assoc($select_all_posts_query)){
-                        $post_id = $row['post_id'];
-                        $post_title = $row['post_title'];
-                        $post_author = $row['post_author'];
-                        $post_date = $row['post_date'];
-                        $post_img = $row['post_img'];
-                        $post_content = substr($row['post_content'], 0, 100);
+                    if(mysqli_num_rows($select_all_posts_query) > 0) {
+                        while($row = mysqli_fetch_assoc($select_all_posts_query)){
+                            $post_id = $row['post_id'];
+                            $post_title = $row['post_title'];
+                            $post_author = $row['post_author'];
+                            $post_date = $row['post_date'];
+                            $post_img = $row['post_img'];
+                            $post_content = substr($row['post_content'], 0, 100);
                     ?>
                     
 
@@ -45,6 +46,10 @@
                 <hr>
 
                 <?php    
+                        }
+                    }else {
+                        // Displaying message if no posts found
+                        echo "<h4>No posts found.</h4>"; 
                     }
                 ?>
                 
