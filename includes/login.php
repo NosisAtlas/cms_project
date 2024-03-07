@@ -5,46 +5,39 @@
         $username = $_POST['username'];
         $password = $_POST['password'];
 
-        // Prepare statement
-        $query = $connection->prepare("SELECT * FROM users WHERE username = ?");
-        // Bind parameter
-        $query->bind_param("s", $username);
+        $query = "SELECT * FROM users WHERE username = ?";
+        $stmt = $connection->prepare($query);
+        $stmt->bind_param("s", $username);
+        $stmt->execute();
+        $result = $stmt->get_result();
 
-        // Execute query
-        if (!$query->execute()) {
-            die("Execution failed: (" . $query->errno . ") " . $query->error);
-        }
-
-        // Get result
-        $result = $query->get_result();
-        if (!$result) {
-            die("Get result failed: (" . $query->errno . ") " . $query->error);
-        }
-
-        if($result->num_rows > 0) {
-            // Fetch user data
+        if($result->num_rows == 1){
             $row = $result->fetch_assoc();
             $hashed_password = $row['user_password'];
 
             // Verify password
             if(password_verify($password, $hashed_password)) {
                 // Password is correct
-                $user_id = $row['user_id'];
-                $user_role = $row['user_role'];
-                if($user_role == 'admin'){
+                $db_user_id = $row['user_id'];
+                $db_username = $row['username'];
+                $db_user_firstname = $row['user_firstname'];
+                $db_user_lastname = $row['user_lastname'];
+                $db_user_role = $row['user_role'];
+                $db_user_password = $row['user_password'];
+                if($db_user_role == 'admin'){
+                    // echo "To admin";
                     header('Location: ../admin/index.php');
-                    exit(); // It's good practice to include an exit after redirection
                 } else {
+                    // echo "To front";
                     header('Location: ../index.php');
-                    exit();
                 }
-            } else {
-                // Password is incorrect
-                echo "Invalid password";
+                exit(); // Stop further execution
             }
-        } else {
-            echo "No user found with the provided credentials.";
-            // You might want to redirect here instead of showing an error message
         }
+        
+        // If username or password is incorrect, redirect to index.php
+        // echo "Denied";
+        header('Location: ../index.php');
+        exit(); // Stop further execution
     }
 ?>
