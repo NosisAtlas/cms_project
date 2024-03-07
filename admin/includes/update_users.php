@@ -59,21 +59,35 @@
         checkQuery($update_user_query);
         
         // Check if the user role is being changed to "user"
+        if(isset($_SESSION['username'])){
+            $user_role = $_SESSION['user_role'];
+            if($user_role == 'user') {
+                // Destroy the session
+                session_destroy();
+                // Redirect the user to the index page
+                header("Location: ../index.php");
+                exit(); // Stop further execution
+            }else if($user_role == 'admin'){
+                echo "<div class='alert alert-success' role='alert'>
+                User updated successfully !  <a href='users.php' class='btn btn-success'>View users</a>
+                </div>"; 
+            }
+        }else if($_SESSION['user_id'] == $user_id){
+            // Destroy the session
+            session_destroy();
+            // Redirect the user to the index page
+            header("Location: ../index.php");
+            exit(); // Stop further execution
+        }else{
         $user_role = $_SESSION['user_role'];
         if($user_role == "admin"){
             // Setting the new session data
             $new_username = $username;
             $new_user_firstname = $user_firstname;
-            $new_user_lastname = $user_lastname;
-            $new_user_role = $user_role;
-            // Setting sessions
-            $_SESSION['username'] =$new_username;
             $_SESSION['user_firstname'] =$new_user_firstname;
             $_SESSION['user_lastname'] =$new_user_lastname;
             $_SESSION['user_role'] =$new_user_role;
-            echo "<div class='alert alert-success' role='alert'>
-            User updated successfully !  <a href='users.php' class='btn btn-success'>View users</a>
-            </div>"; 
+
         }else if($_SESSION['user_id'] == $user_id){
             // Destroy the session
             session_destroy();
@@ -81,6 +95,7 @@
             header("Location: ../index.php");
             exit(); // Stop further execution
         }
+    }
     }
 ?>
 
