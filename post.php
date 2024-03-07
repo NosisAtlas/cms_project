@@ -33,6 +33,13 @@
                 <!-- First Blog Post -->
                 <h2>
                     <a href="#"><?php echo $post_title ?></a>
+                    <?php 
+                        if(isset($_SESSION['user_id']) && $_SESSION['user_id'] == "admin"){
+                            if(isset($_GET['post_id'])){
+                                echo "<a type='button' class='btn btn-warning'>Warning</a>";
+                            }
+                        }
+                    ?>
                 </h2>
                 <p class="lead">
                     by <a href="index.php"><?php echo $post_author ?></a>
