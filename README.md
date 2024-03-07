@@ -1,5 +1,5 @@
 # CMS PROJECT OVERVIEW
-https://img.shields.io/github/last-commit/nosisatlas/cms_project/main
+![GitHub last commit (branch)](https://img.shields.io/github/last-commit/nosisatlas/cms_project/main)
 
 ## Here you'll find the folder structure
 - There's index in the root folder displaying everything needed in the front
