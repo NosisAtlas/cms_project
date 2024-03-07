@@ -186,6 +186,7 @@
             $post_id = $_GET['post_id'];
             include "includes/update_posts.php";
         }
+        
     }
 
     // Deleting posts

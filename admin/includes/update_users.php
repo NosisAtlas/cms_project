@@ -113,6 +113,9 @@
 
         $update_user_query = mysqli_query($connection, $query);
         checkQuery($update_user_query);
+        echo "<div class='alert alert-success' role='alert'>
+                    User updated successfully !  <a href='users.php' class='btn btn-success'>View users</a>
+                </div>"; 
         
         // Check if the user role is being changed to "user"
         if(isset($_SESSION['username'])){
@@ -143,18 +146,7 @@
             $_SESSION['user_firstname'] =$new_user_firstname;
             $_SESSION['user_lastname'] =$new_user_lastname;
             $_SESSION['user_role'] =$new_user_role;
-            header("Location: ./users.php");
+            
         }
-        
-        // Check if the user role is being changed to "user"
-        // if($user_role == 'user') {
-        //     // Destroy the session
-        //     session_destroy();
-        //     // Redirect the user to the index page
-        //     header("Location: ../index.php");
-        //     exit(); // Stop further execution
-        // }else if($user_role == 'admin'){
-        //     header("Location: ./users.php");
-        // }
     }
 ?>
