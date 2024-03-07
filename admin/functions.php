@@ -117,6 +117,7 @@
             $post_category_id = $row['post_category_id'];
         
             echo "<tr>
+                    <th><input class='checkBoxes' type='checkbox' name='checkBoxArray[]' value='{$post_id}'></th>
                     <td>{$post_id}</td>
                     <td><a href='../post.php?post_id={$post_id}'><img class='img-fluid img-thumbnail' width='100' src='../imgs/{$post_img}' alt='post img'></a></td>
                     <td><a href='../post.php?post_id={$post_id}'>{$post_title}</a></td>
