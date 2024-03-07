@@ -146,10 +146,18 @@
                 <!-- /.row -->
 
                 <?php
-                    // Count posts
+                    // Count draft posts
                     $query = "SELECT* FROM posts WHERE  post_status = 'draft'";
                     $select_all_draft_posts = mysqli_query($connection, $query);
                     $posts_draft_count = mysqli_num_rows($select_all_draft_posts);
+                    // Count unapproved comments
+                    $query = "SELECT* FROM comments WHERE  comment_status = 'unapproved'";
+                    $select_all_unapproved_comments = mysqli_query($connection, $query);
+                    $comments_unapproved_count = mysqli_num_rows($select_all_unapproved_comments);
+                    // Count users with role user
+                    $query = "SELECT* FROM users WHERE  user_role = 'user'";
+                    $select_all_user_users = mysqli_query($connection, $query);
+                    $users_user_count = mysqli_num_rows($select_all_user_users);
                 ?>
                 <div class="row">
                     <!-- Google Chart Js script -->
@@ -162,8 +170,8 @@
                             ['Data', 'Count'],
                             <?php 
                                 //
-                                $element_txt = ['Active Posts', 'Draft', 'Comments', 'Users', 'Categories'];
-                                $element_count = [$posts_count, $posts_draft_count, $comments_count, $users_count, $categories_count];
+                                $element_txt = ['Active Posts', 'Draft Posts', 'Comments', 'Pending Comments', 'Users', 'users Role User', 'Categories'];
+                                $element_count = [$posts_count, $posts_draft_count, $comments_count, $comments_unapproved_count, $users_count, $users_user_count, $categories_count];
                                 for($i = 0; $i < count($element_txt); $i++ ){
                                     echo "['{$element_txt[$i]}'" . "," . "{$element_count[$i]}],";
                                 }

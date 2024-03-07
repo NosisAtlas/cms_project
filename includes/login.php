@@ -27,6 +27,7 @@
                 $db_user_role = $row['user_role'];
                 $db_user_password = $row['user_password'];
                 // Setting sessions
+                $_SESSION['user_id'] = $db_user_id;
                 $_SESSION['username'] =$db_username;
                 $_SESSION['user_firstname'] =$db_user_firstname;
                 $_SESSION['user_lastname'] =$db_user_lastname;

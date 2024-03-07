@@ -113,16 +113,7 @@
 
         $update_user_query = mysqli_query($connection, $query);
         checkQuery($update_user_query);
-        // Setting the new session data
-        $new_username = $username;
-        $new_user_firstname = $user_firstname;
-        $new_user_lastname = $user_lastname;
-        $new_user_role = $user_role;
-        // Setting sessions
-        $_SESSION['username'] =$new_username;
-        $_SESSION['user_firstname'] =$new_user_firstname;
-        $_SESSION['user_lastname'] =$new_user_lastname;
-        $_SESSION['user_role'] =$new_user_role;
+        
         // Check if the user role is being changed to "user"
         if(isset($_SESSION['username'])){
             $user_role = $_SESSION['user_role'];
@@ -135,6 +126,24 @@
             }else if($user_role == 'admin'){
                 header("Location: ./");
             }
+        }else if($_SESSION['user_id'] == $user_id){
+            // Destroy the session
+            session_destroy();
+            // Redirect the user to the index page
+            header("Location: ../index.php");
+            exit(); // Stop further execution
+        }else{
+            // Setting the new session data
+            $new_username = $username;
+            $new_user_firstname = $user_firstname;
+            $new_user_lastname = $user_lastname;
+            $new_user_role = $user_role;
+            // Setting sessions
+            $_SESSION['username'] =$new_username;
+            $_SESSION['user_firstname'] =$new_user_firstname;
+            $_SESSION['user_lastname'] =$new_user_lastname;
+            $_SESSION['user_role'] =$new_user_role;
+            header("Location: ./users.php");
         }
         
         // Check if the user role is being changed to "user"
