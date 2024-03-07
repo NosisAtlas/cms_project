@@ -51,8 +51,14 @@
     <div class="form-group">
         <label for="post_status">Post Status</label>
         <select class="form-select form-control" name="post_status" id="post_status">
-            <option value="draft">draft</option>
-            <option value="published">published</option>
+            <option value="<?php echo $post_status; ?>" selected><?php echo $post_status; ?></option>
+            <?php 
+                if($post_status == 'draft'){
+                    echo "<option value='published'>published</option>";
+                }else{
+                    echo "<option value='draft'>draft</option>";
+                }
+            ?>
         </select>
     </div>
     <!-- Post old image preview -->
@@ -79,7 +85,7 @@
 ?>
     <!-- Submit btn -->
     <div class="form-group">
-        <input class="btn btn-primary" type="submit" value="Update" name="update_user">
+        <input class="btn btn-primary" type="submit" value="Update" name="update_post">
     </div>
 </form>
 
@@ -88,7 +94,6 @@
     if(isset($_POST['update_post'])){
         $post_author = $_POST['post_author'];
         $post_title = $_POST['post_title'];
-        $post_date = date('d-m-y');
 
         // Getting image
         $post_img = $_FILES['image']['name'];
@@ -97,7 +102,6 @@
         $post_content = $_POST['post_content'];
         $post_tags = $_POST['post_tags'];
         $post_status = $_POST['post_status'];
-        $post_comment_count = 7;
         $post_category_id = $_POST['post_category'];
 
         // Processing img
@@ -111,29 +115,20 @@
             }
         }
 
-        // Validating data
-        if($username == "" || empty($username) ||
-        $user_password == "" || empty($user_password) ||
-        $user_email == "" || empty($user_email) 
-        ){
-        echo "The fields should not be empty. You must at least insert username, password and email!";
-    }else{
-        // Validating pass
-        if(strlen($user_password)<= 6 || strlen($user_password) > 15){
-            echo "<p>Password must not be less than 6 or more than 15</p>";
-        }else{
-            $hashFormat = "$2y$10$";
-            $salt = "iusesomeordinarypasss24";
-            $hashFandSalt = $hashFormat . $salt;
-            $encriptPassword = crypt($user_password, $hashFandSalt);
+        // Updating user data query
+        $query = "UPDATE posts SET ";
+        $query .= "post_category_id = '{$post_category_id}', ";
+        $query .= "post_title = '{$post_title}',";
+        $query .= "post_author = '{$post_author}', ";
+        $query .= "post_img = '{$post_img}', ";
+        $query .= "post_content = '{$post_content}', ";
+        $query .= "post_tags = '{$post_tags}', ";
+        $query .= "post_status = '{$post_status}' ";
+        $query .= "WHERE post_id = {$post_id}";
 
-            //Query for insert users
-            $query = "INSERT INTO users(username, user_password, user_firstname, user_lastname, user_email, user_img, user_role, randSalt)";
-            $query .= "VALUES('{$username}','{$encriptPassword}','{$user_firstname}','{$user_lastname}','{$user_email}','{$user_img}','{$user_role}','{$user_randSalt}')";
-            $create_user_query = mysqli_query($connection, $query);
-            checkQuery($create_user_query);                
-            header("Location: users.php");
-        }
-    }
+
+        $update_post_query = mysqli_query($connection, $query);
+        checkQuery($update_post_query);
+        header("Location: posts.php");
     }
 ?>

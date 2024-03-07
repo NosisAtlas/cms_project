@@ -144,6 +144,13 @@
                     </div>
                 </div>
                 <!-- /.row -->
+
+                <?php
+                    // Count posts
+                    $query = "SELECT* FROM posts WHERE  post_status = 'draft'";
+                    $select_all_draft_posts = mysqli_query($connection, $query);
+                    $posts_draft_count = mysqli_num_rows($select_all_draft_posts);
+                ?>
                 <div class="row">
                     <!-- Google Chart Js script -->
                     <script type="text/javascript">
@@ -155,8 +162,8 @@
                             ['Data', 'Count'],
                             <?php 
                                 //
-                                $element_txt = ['Active Posts', 'Comments', 'Users', 'Categories'];
-                                $element_count = [$posts_count, $comments_count, $users_count, $categories_count];
+                                $element_txt = ['Active Posts', 'Draft', 'Comments', 'Users', 'Categories'];
+                                $element_count = [$posts_count, $posts_draft_count, $comments_count, $users_count, $categories_count];
                                 for($i = 0; $i < count($element_txt); $i++ ){
                                     echo "['{$element_txt[$i]}'" . "," . "{$element_count[$i]}],";
                                 }
