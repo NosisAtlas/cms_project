@@ -118,8 +118,8 @@
         
             echo "<tr>
                     <td>{$post_id}</td>
-                    <td><img class='img-fluid img-thumbnail' width='100' src='../imgs/{$post_img}' alt='post img'></td>
-                    <td>{$post_title}</td>
+                    <td><a href='../post.php?post_id={$post_id}'><img class='img-fluid img-thumbnail' width='100' src='../imgs/{$post_img}' alt='post img'></a></td>
+                    <td><a href='../post.php?post_id={$post_id}'>{$post_title}</a></td>
                     <td>{$post_author}</td>
                     <td>" . findCategory($post_category_id) . "</td>
                     <td>{$post_content}</td>
