@@ -24,13 +24,7 @@
                             }
 
                             switch($source){
-                                case 'add_comment':
-                                    include "includes/add_post.php";
-                                    break;
-                                case 'edit_comment':
-                                    // Form for Editing the posts
-                                    updatePost();
-                                    break;
+
                                 default:
                                     include "includes/view_all_comments.php";
                                     break;

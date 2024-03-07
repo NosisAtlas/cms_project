@@ -234,7 +234,6 @@
                         <td>{$comment_date}</td>
                         <td><a href='comments.php?approve_comment={$comment_id}'>Approve</a></td>
                         <td><a href='comments.php?unapprove_comment={$comment_id}'>Unapprove</a></td>
-                        <td><a href='comments.php?source=edit_comment&comment_id={$comment_id}'>Edit</a></td>
                         <td><a href='comments.php?delete={$comment_id}'>Delete</a></td>
                     </tr>";
 
