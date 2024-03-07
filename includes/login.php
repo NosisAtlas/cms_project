@@ -1,5 +1,7 @@
+<?php include 'db.php'; ?>
+<?php session_start(); ?>
+
 <?php
-    include 'db.php';
 
     if(isset($_POST['login'])){
         $username = $_POST['username'];
@@ -24,7 +26,15 @@
                 $db_user_lastname = $row['user_lastname'];
                 $db_user_role = $row['user_role'];
                 $db_user_password = $row['user_password'];
-                if($db_user_role == 'admin'){
+                // Setting sessions
+                $_SESSION['username'] =$db_username;
+                $_SESSION['user_firstname'] =$db_user_firstname;
+                $_SESSION['user_lastname'] =$db_user_lastname;
+                $_SESSION['user_role'] =$db_user_role;
+
+
+                // Heading users to specific page by role
+                if($_SESSION['user_role'] == 'admin'){
                     // echo "To admin";
                     header('Location: ../admin/index.php');
                 } else {

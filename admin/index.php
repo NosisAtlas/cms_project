@@ -13,7 +13,7 @@
                     <div class="col-lg-12">
                         <h1 class="page-header">
                             Welcome to admin DASHBOARD
-                            <small>John</small>
+                            <small><?php echo strtoupper($_SESSION['username']); ?></small>
                         </h1>
                         
                     </div>
