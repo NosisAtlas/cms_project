@@ -493,8 +493,13 @@
             $query = "UPDATE users SET user_role = 'user' WHERE user_id = $assign_user_id ";
             $assign_user_query = mysqli_query($connection, $query);
             checkQuery($assign_user_query);
-            header("Location: users.php");
-        }
+            // header("Location: users.php");
+            // Destroy the session
+            session_destroy();
+            // Redirect the user to the index page
+            header("Location: ../index.php");
+            exit(); // Stop further execution
+        }        
     }
 
 ?>

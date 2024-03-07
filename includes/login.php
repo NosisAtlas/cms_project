@@ -15,10 +15,10 @@
 
         if($result->num_rows == 1){
             $row = $result->fetch_assoc();
-            $hashed_password = $row['user_password'];
+            $db_password = $row['user_password'];
 
             // Verify password
-            if(password_verify($password, $hashed_password)) {
+            if(password_verify($password, $db_password)) {
                 // Password is correct
                 $db_user_id = $row['user_id'];
                 $db_username = $row['username'];

@@ -71,7 +71,6 @@
 
 <?php 
     }
-    
     // Updating user data query
     if(isset($_POST['update_user'])){
         $username = $_POST['username'];
@@ -88,6 +87,10 @@
             $salt = "iusesomeordinarypasss24";
             $hashFandSalt = $hashFormat . $salt;
             $encriptPassword = crypt($user_password, $hashFandSalt);
+            // Include password update in the query
+            $password_update = "user_password = '{$encriptPassword}', ";
+        }else if(empty($user_password)){
+            $password_update = "";
         }
 
         // Check if new image uploaded
@@ -100,7 +103,7 @@
         // Updating user data query
         $query = "UPDATE users SET ";
         $query .= "username = '{$username}', ";
-        $query .= "user_password = '{$encriptPassword}', ";
+        $query .= $password_update;
         $query .= "user_firstname = '{$user_firstname}', ";
         $query .= "user_lastname = '{$user_lastname}', ";
         $query .= "user_email = '{$user_email}', ";
@@ -110,6 +113,39 @@
 
         $update_user_query = mysqli_query($connection, $query);
         checkQuery($update_user_query);
-        header("Location: users.php");
+        // Setting the new session data
+        $new_username = $username;
+        $new_user_firstname = $user_firstname;
+        $new_user_lastname = $user_lastname;
+        $new_user_role = $user_role;
+        // Setting sessions
+        $_SESSION['username'] =$new_username;
+        $_SESSION['user_firstname'] =$new_user_firstname;
+        $_SESSION['user_lastname'] =$new_user_lastname;
+        $_SESSION['user_role'] =$new_user_role;
+        // Check if the user role is being changed to "user"
+        if(isset($_SESSION['username'])){
+            $user_role = $_SESSION['user_role'];
+            if($user_role == 'user') {
+                // Destroy the session
+                session_destroy();
+                // Redirect the user to the index page
+                header("Location: ../index.php");
+                exit(); // Stop further execution
+            }else if($user_role == 'admin'){
+                header("Location: ./");
+            }
+        }
+        
+        // Check if the user role is being changed to "user"
+        // if($user_role == 'user') {
+        //     // Destroy the session
+        //     session_destroy();
+        //     // Redirect the user to the index page
+        //     header("Location: ../index.php");
+        //     exit(); // Stop further execution
+        // }else if($user_role == 'admin'){
+        //     header("Location: ./users.php");
+        // }
     }
 ?>
