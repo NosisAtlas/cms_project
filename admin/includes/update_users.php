@@ -13,6 +13,76 @@
         $user_randSalt = $row['randSalt'];
 
 ?>
+<?php 
+    }
+    // Updating user data query
+    if(isset($_POST['update_user'])){
+        $username = $_POST['username'];
+        $user_password = $_POST['user_password'];
+        $user_firstname = $_POST['user_firstname'];
+        $user_lastname = $_POST['user_lastname'];
+        $user_email = $_POST['user_email'];
+        $user_role = $_POST['user_role'];
+
+        // Checking if password is provided
+        if(!empty($user_password)) {
+            // Hash the password
+            $hashFormat = "$2y$10$";
+            $salt = "iusesomeordinarypasss24";
+            $hashFandSalt = $hashFormat . $salt;
+            $encriptPassword = crypt($user_password, $hashFandSalt);
+            // Include password update in the query
+            $password_update = "user_password = '{$encriptPassword}', ";
+        }else if(empty($user_password)){
+            $password_update = "";
+        }
+
+        // Check if new image uploaded
+        if(!empty($_FILES['image']['name'])) {
+            $user_img = $_FILES['image']['name'];
+            $user_img_temp = $_FILES['image']['tmp_name'];
+            move_uploaded_file($user_img_temp, "../admin/imgs/$user_img");
+        }
+
+        // Updating user data query
+        $query = "UPDATE users SET ";
+        $query .= "username = '{$username}', ";
+        $query .= $password_update;
+        $query .= "user_firstname = '{$user_firstname}', ";
+        $query .= "user_lastname = '{$user_lastname}', ";
+        $query .= "user_email = '{$user_email}', ";
+        $query .= "user_img = '{$user_img}', ";
+        $query .= "user_role = '{$user_role}' ";
+        $query .= "WHERE user_id = {$user_id}";
+
+        $update_user_query = mysqli_query($connection, $query);
+        checkQuery($update_user_query);
+        
+        // Check if the user role is being changed to "user"
+        $user_role = $_SESSION['user_role'];
+        if($user_role == "admin"){
+            // Setting the new session data
+            $new_username = $username;
+            $new_user_firstname = $user_firstname;
+            $new_user_lastname = $user_lastname;
+            $new_user_role = $user_role;
+            // Setting sessions
+            $_SESSION['username'] =$new_username;
+            $_SESSION['user_firstname'] =$new_user_firstname;
+            $_SESSION['user_lastname'] =$new_user_lastname;
+            $_SESSION['user_role'] =$new_user_role;
+            echo "<div class='alert alert-success' role='alert'>
+            User updated successfully !  <a href='users.php' class='btn btn-success'>View users</a>
+            </div>"; 
+        }else if($_SESSION['user_id'] == $user_id){
+            // Destroy the session
+            session_destroy();
+            // Redirect the user to the index page
+            header("Location: ../index.php");
+            exit(); // Stop further execution
+        }
+    }
+?>
 
 <form action="" method="post" enctype="multipart/form-data">
     <div class="form-group">
@@ -69,84 +139,3 @@
     </div>
 </form>
 
-<?php 
-    }
-    // Updating user data query
-    if(isset($_POST['update_user'])){
-        $username = $_POST['username'];
-        $user_password = $_POST['user_password'];
-        $user_firstname = $_POST['user_firstname'];
-        $user_lastname = $_POST['user_lastname'];
-        $user_email = $_POST['user_email'];
-        $user_role = $_POST['user_role'];
-
-        // Checking if password is provided
-        if(!empty($user_password)) {
-            // Hash the password
-            $hashFormat = "$2y$10$";
-            $salt = "iusesomeordinarypasss24";
-            $hashFandSalt = $hashFormat . $salt;
-            $encriptPassword = crypt($user_password, $hashFandSalt);
-            // Include password update in the query
-            $password_update = "user_password = '{$encriptPassword}', ";
-        }else if(empty($user_password)){
-            $password_update = "";
-        }
-
-        // Check if new image uploaded
-        if(!empty($_FILES['image']['name'])) {
-            $user_img = $_FILES['image']['name'];
-            $user_img_temp = $_FILES['image']['tmp_name'];
-            move_uploaded_file($user_img_temp, "../admin/imgs/$user_img");
-        }
-
-        // Updating user data query
-        $query = "UPDATE users SET ";
-        $query .= "username = '{$username}', ";
-        $query .= $password_update;
-        $query .= "user_firstname = '{$user_firstname}', ";
-        $query .= "user_lastname = '{$user_lastname}', ";
-        $query .= "user_email = '{$user_email}', ";
-        $query .= "user_img = '{$user_img}', ";
-        $query .= "user_role = '{$user_role}' ";
-        $query .= "WHERE user_id = {$user_id}";
-
-        $update_user_query = mysqli_query($connection, $query);
-        checkQuery($update_user_query);
-        echo "<div class='alert alert-success' role='alert'>
-                    User updated successfully !  <a href='users.php' class='btn btn-success'>View users</a>
-                </div>"; 
-        
-        // Check if the user role is being changed to "user"
-        if(isset($_SESSION['username'])){
-            $user_role = $_SESSION['user_role'];
-            if($user_role == 'user') {
-                // Destroy the session
-                session_destroy();
-                // Redirect the user to the index page
-                header("Location: ../index.php");
-                exit(); // Stop further execution
-            }else if($user_role == 'admin'){
-                header("Location: ./");
-            }
-        }else if($_SESSION['user_id'] == $user_id){
-            // Destroy the session
-            session_destroy();
-            // Redirect the user to the index page
-            header("Location: ../index.php");
-            exit(); // Stop further execution
-        }else{
-            // Setting the new session data
-            $new_username = $username;
-            $new_user_firstname = $user_firstname;
-            $new_user_lastname = $user_lastname;
-            $new_user_role = $user_role;
-            // Setting sessions
-            $_SESSION['username'] =$new_username;
-            $_SESSION['user_firstname'] =$new_user_firstname;
-            $_SESSION['user_lastname'] =$new_user_lastname;
-            $_SESSION['user_role'] =$new_user_role;
-            
-        }
-    }
-?>
