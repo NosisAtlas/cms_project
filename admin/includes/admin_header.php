@@ -40,7 +40,13 @@
     <![endif]-->
     <!-- Google Chart -->
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-
+    <!-- CKEDITOR script -->
+    <style>.ck-editor__editable[role="textbox"] {
+                /* Editing area */
+                min-height: 300px;
+            }</style>
+    <script src="https://cdn.ckeditor.com/ckeditor5/41.2.0/classic/ckeditor.js"></script>
+    <!-- CKEDITOR script END -->
 </head>
 
 <body>

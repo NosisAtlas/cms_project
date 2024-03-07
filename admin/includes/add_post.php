@@ -52,10 +52,11 @@
     <!-- Post content -->
     <div class="form-group">
         <label for="post_content">Post Content</label>
-        <textarea class="form-control" id="" cols="30" rows="10" name="post_content"></textarea>
+        <textarea class="form-control" id="content" cols="30" rows="10" name="post_content"></textarea>
     </div>
     <!-- Submit btn -->
     <div class="form-group">
         <input class="btn btn-primary" type="submit" value="Publish" name="create_post">
     </div>
 </form>
+

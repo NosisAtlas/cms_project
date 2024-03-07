@@ -150,6 +150,10 @@
                     $query = "SELECT* FROM posts WHERE  post_status = 'draft'";
                     $select_all_draft_posts = mysqli_query($connection, $query);
                     $posts_draft_count = mysqli_num_rows($select_all_draft_posts);
+                    // Count published posts
+                    $query = "SELECT* FROM posts WHERE  post_status = 'published'";
+                    $select_all_published_posts = mysqli_query($connection, $query);
+                    $posts_published_count = mysqli_num_rows($select_all_published_posts);
                     // Count unapproved comments
                     $query = "SELECT* FROM comments WHERE  comment_status = 'unapproved'";
                     $select_all_unapproved_comments = mysqli_query($connection, $query);
@@ -170,8 +174,8 @@
                             ['Data', 'Count'],
                             <?php 
                                 //
-                                $element_txt = ['Active Posts', 'Draft Posts', 'Comments', 'Pending Comments', 'Users', 'users Role User', 'Categories'];
-                                $element_count = [$posts_count, $posts_draft_count, $comments_count, $comments_unapproved_count, $users_count, $users_user_count, $categories_count];
+                                $element_txt = ['All Posts', 'Draft Posts', 'Published Posts', 'Comments', 'Pending Comments', 'Users', 'users Role User', 'Categories'];
+                                $element_count = [$posts_count, $posts_draft_count, $posts_published_count, $comments_count, $comments_unapproved_count, $users_count, $users_user_count, $categories_count];
                                 for($i = 0; $i < count($element_txt); $i++ ){
                                     echo "['{$element_txt[$i]}'" . "," . "{$element_count[$i]}],";
                                 }
