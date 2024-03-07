@@ -172,7 +172,9 @@
 
                 $create_post_query = mysqli_query($connection, $query);
                 checkQuery($create_post_query);
-                header("Location: posts.php");
+                echo    "<div class='alert alert-success' role='alert'>
+                                User created successfully !  <a href='posts.php' class='btn btn-success'>View posts</a>
+                            </div>"; 
             }
         }
     }
@@ -444,8 +446,10 @@
                     $query = "INSERT INTO users(username, user_password, user_firstname, user_lastname, user_email, user_img, user_role, randSalt)";
                     $query .= "VALUES('{$username}','{$encriptPassword}','{$user_firstname}','{$user_lastname}','{$user_email}','{$user_img}','{$user_role}','{$user_randSalt}')";
                     $create_user_query = mysqli_query($connection, $query);
-                    checkQuery($create_user_query);                
-                    header("Location: users.php");
+                    checkQuery($create_user_query);        
+                    echo    "<div class='alert alert-success' role='alert'>
+                                User created successfully !  <a href='users.php' class='btn btn-success'>View users</a>
+                            </div>";     
                 }
             }
         }
