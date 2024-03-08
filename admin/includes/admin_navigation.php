@@ -1,3 +1,7 @@
+
+<?php 
+    //
+?>
 <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
             
             <!-- Brand and toggle get grouped for better mobile display -->
@@ -14,7 +18,8 @@
             
             <!-- Top Menu Items -->
             <ul class="nav navbar-right top-nav">
-                <li><a href="../index.php">Home</a></li>         
+                <li><a href="../index.php">Home</a></li>    
+                <li><a>Users online: <?php echo users_online(); ?></a></li>         
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i>
                     <?php 
