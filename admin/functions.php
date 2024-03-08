@@ -416,7 +416,6 @@
             $user_img = $_FILES['image']['name'];
             $user_img_temp = $_FILES['image']['tmp_name'];
             $user_role = $_POST['user_role'];
-            $user_randSalt = '';
 
             // Check if user selected an image
             if(empty($user_img) || $user_img == '') {
@@ -444,8 +443,8 @@
                     $encriptPassword = crypt($user_password, $hashFandSalt);
 
                     //Query for insert users
-                    $query = "INSERT INTO users(username, user_password, user_firstname, user_lastname, user_email, user_img, user_role, randSalt)";
-                    $query .= "VALUES('{$username}','{$encriptPassword}','{$user_firstname}','{$user_lastname}','{$user_email}','{$user_img}','{$user_role}','{$user_randSalt}')";
+                    $query = "INSERT INTO users(username, user_password, user_firstname, user_lastname, user_email, user_img, user_role, randSalt) ";
+                    $query .= "VALUES('{$username}','{$encriptPassword}','{$user_firstname}','{$user_lastname}','{$user_email}','{$user_img}','{$user_role}','{$hashFandSalt}')";
                     $create_user_query = mysqli_query($connection, $query);
                     checkQuery($create_user_query);        
                     echo    "<div class='alert alert-success' role='alert'>

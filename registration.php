@@ -14,6 +14,7 @@
             $username = $_POST['username'];
             $user_email = $_POST['email'];
             $user_password = $_POST['password'];
+            $user_img = "default_image.webp";
 
             $username = mysqli_real_escape_string($connection, $username);
             $user_email = mysqli_real_escape_string($connection, $user_email);
@@ -34,32 +35,20 @@
                     Password must not be less than 6 or more than 15.
                     </div>";
                 }else{
-                    $query = "SELECT randSalt from users";
-                    $selected_randsalt = mysqli_query($connection, $query);
-                    checkQuery($selected_randsalt);
-                    while($row = mysqli_fetch_array($selected_randsalt)){
-                        $salt = $row['randSalt'];
-                        echo $salt;
-                    }
-                    $encriptPassword = crypt($user_password, $salt);
+                    $hashFormat = "$2y$10$";
+	                $salt = "iusesomeordinarypasss24";
+                    $hashFandSalt = $hashFormat . $salt;
+                    $encriptPassword = crypt($user_password, $hashFandSalt);
 
                     //Query for insert users
-                    $query = "INSERT INTO users(username, user_password, user_firstname, user_lastname, user_email, user_img, user_role, randSalt)";
-                    $query .= "VALUES('{$username}','{$encriptPassword}',' ',' ','{$user_email}',' ',' ','{$salt}')";
-                    $create_user_query = mysqli_query($connection, $query);
-                    checkQuery($create_user_query);        
-                    checkQuery($create_user_query);        
-                    if(isset($_SESSION['user_role'])){
-                        if($_SESSION['user_role'] == 'admin'){
-                            echo    "<div class='alert alert-success' role='alert'>
-                            User created successfully !  <a href='admin/users.php' class='btn btn-success'>View users</a>
-                            </div>";  
-                        }else{
-                            echo    "<div class='alert alert-success' role='alert'>
-                                User created successfully !  <a href='index.php' class='btn btn-success'>Log in to your account</a>
-                            </div>";  
-                        }
-                    }
+                    $query = "INSERT INTO users(username, user_password, user_email, user_img, randSalt) ";
+                    $query .= "VALUES('{$username}','{$encriptPassword}','{$user_email}','{$user_img}','{$hashFandSalt}')";
+
+                    $register_user_query = mysqli_query($connection, $query);
+                    checkQuery($register_user_query);        
+                    echo    "<div class='container alert alert-success' role='alert'>
+                                Your registration has been sent submitted!  <a href='index.php' class='btn btn-success'>Log in to your account</a>
+                            </div>"; 
                        
                 }
             }

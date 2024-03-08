@@ -4,10 +4,12 @@
 <?php include "functions.php" ?>
 
 <?php
-    if(!isset($_SESSION['user_role'])){
-        header("Location: ../index.php");
+    if(isset($_SESSION['user_role'])){
+        if($_SESSION['user_role'] == 'user'){
+            header("Location: ../index.php");
+        }
     }else{
-        echo "Session exist";
+        //
     }
 ?>
 <!DOCTYPE html>
