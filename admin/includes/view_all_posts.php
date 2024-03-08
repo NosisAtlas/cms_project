@@ -76,7 +76,8 @@
                                     <th>Date</th>
                                     <th>Tags</th>
                                     <th>Status</th>
-                                    <th>Comments</th>   
+                                    <th>Comments</th>  
+                                    <th>Views</th>   
                                     <th>Update</th>                                    
                                     <th>Actions</th>                                    
                                 </tr>

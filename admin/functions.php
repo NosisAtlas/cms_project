@@ -101,7 +101,7 @@
     // Displaying Posts
     function findAllPosts(){
         global $connection;
-        $query = "SELECT * FROM posts";
+        $query = "SELECT * FROM posts ORDER BY post_id DESC";
         $select_posts_admin = mysqli_query($connection, $query);
         // Displaying categ data
         while($row = mysqli_fetch_assoc($select_posts_admin)){
@@ -114,6 +114,7 @@
             $post_tags = $row['post_tags'];
             $post_status = $row['post_status'];
             $post_comment_count = $row['post_comment_count'];
+            $post_views_count = $row['post_views_count'];
             $post_category_id = $row['post_category_id'];
         
             echo "<tr>
@@ -128,6 +129,7 @@
                     <td>{$post_tags}</td>
                     <td>{$post_status}</td>
                     <td>{$post_comment_count}</td>
+                    <td>{$post_views_count}</td>
                     <td><a href='posts.php?source=edit_post&post_id={$post_id}'>Edit</a></td>
                     <td><a onclick=\"javascript: return confirm('Are you sure you want to delete?')\" href='posts.php?delete={$post_id}'>Delete</a></td>
                 </tr>";

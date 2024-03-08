@@ -17,7 +17,11 @@
                 <?php 
                     if(isset($_GET['post_id'])){
                         $post_id_url = $_GET['post_id']; 
-                    }
+                        // Updating the view post count
+                        $view_post_query = "UPDATE posts SET post_views_count = post_views_count + 1 WHERE post_id = {$post_id_url}";
+                        $send_update_post_views_query = mysqli_query($connection, $view_post_query);
+                        checkQuery($send_update_post_views_query);
+                    
                     // Displaying posts from Db 
                     $query = "SELECT * FROM posts WHERE post_id = $post_id_url";
                     $select_all_posts_query = mysqli_query($connection, $query);
@@ -89,6 +93,9 @@
 
                 <!-- Posted Comments -->
                 <?php 
+                    }else{
+                        header('Location: index.php');
+                    }
                     $post_id_url;
                     if(isset($_GET['post_id'])){
                         $post_id_url = $_GET['post_id']; 
