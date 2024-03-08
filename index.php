@@ -89,14 +89,32 @@
         <ul class="pager">
             <?php 
                 // Loop for displaying pagination
-                for($i = 1; $i <= $post_count; $i++ )
-                if($i == $page){
-                    echo "<li><a class='active_link' href='index.php?page={$i}'>{$i}</a></li>";
-                }else{
-                    echo "<li><a href='index.php?page={$i}'>{$i}</a></li>";
+                // for($i = 1; $i <= $post_count; $i++ )
+                // if($i == $page){
+                //     echo "<li><a class='active_link' href='index.php?page={$i}'>{$i}</a></li>";
+                // }else{
+                //     echo "<li><a href='index.php?page={$i}'>{$i}</a></li>";
+                // }
+
+                // Loop for displaying pagination
+                for($i = 1; $i <= $post_count; $i++ ) {
+                    // Check if there are posts available for the current page
+                    $offset = ($i - 1) * $per_page;
+                    $posts_available = mysqli_query($connection, "SELECT * FROM posts WHERE post_status = 'published' LIMIT $offset, $per_page");
+                    $has_posts = mysqli_num_rows($posts_available) > 0;
+                    mysqli_free_result($posts_available);
+
+                    // Display the pagination link only if there are posts available for the current page
+                    if ($has_posts) {
+                        if ($i == $page) {
+                            echo "<li><a class='active_link' href='index.php?page={$i}'>{$i}</a></li>";
+                        } else {
+                            echo "<li><a href='index.php?page={$i}'>{$i}</a></li>";
+                        }
+                    }
                 }
+    ?>
             
-            ?>
         </ul>
         
 <?php include 'includes/footer.php' ?>
