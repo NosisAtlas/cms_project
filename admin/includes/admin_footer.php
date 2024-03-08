@@ -18,7 +18,6 @@
         } );
     </script>
     <!-- CKEDITOR script END -->
-
 </body>
 
 </html>

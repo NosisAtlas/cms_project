@@ -29,6 +29,7 @@
     <link href="css/bootstrap.min.css" rel="stylesheet">
 
     <!-- Custom CSS -->
+    <link href="css/styles.css" rel="stylesheet">
     <link href="css/sb-admin.css" rel="stylesheet">
 
     <!-- Custom Fonts -->
