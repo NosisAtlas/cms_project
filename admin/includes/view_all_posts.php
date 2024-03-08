@@ -43,6 +43,12 @@
                                     Post cloned successfully !  <a href='../post.php?post_id={$post_id}' class='btn btn-success'>View cloned post</a>
                                 </div>"; 
                     break;
+                    case 'resetPostViews' :
+                        // Updating the view post count
+                        $view_post_query = "UPDATE posts SET post_views_count = 0 WHERE post_id = {$post_value_id}";
+                        $send_update_post_views_query = mysqli_query($connection, $view_post_query);
+                        checkQuery($send_update_post_views_query);
+                        break;
             }
         }
     }
@@ -58,6 +64,7 @@
                     <option value="draft">Draft</option>
                     <option value="delete">Delete</option>
                     <option value="clone">Clone</option>
+                    <option value="resetPostViews">Reset Post Views</option>
                 </select>
             </div>
             <div class="col-xs-4">
