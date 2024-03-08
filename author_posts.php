@@ -15,11 +15,12 @@
                     <small>Secondary Text</small>
                 </h1>
                 <?php 
-                    if(isset($_GET['post_id'])){
-                        $post_id_url = $_GET['post_id']; 
+                    if(isset($_GET['post_id']) && isset($_GET['author'])){
+                        $post_id_url = $_GET['post_id'];
+                        $post_author_url = $_GET['author'];
                     }
                     // Displaying posts from Db 
-                    $query = "SELECT * FROM posts WHERE post_id = $post_id_url";
+                    $query = "SELECT * FROM posts WHERE post_author = '{$post_author_url}' ";
                     $select_all_posts_query = mysqli_query($connection, $query);
                     while($row = mysqli_fetch_assoc($select_all_posts_query)){
                         $post_id = $row['post_id'];
@@ -33,7 +34,7 @@
 
                 <!-- First Blog Post -->
                 <h2>
-                    <?php echo $post_title ?>
+                    <a href="post.php?post_id=<?php echo $post_id; ?>"><?php echo $post_title ?></a>
                 </h2>
                 <p class="lead">
                     by <a href="author_posts.php?author=<?php echo $post_author ?>&post_id=<?php echo $post_id ?>"><?php echo $post_author . " "; ?></a>
@@ -58,45 +59,7 @@
 
                 <?php    
                     }
-                ?>
-
-                 <!-- Blog Comments -->
-                 <?php
-                    // Inserting Comments 
-                    insertComments(); 
-                 ?>
-                <!-- Comments Form -->
-                <div class="well">
-                    <h4>Leave a Comment:</h4>
-                    <form action="" role="form" method="post">
-                        <div class="form-group">
-                            <label for="comment_author">Author</label>
-                            <input class="form-control" type="text" name="comment_author">
-                        </div>
-                        <div class="form-group">
-                            <label for="comment_email">Email</label>
-                            <input class="form-control" type="email" name="comment_email">
-                        </div>
-                        <div class="form-group">
-                            <label for="comment_content">Content</label>
-                            <textarea class="form-control" rows="3" name="comment_content"></textarea>
-                        </div>
-                        <button type="submit" class="btn btn-primary" name="create_comment">Comment</button>
-                    </form>
-                </div>
-
-                <hr>
-
-                <!-- Posted Comments -->
-                <?php 
-                    $post_id_url;
-                    if(isset($_GET['post_id'])){
-                        $post_id_url = $_GET['post_id']; 
-                    }
-                    displayAllCommentsPost($post_id_url); 
-                    // var_dump(displayAllCommentsPost());
-                ?>
-                
+                ?>                
                
                 <!-- Pager -->
 
