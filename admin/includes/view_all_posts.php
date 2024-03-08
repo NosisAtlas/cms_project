@@ -18,6 +18,31 @@
                     $delete_posts = mysqli_query($connection, $query);
                     checkQuery($delete_posts);
                     break;
+                case 'clone' :
+                    $query = "SELECT * FROM posts WHERE post_id ={$post_value_id}";
+                    $select_post_to_clone = mysqli_query($connection, $query);
+                    checkQuery($select_post_to_clone);
+                    while($row = mysqli_fetch_array($select_post_to_clone)){
+                        $post_id = $row['post_id'];
+                        $post_category_id = $row['post_category_id'];
+                        $post_title = $row['post_title'];
+                        $post_author = $row['post_author'];
+                        $post_date = date('d-m-y');
+                        $post_img = $row['post_img'];
+                        $post_content = $row['post_content'];
+                        $post_tags = $row['post_tags'];
+                        $post_status = 'draft';
+                    }
+                    $query = "INSERT INTO posts (post_category_id, post_title, post_author, post_date, post_img, post_content, post_tags, post_comment_count, post_status) ";
+                    $query .= "VALUES ({$post_category_id}, '{$post_title}', '{$post_author}', now(), '{$post_img}', '{$post_content}', '{$post_tags}', 0, '{$post_status}')";
+
+
+                    $create_post_query = mysqli_query($connection, $query);
+                    checkQuery($create_post_query);
+                    echo    "<div class='alert alert-success' role='alert'>
+                                    Post cloned successfully !  <a href='../post.php?post_id={$post_id}' class='btn btn-success'>View cloned post</a>
+                                </div>"; 
+                    break;
             }
         }
     }
@@ -32,6 +57,7 @@
                     <option value="published">Published</option>
                     <option value="draft">Draft</option>
                     <option value="delete">Delete</option>
+                    <option value="clone">Clone</option>
                 </select>
             </div>
             <div class="col-xs-4">
