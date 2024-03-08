@@ -47,6 +47,9 @@
                     //
                 }
             }
+        }else{
+            header('Location: ../login_error_page.php');
+            exit(); // Stop further execution
         }
         
         // If username or password is incorrect, redirect to index.php
