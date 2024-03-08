@@ -4,12 +4,16 @@
 <?php include "functions.php" ?>
 
 <?php
+    // Redirecting the users with user role 
     if(isset($_SESSION['user_role'])){
         if($_SESSION['user_role'] == 'user'){
             header("Location: ../index.php");
+            exit();
         }
     }else{
-        //
+         // Redirect to home page or handle unauthorized access
+         header("Location: ../404_page.php");
+         exit();
     }
 ?>
 <!DOCTYPE html>
