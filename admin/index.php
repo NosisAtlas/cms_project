@@ -1,7 +1,21 @@
 <?php include 'includes/admin_header.php' ?>
 
     <div id="wrapper">
-
+        <?php 
+            $session = session_id();
+            $time = time();
+            $time_out_in_seconds = 60;
+            $time_out = $time - $time_out_in_seconds;
+            $query = "SELECT * FROM users_online WHERE session = '$session'";
+            $send_online_users_query = mysqli_query($connection, $query);
+            checkQuery($send_online_users_query);
+            $count = mysqli_num_rows($send_online_users_query);
+            if($count == NULL){
+                mysqli_query($connection, "INSERT INTO users_online(session, time) VALUES('$session','$time')");
+            }else{
+                mysqli_query($connection, "INSERT INTO users_online(session, time) VALUES('$session','$time')");
+            }
+        ?>
         <!-- Navigation -->
         <?php include 'includes/admin_navigation.php' ?>
 
