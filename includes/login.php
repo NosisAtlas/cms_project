@@ -37,13 +37,14 @@
                 // Heading users to specific page by role
                 if($_SESSION['user_role'] == 'admin'){
                     // echo "To admin";
-
                     header('Location: ../admin/index.php');
+                    exit(); // Stop further execution
                 } else if($_SESSION['user_role'] == 'user'){
                     // echo "To front";
                     header('Location: ../index.php');
-                }else{
                     exit(); // Stop further execution
+                }else{
+                    //
                 }
             }
         }
