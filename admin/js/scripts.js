@@ -21,3 +21,14 @@ $(document).ready(function () {
     });
   // Loader script END
 });
+
+// Displaying online users without refreshing the page
+function loadUsersOnline() {
+  $.get("function.php?onlineusers=result", function (data) {
+    $(".usersonline").text(data);
+  });
+}
+setInterval(function () {
+  // call display online users function
+  loadUsersOnline();
+}, 500);
