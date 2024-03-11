@@ -157,7 +157,7 @@
 
             // Processing img
             move_uploaded_file($post_img_temp, "../imgs/$post_img");
-
+    
             if($post_title == "" || empty($post_title) ||
                 $post_author == "" || empty($post_author) ||
                 $post_date == "" || empty($post_date) ||

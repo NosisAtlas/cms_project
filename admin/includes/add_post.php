@@ -29,7 +29,23 @@
     <!-- Post author -->
     <div class="form-group">
         <label for="post_author">Post Author</label>
-        <input class="form-control" type="text" name="post_author">
+        <select class="form-select form-control" name="post_author" id="post_author">
+            <?php 
+                $query = "SELECT * FROM users";
+                $select_users = mysqli_query($connection, $query);
+                checkQuery($select_users);
+                // Displaying categ data
+                while($row = mysqli_fetch_assoc($select_users)){
+                    $user_id = $row['cat_id'];
+                    $user_username = $row['username'];
+            ?>
+                <option value="<?php echo $user_username; ?>">
+                    <?php echo $user_username; ?>
+                </option>
+
+
+            <?php } ?>
+        </select>
     </div>
     <!-- Post status -->
     <div class="form-group">
