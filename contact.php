@@ -6,12 +6,14 @@
     <?php  include "includes/navigation.php"; ?>
     
 
-    <?php 
+    <?php             
+        // Checking the submit
         if(isset($_POST['submit'])){
-            $to = "support@cms.com";
+            $to = "fz.farhane109@gmail.com";
             $contact_subject = $_POST['subject'];
             $contact_email = $_POST['email'];
-            $contact_body = $_POST['body'];
+            // use wordwrap() if lines are longer than 70 characters
+            $contact_body = wordwrap($_POST['body'], 70);
 
             $contact_subject = mysqli_real_escape_string($connection, $contact_subject);
             $contact_email = mysqli_real_escape_string($connection, $contact_email);
@@ -26,6 +28,9 @@
                         The fields should not be empty! Subject, email and body should be assigned.
                     </div>";
             }else{
+                // send email
+                mail($to, $contact_subject,$contact_body, $contact_email);
+                // echo success message
                 echo "<div class='container alert alert-success' role='alert'>
                         Your contact request has been submitted.
                     </div>";
