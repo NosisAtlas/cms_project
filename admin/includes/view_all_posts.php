@@ -1,4 +1,7 @@
 <?php 
+    // Include delete modal
+    include("delete_modal.php");
+    // Check the box array
     if(isset($_POST['checkBoxArray'])){
         foreach($_POST['checkBoxArray'] as $post_value_id) {
             $bulk_options = $_POST['bulk_options'];
