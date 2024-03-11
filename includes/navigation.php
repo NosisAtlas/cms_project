@@ -9,7 +9,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="index.php">CMS Front</a>
+                <a class="navbar-brand" href="./">CMS Front</a>
             </div>
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
@@ -50,8 +50,8 @@
                                 echo "";    
                             }
                         }else{
-                            echo "<li class='$registration_class'><a href='./registration.php'>Registration</a></li>";
-                            echo "<li class='$contact_class'><a href='./contact.php'>Contact</a></li>";
+                            echo "<li class='$registration_class'><a href='./registration'>Registration</a></li>";
+                            echo "<li class='$contact_class'><a href='./contact'>Contact</a></li>";
                                      
                         }
                     ?>
