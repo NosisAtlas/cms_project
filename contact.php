@@ -11,17 +11,17 @@
         if(isset($_POST['submit'])){
             $to = "fz.farhane109@gmail.com";
             $contact_subject = $_POST['subject'];
-            $contact_email = $_POST['email'];
             // use wordwrap() if lines are longer than 70 characters
             $contact_body = wordwrap($_POST['body'], 70);
+            $header = "From: " . $_POST['email'];
 
             $contact_subject = mysqli_real_escape_string($connection, $contact_subject);
-            $contact_email = mysqli_real_escape_string($connection, $contact_email);
+            $header = mysqli_real_escape_string($connection, $header);
             $contact_body = mysqli_real_escape_string($connection, $contact_body);
 
             // Validating data
             if($contact_subject == "" || empty($contact_subject) ||
-                $contact_email == "" || empty($contact_email) ||
+                $header == "" || empty($header) ||
                 $contact_body == "" || empty($contact_body) 
                 ){
                 echo "<div class='container alert alert-danger' role='alert'>
@@ -29,7 +29,7 @@
                     </div>";
             }else{
                 // send email
-                mail($to, $contact_subject,$contact_body, $contact_email);
+                mail($to, $contact_subject,$contact_body, $header);
                 // echo success message
                 echo "<div class='container alert alert-success' role='alert'>
                         Your contact request has been submitted.
