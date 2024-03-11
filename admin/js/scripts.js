@@ -23,12 +23,21 @@ $(document).ready(function () {
 });
 
 // Displaying online users without refreshing the page
+// function loadUsersOnline() {
+//   $.get("functions.php?onlineusers=result", function (data) {
+//     $(".usersonline").text(data);
+//   });
+// }
+// setInterval(function () {
+//   // call display online users function
+//   loadUsersOnline();
+// }, 500);
 function loadUsersOnline() {
-  $.get("function.php?onlineusers=result", function (data) {
+  $.get("functions.php?onlineusers=result", function (data) {
     $(".usersonline").text(data);
   });
 }
+
 setInterval(function () {
-  // call display online users function
   loadUsersOnline();
 }, 500);

@@ -20,7 +20,7 @@
             <ul class="nav navbar-right top-nav">
                 <li><a href="../index.php">Home</a></li>    
                 <!-- <li><a>Users online: <?php echo users_online(); ?></a></li>   -->
-                <li><a>Users online: <span class="usersonline"></span></a></li>         
+                <li><a href="">Users online: <span class="usersonline"></span></a></li>    
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i>
                     <?php 
