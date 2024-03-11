@@ -24,6 +24,8 @@
                             $category_class = "";
                             $registration_class = "";
                             $registration = 'registration.php';
+                            $loggin_class = "";
+                            $loggin = 'loggin.php';
                             $contact_class = "";
                             $contact = 'contact.php';
                             $admin = "admin";
@@ -38,6 +40,8 @@
                                 $contact_class = "active";
                             }else if($pageName == $admin){
                                 $admin_class = "active";
+                            }else if($pageName == $loggin){
+                                $loggin_class = "active";
                             }
                             echo "<li class='$category_class'><a href='category.php?category={$cat_id}'>{$cat_title}</a></li>";
                         }
@@ -50,8 +54,9 @@
                                 echo "";    
                             }
                         }else{
-                            echo "<li class='$registration_class'><a href='./registration'>Registration</a></li>";
                             echo "<li class='$contact_class'><a href='./contact'>Contact</a></li>";
+                            echo "<li class='$loggin_class'><a href='./loggin'>Login</a></li>";
+                            echo "<li class='$registration_class'><a href='./registration'>Registration</a></li>";
                                      
                         }
                     ?>

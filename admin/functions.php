@@ -7,6 +7,64 @@
         }
     }
 
+    // Escaping data
+    function escape($string) {
+        global $connection;
+        return mysqli_real_escape_string($connection, trim($string));    
+    }
+
+    // Redirecting
+    function redirect($location){
+        header("Location:" . $location);
+        exit;
+    }
+
+    // Checking methods
+    function ifItIsMethod($method=null){
+        if($_SERVER['REQUEST_METHOD'] == strtoupper($method)){
+            return true;
+        }
+        return false;
+    }
+
+    // Checking logged in
+    function isLoggedIn(){
+        if(isset($_SESSION['user_id'])){
+            return true;
+        }
+        return false;
+    }
+
+    // Redirecting user if logged in
+    function checkIfUserIsLoggedInAndRedirect($redirectLocation=null){
+        if(isLoggedIn()){
+            redirect($redirectLocation);
+        }
+    }
+
+    function set_message($msg){
+        if(!empty($msg)) {        
+        $_SESSION['message'] = $msg;
+        } else {
+        $msg = "";
+            }
+        }
+        
+        // Displayin session message and unsetting it
+        function display_message() {
+            if(isset($_SESSION['message']) && $_SESSION['message'] == "Logged in successfully!"){
+                echo "<div class='container alert alert-success' role='alert'>{$_SESSION['message']} !  <a href='./' class='btn btn-success'> Go to home!</a>
+                </div>";
+                // unset($_SESSION['message']);
+            }else if(isset($_SESSION['message']) && $_SESSION['message'] == "Couldn't login!"){
+                echo "<div class='container alert alert-danger' role='alert'>{$_SESSION['message']} !  <a href='loggin' class='btn btn-success'> Login again!</a>
+                </div>";
+                // unset($_SESSION['message']);
+            }
+        }
+
+    //////////////////////////////////////////////////////////////////////
+
     // Finding specific category
     function findCategory($categ_id){
         global $connection;
@@ -540,4 +598,41 @@
     }
     users_online();
 
+    // Login function
+
+    function logIn($username, $password){
+        global $connection;
+
+        $username = trim($username);
+        $password = trim($password);
+
+        $username = mysqli_real_escape_string($connection, $username);
+        $password = mysqli_real_escape_string($connection, $password);
+
+        $query = "SELECT * FROM users WHERE username = '{$username}' ";
+        $select_user_query = mysqli_query($connection, $query);
+        if (!$select_user_query) {
+            die("QUERY FAILED" . mysqli_error($connection));
+        }
+
+        while ($row = mysqli_fetch_array($select_user_query)) {
+            $db_user_id = $row['user_id'];
+            $db_username = $row['username'];
+            $db_user_password = $row['user_password'];
+            $db_user_firstname = $row['user_firstname'];
+            $db_user_lastname = $row['user_lastname'];
+            $db_user_role = $row['user_role'];
+
+            if (password_verify($password,$db_user_password)) {
+                $_SESSION['username'] = $db_username;
+                $_SESSION['firstname'] = $db_user_firstname;
+                $_SESSION['lastname'] = $db_user_lastname;
+                $_SESSION['user_role'] = $db_user_role;
+                redirect("./admin");
+            } else {
+                return false;
+            }
+        }
+        return true;
+}
 ?>
