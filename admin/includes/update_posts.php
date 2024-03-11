@@ -74,7 +74,7 @@
     }
 ?>
 
-<form action="" method="post" enctype="multipart/form-data">
+<form id="update_form" action="" method="post" enctype="multipart/form-data">
     <!-- Post Title -->
     <div class="form-group">
         <label for="post_title">Post Title</label>
@@ -145,10 +145,23 @@
     <!-- Post Content -->
     <div class="form-group">
         <label for="post_content">Post Content</label>
-        <textarea class="form-control" id="content" cols="30" rows="10" name="post_content"><?php echo $post_content; ?></textarea>
+        <textarea class="form-control" id="content" cols="30" rows="10" name="post_content"><?php echo str_replace('\r\n', ' ', $post_content); ?></textarea>
     </div>
     <!-- Submit Button -->
     <div class="form-group">
         <input class="btn btn-primary" type="submit" value="Update" name="update_post">
     </div>
 </form>
+
+
+<script>
+
+
+$(document).ready(function() {
+    $('#update_form').submit(function() {
+        var content = $('#content').val();
+        content = content.replace(/^\s*[\r\n]/gm, ''); // Remove empty lines
+        $('#content').val(content);
+    });
+});
+</script>
