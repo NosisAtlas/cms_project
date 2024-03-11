@@ -54,6 +54,9 @@
             }</style>
     <script src="https://cdn.ckeditor.com/ckeditor5/41.2.0/classic/ckeditor.js"></script>
     <!-- CKEDITOR script END -->
+
+    <!-- jQuery -->
+    <script src="js/jquery.js"></script>
 </head>
 
 <body>

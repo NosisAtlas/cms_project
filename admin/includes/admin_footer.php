@@ -1,8 +1,7 @@
 </div>
     <!-- /#wrapper -->
 
-    <!-- jQuery -->
-    <script src="js/jquery.js"></script>
+    
 
     <!-- Check box script -->
     <script src="js/scripts.js"></script>

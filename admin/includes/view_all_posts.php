@@ -102,3 +102,12 @@
     </table>
 </div>
 </form>
+
+<script>
+    $(document).ready(function () {
+        $(".delete_link").on("click", function(){
+            var id = $(this).attr("rel")
+            alert(id)
+        })
+    })
+</script>

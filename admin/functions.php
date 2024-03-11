@@ -131,7 +131,7 @@
                     <td>{$post_comment_count}</td>
                     <td>{$post_views_count}</td>
                     <td><a href='posts.php?source=edit_post&post_id={$post_id}'>Edit</a></td>
-                    <td><a onclick=\"javascript: return confirm('Are you sure you want to delete?')\" href='posts.php?delete={$post_id}'>Delete</a></td>
+                    <td><a rel='{$post_id}' href='' class='delete_link'>Delete</a></td>
                 </tr>";
         }
     }
