@@ -21,21 +21,40 @@
                         while($row = mysqli_fetch_assoc($select_all_categs_query)){
                             $cat_id = $row['cat_id'];
                             $cat_title = $row['cat_title'];
-                            echo "<li><a href='category.php?category={$cat_id}'>{$cat_title}</a></li>";
+                            $category_class = "";
+                            $registration_class = "";
+                            $registration = 'registration.php';
+                            $contact_class = "";
+                            $contact = 'contact.php';
+                            $admin = "admin";
+                            $admin_class = "";
+                            $pageName = basename($_SERVER['PHP_SELF']);
+
+                            if(isset($_GET['category']) && $_GET['category'] == $cat_id){
+                                $category_class = "active";
+                            }else if($pageName == $registration){
+                                $registration_class = "active";
+                            }else if($pageName == $contact){
+                                $contact_class = "active";
+                            }else if($pageName == $admin){
+                                $admin_class = "active";
+                            }
+                            echo "<li class='$category_class'><a href='category.php?category={$cat_id}'>{$cat_title}</a></li>";
                         }
                     ?>           
                     <?php 
                         if(isset($_SESSION['user_role'])){
                             if($_SESSION['user_role'] == 'admin'){
-                                echo '<li><a href="admin">Admin</a></li>';                         
+                                echo "<li class='$admin_class'><a href='admin'>Admin</a></li>";                         
                             }else{
-                                echo '';    
+                                echo "";    
                             }
                         }else{
-                            echo '<li><a href="./registration.php">Registration</a></li>';                         
+                            echo "<li class='$registration_class'><a href='./registration.php'>Registration</a></li>";
+                            echo "<li class='$contact_class'><a href='./contact.php'>Contact</a></li>";
+                                     
                         }
                     ?>
-                    <li><a href="./contact.php">Contact</a></li>
                 </ul>
             </div>
             <!-- /.navbar-collapse -->
