@@ -38,6 +38,10 @@
             </span>
         </div>
         <!-- /.input-group -->
+
+        <div class="form-group">
+            <a href="./forgot?forgot=<?php echo uniqid(true); ?>">Forgot password?</a>
+        </div>
     </form>
     <!-- Search form -->
     <?php endif; ?>
