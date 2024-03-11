@@ -100,7 +100,19 @@
     <!-- Post Author -->
     <div class="form-group">
         <label for="post_author">Post Author</label>
-        <input class="form-control" type="text" value="<?php echo $post_author; ?>" name="post_author">
+        <select class="form-select form-control" name="post_author" id="post_author">
+            <?php 
+                $query = "SELECT * FROM users";
+                $select_users = mysqli_query($connection, $query);
+                checkQuery($select_users);
+                // Displaying category data
+                while($row = mysqli_fetch_assoc($select_users)){
+                    $user_id = $row['user_id'];
+                    $user_username = $row['username'];
+            ?>
+                <option value="<?php echo $user_username; ?>" <?php if($user_username === $post_author) echo 'selected'; ?>><?php echo $user_username; ?></option>
+            <?php } ?>
+        </select>
     </div>
     <!-- Post Status -->
     <div class="form-group">
