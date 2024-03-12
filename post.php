@@ -52,7 +52,7 @@
             echo "Error fetching post data: " . mysqli_error($connection);
         }
         
-        // Step 2: Create likes for post
+        // Step 2: Delete likes for post
         mysqli_query($connection, "DELETE FROM likes WHERE user_id = $user_id_ajax AND post_id = $post_id_ajax");
         
         // Step 3: Updating the likes of the specific posts
