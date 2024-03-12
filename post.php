@@ -5,7 +5,21 @@
 
 <?php 
     if(isset($_POST['liked'])){
-        echo "<h1>It works!</h1>";
+        $post_id_ajax = $_POST['post_id'];
+        // Step 1: Execute the query
+        $searchPostQuery = "SELECT * FROM posts WHERE post_id = $post_id_ajax";
+        $postResult = mysqli_query($connection, $searchPostQuery);
+        $postData = mysqli_fetch_array($postResult);
+        $likes = $postData['likes'];
+    
+        // Step 2: Check if the query was successful
+        if(mysqli_num_rows($postResult) >= 1){
+            // Step 3: Fetch the array
+            echo $postData['post_id'];
+        } else {
+            // Handle query error
+            echo "Error fetching post data: " . mysqli_error($connection);
+        }
     }
 ?>
    
