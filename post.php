@@ -73,6 +73,7 @@
                     <small>Secondary Text</small>
                 </h1>
                 <?php 
+                    $update_post_likes;
                     if(isset($_GET['post_id'])){
                         $post_id_url = $_GET['post_id']; 
                         // Updating the view post count
@@ -91,6 +92,7 @@
                         $post_img = $row['post_img'];
                         $post_content = $row['post_content'];
                         $post_likes = $row['likes'];
+                        $update_post_likes = $post_likes;
                     ?>
                     
 
@@ -202,6 +204,19 @@
    $(document).ready(function(){
     var post_id = <?php echo $post_id_url; ?>;
     var user_id = <?php echo $_SESSION['user_id']; ?>;
+    var updates_post_likes = <?php echo $update_post_likes; ?>;
+
+    // Function to update like count dynamically
+    // function updateLikeCount() {
+    //     $.ajax({
+    //         url: "post.php?post_id=<?php echo $post_id_url; ?>",
+    //         type: "post",
+    //         data: { 'post_id': post_id },
+    //         success: function(response) {
+    //             $(".likes-count").text(<?php echo $post_likes; ?>); // Update like count on the page
+    //         }
+    //     });
+    // }
     // Liking post
     $(".like").click(function(){
         $.ajax({
@@ -212,9 +227,13 @@
                 'post_id': post_id,
                 'user_id': user_id,
             },
+            // success: function(response) {
+                // Handle the response here, if needed
+                // updateLikeCount(); // Update like count after liking
+            // }
             success: function(response) {
-                // Handle the response here, such as updating the like count or UI
-                console.log(user_id);
+                $(".likes-count").text(<?php echo $post_likes + 1 ; ?>); // Update like count on the page
+                window.location.reload(); // Reload the page after updating the like count
             }
         });
     });
@@ -230,8 +249,8 @@
                 'user_id': user_id,
             },
             success: function(response) {
-                // Handle the response here, such as updating the like count or UI
-                console.log(user_id);
+                $(".likes-count").text(<?php echo $post_likes - 1; ?>); // Update like count on the page
+                window.location.reload(); // Reload the page after updating the like count
             }
         });
     });
