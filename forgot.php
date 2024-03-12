@@ -30,11 +30,17 @@
                     mysqli_stmt_execute($stmt);
                     mysqli_stmt_close($stmt);
 
-                    // Configuring PHPmailer 
+                    /**
+                    *
+                    * configure PHPMailer
+                    *
+                    *
+                    */
+
                     //Create an instance; passing `true` enables exceptions
                     $mail = new PHPMailer(true);
                     //Server settings
-                    $mail->SMTPDebug = SMTP::DEBUG_SERVER;                      //Enable verbose debug output
+                    // $mail->SMTPDebug = SMTP::DEBUG_SERVER;                      //Enable verbose debug output
                     $mail->isSMTP();                                            //Send using SMTP
                     $mail->Host       = 'sandbox.smtp.mailtrap.io';                     //Set the SMTP server to send through
                     $mail->SMTPAuth   = true;                                   //Enable SMTP authentication
@@ -80,15 +86,13 @@
                 <div class="panel panel-default">
                     <div class="panel-body">
                         <div class="text-center">
-
-
+                            <?php 
+                                if(!isset($emailSent)):
+                            ?>
                                 <h3><i class="fa fa-lock fa-4x"></i></h3>
                                 <h2 class="text-center">Forgot Password?</h2>
                                 <p>You can reset your password here.</p>
                                 <div class="panel-body">
-
-
-
 
                                     <form id="register-form" role="form" autocomplete="off" class="form" method="post">
 
@@ -106,7 +110,13 @@
                                     </form>
 
                                 </div><!-- Body-->
-
+                                <?php 
+                                    else:
+                                ?>
+                                <h2>Please check your email</h2>
+                                <?php 
+                                    endif;
+                                ?>
                         </div>
                     </div>
                 </div>
