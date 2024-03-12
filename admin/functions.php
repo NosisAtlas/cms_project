@@ -90,6 +90,24 @@
                 return false;
             }
         }
+
+        //Creating query
+        function query($query){
+            global $connection;
+            return mysqli_query($connection, $query);
+        }
+
+        // Checcking if user is logged in
+        function loggedInUserId(){
+            if(isLoggedIn()){
+                $result = query("SELECT * FROM users WHERE username='" . $_SESSION['username'] ."'");
+                $user = mysqli_fetch_array($result);
+                if(mysqli_num_rows($result) >= 1){
+                    return $user['user_id'];
+                }
+            }
+            return false;
+        }
         
 
     //////////////////////////////////////////////////////////////////////
