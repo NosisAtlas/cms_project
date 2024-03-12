@@ -4,8 +4,11 @@
 <?php include 'includes/navigation.php' ?>
 
 <?php 
+    // Processing the post like
     if(isset($_POST['liked'])){
         $post_id_ajax = $_POST['post_id'];
+        $user_id_ajax = $_POST['user_id'];
+
         // Step 1: Fetching the right post
         $searchPostQuery = "SELECT * FROM posts WHERE post_id = $post_id_ajax";
         $postResult = mysqli_query($connection, $searchPostQuery);
@@ -21,6 +24,40 @@
 
         // Step 2: Updating the likes of the specific posts
         mysqli_query($connection, "UPDATE posts SET likes = likes + 1 WHERE post_id = $post_id_ajax");
+
+        // Step 3: Create likes for post
+        mysqli_query($connection, "INSERT INTO likes(user_id, post_id) VALUES($user_id_ajax, $post_id_ajax)");
+        exit();
+    }
+
+    //
+    if(isset($_POST['disliked'])){
+        $post_id_ajax = $_POST['post_id'];
+        $user_id_ajax = $_POST['user_id'];
+        // Check if the user has already liked the post
+        $check_like_query = "SELECT * FROM likes WHERE user_id = $user_id_ajax AND post_id = $post_id_ajax";
+        $check_like_result = mysqli_query($connection, $check_like_query);
+        $user_has_liked = mysqli_num_rows($check_like_result) > 0;
+
+        // Step 1: Fetching the right post
+        $searchPostQuery = "SELECT * FROM posts WHERE post_id = $post_id_ajax";
+        $postResult = mysqli_query($connection, $searchPostQuery);
+        $postData = mysqli_fetch_array($postResult);
+        $likes = $postData['likes'];
+    
+        // Check if the query was successful
+        if(mysqli_num_rows($postResult) >= 1){
+            echo $postData['post_id'];
+        } else {
+            echo "Error fetching post data: " . mysqli_error($connection);
+        }
+
+        // Step 2: Updating the likes of the specific posts
+        mysqli_query($connection, "UPDATE posts SET likes = likes - 1 WHERE post_id = $post_id_ajax");
+
+        // Step 3: Create likes for post
+        mysqli_query($connection, "DELETE * FROM likes WHERE user_id = $user_id_ajax AND post_id = $post_id_ajax");
+        exit();
     }
 ?>
    
@@ -82,11 +119,27 @@
 
                 <hr>
                 <div class="container-fluid">
+                    <?php if($_SESSION['user_role'] == "admin" || $_SESSION['user_role'] == "user"): ?>
+                        <div class="row">
+                            <p class="pull-right"><a class="like" href="#"><span class="glyphicon glyphicon-thumbs-up"></span> Like</a></p>
+                        </div>
+                        <?php if($post_likes > 0): ?>
+                            <?php if(isset($user_has_liked)): ?>
+                                <?php 
+                                    echo "Liked";
+                                ?>
+                            <div class="row">
+                                <p class="pull-right"><a class="dislike" href="#"><span class="glyphicon glyphicon-thumbs-down"></span> Dislike</a></p>
+                            </div>
+                            <?php endif; ?>
+                        <?php endif; ?>
+                    <?php else: ?>
+                        <div class="row">
+                            <p class="pull-right"><a href="loggin">Login to like this post</a></p>
+                        </div>
+                    <?php endif; ?>
                     <div class="row">
-                        <p class="pull-right"><a class="like" href="#"><span class="glyphicon glyphicon-thumbs-up"></span> Like</a></p>
-                    </div>
-                    <div class="row">
-                        <p class="pull-right">Like: <?php echo $post_likes ?></p>
+                        <p class="pull-right">Likes: <span class="likes-count"><?php echo $post_likes ?></span></p>
                     </div>
                 </div>
                 
@@ -153,13 +206,31 @@
 <script>
    $(document).ready(function(){
     var post_id = <?php echo $post_id_url; ?>;
-    var user_id = 2;
+    var user_id = <?php echo $_SESSION['user_id']; ?>;
+    // Liking post
     $(".like").click(function(){
         $.ajax({
             url: "post.php?post_id=<?php echo $post_id_url; ?>",
             type: "post",
             data: {
                 'liked': 1,
+                'post_id': post_id,
+                'user_id': user_id,
+            },
+            success: function(response) {
+                // Handle the response here, such as updating the like count or UI
+                console.log(user_id);
+            }
+        });
+    });
+
+    // Disliking post
+    $(".dislike").click(function(){
+        $.ajax({
+            url: "post.php?post_id=<?php echo $post_id_url; ?>",
+            type: "post",
+            data: {
+                'disliked': 1,
                 'post_id': post_id,
                 'user_id': user_id,
             },
