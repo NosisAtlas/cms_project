@@ -101,6 +101,7 @@
         function loggedInUserId(){
             if(isLoggedIn()){
                 $result = query("SELECT * FROM users WHERE username='" . $_SESSION['username'] ."'");
+                checkQuery($result);
                 $user = mysqli_fetch_array($result);
                 if(mysqli_num_rows($result) >= 1){
                     return $user['user_id'];
@@ -112,6 +113,7 @@
         // Checking if the user liked the post
         function userLikedPost($post_id = ''){
             $result = query("SELECT * FROM likes WHERE user_id" . loggedInUserId() . "AND post_id = {$post_id}");
+            checkQuery($result);
             $user = mysqli_fetch_array($result);
             return mysqli_num_rows($result) >= 1 ? $user['user_id'] : false;
         }
