@@ -2,6 +2,12 @@
 
  <!-- Navigation -->
 <?php include 'includes/navigation.php' ?>
+
+<?php 
+    if(isset($_POST['liked'])){
+        echo "<h1>It works!</h1>";
+    }
+?>
    
     <!-- Page Content -->
     <div class="container">
@@ -61,7 +67,7 @@
                 <hr>
                 <div class="container-fluid">
                     <div class="row">
-                        <p class="pull-right"><a href=""><span class="glyphicon glyphicon-thumbs-up"></span> Like</a></p>
+                        <p class="pull-right"><a class="like" href="#"><span class="glyphicon glyphicon-thumbs-up"></span> Like</a></p>
                     </div>
                     <div class="row">
                         <p class="pull-right">Like: 20</p>
@@ -129,5 +135,24 @@
         
 <?php include 'includes/footer.php' ?>
 <script>
+   $(document).ready(function(){
+    var post_id = <?php echo $post_id_url; ?>;
+    var user_id = 2;
+    $(".like").click(function(){
+        $.ajax({
+            url: "post.php?post_id=<?php echo $post_id_url; ?>",
+            type: "post",
+            data: {
+                'liked': 1,
+                'post_id': post_id,
+                'user_id': user_id,
+            },
+            success: function(response) {
+                // Handle the response here, such as updating the like count or UI
+                console.log(user_id);
+            }
+        });
+    });
+});
 
 </script>
