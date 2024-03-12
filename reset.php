@@ -13,11 +13,11 @@
 ?>
 
 <?php
-    // if(!isset($_GET['email']) && !isset($_GET['token'])){
-    //     redirect('index');
-    // }
-    $email = 'nosis@atlas.com';
-    $token = "5f0c255de134aaf9a40498d00714d937ad7d870ced6e89c13d280782c78fce5f0a736ae71a9cb91a215de6a1474d2abd7c88";
+    if(!isset($_GET['email']) && !isset($_GET['token'])){
+        redirect('index');
+    }
+    $email = $_GET['email'];
+    $token = $_GET['token'];
     if($stmt = mysqli_prepare($connection, 'SELECT username, user_email, token FROM users WHERE token = ?')){
         mysqli_stmt_bind_param($stmt, "s", $token);
         mysqli_stmt_execute($stmt);
@@ -36,11 +36,9 @@
                     mysqli_stmt_bind_param($stmt, "s", $email);
                     mysqli_stmt_execute($stmt);
                     if(mysqli_stmt_affected_rows($stmt) >= 1){
-                        echo "affected !";
-                        mysqli_stmt_close($stmt);
-                    }else{
-                        echo "Not affected !";
+                        redirect('./loggin');
                     }
+                    mysqli_stmt_close($stmt);
                 }
                 echo "They're the same";
             }else{
@@ -62,12 +60,11 @@
                         <div class="text-center">
 
                                 
-                        <?php if(!isset( $emailSent)): ?>
-                        <h3><i class="fa fa-lock fa-4x"></i></h3>
-                        <h2 class="text-center">Forgot Password?</h2>
-                        <p>You can reset your password here.</p>
-                        <div class="panel-body">
-                            
+                            <h3><i class="fa fa-lock fa-4x"></i></h3>
+                            <h2 class="text-center">Forgot Password?</h2>
+                            <p>You can reset your password here.</p>
+                            <div class="panel-body">
+                                
                             <form id="register-form" role="form" autocomplete="off" class="form" method="post">
                                 <input type="hidden" class="hide" name="token" id="token" value="">
                                 <div class="form-group">
@@ -90,11 +87,6 @@
 
                         </div><!-- Body-->
 
-                        <?php else: ?>
-
-                        <h2>Please check your email</h2>
-
-                        <?php endIf; ?>
 
                         </div>
                     </div>
@@ -102,8 +94,7 @@
             </div>
         </div>
     </div>
-
-
+    
     <hr>
 
     <?php include "includes/footer.php";?>
