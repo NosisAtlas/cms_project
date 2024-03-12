@@ -6,20 +6,21 @@
 <?php 
     if(isset($_POST['liked'])){
         $post_id_ajax = $_POST['post_id'];
-        // Step 1: Execute the query
+        // Step 1: Fetching the right post
         $searchPostQuery = "SELECT * FROM posts WHERE post_id = $post_id_ajax";
         $postResult = mysqli_query($connection, $searchPostQuery);
         $postData = mysqli_fetch_array($postResult);
         $likes = $postData['likes'];
     
-        // Step 2: Check if the query was successful
+        // Check if the query was successful
         if(mysqli_num_rows($postResult) >= 1){
-            // Step 3: Fetch the array
             echo $postData['post_id'];
         } else {
-            // Handle query error
             echo "Error fetching post data: " . mysqli_error($connection);
         }
+
+        // Step 2: Updating the likes of the specific posts
+        mysqli_query($connection, "UPDATE posts SET likes = likes + 1 WHERE post_id = $post_id_ajax");
     }
 ?>
    
@@ -52,6 +53,7 @@
                         $post_date = $row['post_date'];
                         $post_img = $row['post_img'];
                         $post_content = $row['post_content'];
+                        $post_likes = $row['likes'];
                     ?>
                     
 
@@ -84,7 +86,7 @@
                         <p class="pull-right"><a class="like" href="#"><span class="glyphicon glyphicon-thumbs-up"></span> Like</a></p>
                     </div>
                     <div class="row">
-                        <p class="pull-right">Like: 20</p>
+                        <p class="pull-right">Like: <?php echo $post_likes ?></p>
                     </div>
                 </div>
                 
