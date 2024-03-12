@@ -59,6 +59,15 @@
                 <p><?php echo $post_content ?></p>
 
                 <hr>
+                <div class="container-fluid">
+                    <div class="row">
+                        <p class="pull-right"><a href=""><span class="glyphicon glyphicon-thumbs-up"></span> Like</a></p>
+                    </div>
+                    <div class="row">
+                        <p class="pull-right">Like: 20</p>
+                    </div>
+                </div>
+                
 
                 <?php    
                     }
@@ -119,3 +128,6 @@
         <hr>
         
 <?php include 'includes/footer.php' ?>
+<script>
+
+</script>
