@@ -1,12 +1,17 @@
 {
-    "name": "pc/cms_project",
-    "require-dev": {
-        "phpmailer/phpmailer": "^6.9"
-    },
-    "authors": [
-        {
-            "name": "Nosis Atlas"
-        }
-    ],
-    "require": {}
+  "name": "pc/cms_project",
+  "require-dev": {
+    "phpmailer/phpmailer": "^6.9"
+  },
+  "autoload": {
+    "classmap": [
+      "classes"
+    ]
+  },
+  "authors": [
+    {
+      "name": "Nosis Atlas"
+    }
+  ],
+  "require": {}
 }

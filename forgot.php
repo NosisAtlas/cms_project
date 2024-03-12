@@ -1,3 +1,5 @@
+<?php  include "includes/header.php"; ?>
+
 <?php 
     // Sending emails for forgot pass
     //Import PHPMailer classes into the global namespace
@@ -8,47 +10,11 @@
 
     //Load Composer's autoloader
     require 'vendor/autoload.php';
-
-    //Create an instance; passing `true` enables exceptions
-    $mail = new PHPMailer(true);
-
-    try {
-        //Server settings
-        $mail->SMTPDebug = SMTP::DEBUG_SERVER;                      //Enable verbose debug output
-        $mail->isSMTP();                                            //Send using SMTP
-        $mail->Host       = 'sandbox.smtp.mailtrap.io';                     //Set the SMTP server to send through
-        $mail->SMTPAuth   = true;                                   //Enable SMTP authentication
-        $mail->Username   = 'e8b8dfc05dae4f';                     //SMTP username
-        $mail->Password   = 'f116d7a93bb9d5';                               //SMTP password
-        $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;            //Enable implicit TLS encryption
-        $mail->Port       = 587;                                    
-        $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
-
-        //Recipients
-        $mail->setFrom('nosis@atlas.com', 'Mailer');
-        $mail->addAddress('support@cms.com', 'Admin');     //Add a recipient
-        $mail->addAddress('ellen@example.com');               //Name is optional
-        $mail->addReplyTo('info@example.com', 'Information');
-        $mail->addCC('cc@example.com');
-        $mail->addBCC('bcc@example.com');
-
-        //Content
-        $mail->isHTML(true);                                  //Set email format to HTML
-        $mail->Subject = 'Here is the subject';
-        $mail->Body    = 'This is the HTML message body <b>in bold!</b>';
-        $mail->AltBody = 'This is the body in plain text for non-HTML mail clients';
-
-        $mail->send();
-        echo 'Message has been sent';
-    } catch (Exception $e) {
-        echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
-    }
 ?>
 
-<?php  include "includes/header.php"; ?>
 
 <?php 
-    if(!ifItIsMethod('get') && !isset($_GET['forgot'])){
+    if(!isset($_GET['forgot'])){
         redirect('./');
     }
 
@@ -63,6 +29,39 @@
                     mysqli_stmt_bind_param($stmt, "s", $email);
                     mysqli_stmt_execute($stmt);
                     mysqli_stmt_close($stmt);
+
+                    // Configuring PHPmailer 
+                    //Create an instance; passing `true` enables exceptions
+                    $mail = new PHPMailer(true);
+                    //Server settings
+                    $mail->SMTPDebug = SMTP::DEBUG_SERVER;                      //Enable verbose debug output
+                    $mail->isSMTP();                                            //Send using SMTP
+                    $mail->Host       = 'sandbox.smtp.mailtrap.io';                     //Set the SMTP server to send through
+                    $mail->SMTPAuth   = true;                                   //Enable SMTP authentication
+                    $mail->Username   = 'e8b8dfc05dae4f';                     //SMTP username
+                    $mail->Password   = 'f116d7a93bb9d5';                               //SMTP password
+                    $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;            //Enable implicit TLS encryption
+                    $mail->Port       = 587;                                    
+                    $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
+                    $mail->CharSet    = 'UTF-8';
+
+                    //Content
+                    //Recipients
+                    $mail->setFrom('nosis@atlas.com', 'Mailer');
+                    $mail->addAddress('support@cms.com', 'Admin');     //Add a recipient
+                    $mail->isHTML(true);                                  //Set email format to HTML
+                    $mail->Subject = 'Here is the subject';
+                    $mail->Body    = '<p>
+                        Please click to reset password <b>Reset password!</b>
+                        <a href="http://localhost/EgioWww/CMS_project/reset?email='. $email .'&token='. $token .' ">http://localhost/EgioWww/CMS_project/reset?email='.$email.'&token='.$token.'</a>
+                        </p>';
+
+                    if($mail->send()){
+                        $emailSent = true;
+                        echo "SENT";
+                    } else{
+                        echo "NOT SENT";
+                    }
                 }else{
                     echo mysqli_error($connection);
                 }
