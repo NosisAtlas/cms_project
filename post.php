@@ -123,21 +123,13 @@
                         <div class="row">
                             <p class="pull-right"><a class="like" href="#"><span class="glyphicon glyphicon-thumbs-up"></span> Like</a></p>
                         </div>
-                        <?php if($post_likes > 0): ?>
-                            <?php if(isset($user_has_liked)): ?>
-                                <?php 
-                                    echo "Liked";
-                                ?>
-                            <div class="row">
-                                <p class="pull-right"><a class="dislike" href="#"><span class="glyphicon glyphicon-thumbs-down"></span> Dislike</a></p>
-                            </div>
-                            <?php endif; ?>
+                        <div class="row">
+                            <p class="pull-right"><a class="dislike" href="#"><span class="glyphicon glyphicon-thumbs-down"></span> Dislike</a></p>
+                        </div>
                         <?php endif; ?>
-                    <?php else: ?>
                         <div class="row">
                             <p class="pull-right"><a href="loggin">Login to like this post</a></p>
                         </div>
-                    <?php endif; ?>
                     <div class="row">
                         <p class="pull-right">Likes: <span class="likes-count"><?php echo $post_likes ?></span></p>
                     </div>

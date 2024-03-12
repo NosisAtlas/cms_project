@@ -108,6 +108,13 @@
             }
             return false;
         }
+
+        // Checking if the user liked the post
+        function userLikedPost($post_id = ''){
+            $result = query("SELECT * FROM likes WHERE user_id" . loggedInUserId() . "AND post_id = {$post_id}");
+            $user = mysqli_fetch_array($result);
+            return mysqli_num_rows($result) >= 1 ? $user['user_id'] : false;
+        }
         
 
     //////////////////////////////////////////////////////////////////////
