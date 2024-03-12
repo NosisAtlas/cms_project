@@ -51,12 +51,12 @@
         } else {
             echo "Error fetching post data: " . mysqli_error($connection);
         }
-
-        // Step 2: Updating the likes of the specific posts
+        
+        // Step 2: Create likes for post
+        mysqli_query($connection, "DELETE FROM likes WHERE user_id = $user_id_ajax AND post_id = $post_id_ajax");
+        
+        // Step 3: Updating the likes of the specific posts
         mysqli_query($connection, "UPDATE posts SET likes = likes - 1 WHERE post_id = $post_id_ajax");
-
-        // Step 3: Create likes for post
-        mysqli_query($connection, "DELETE * FROM likes WHERE user_id = $user_id_ajax AND post_id = $post_id_ajax");
         exit();
     }
 ?>
@@ -116,23 +116,26 @@
                 <img class="img-responsive" src="imgs/<?php echo $post_img ?>" alt="">
                 <hr>
                 <p><?php echo $post_content ?></p>
+                <?php 
+                    // Free the memory associated with a result
+                    // mysqli_free_result($select_all_posts_query);
+                    // break; // Exit the loop
+                ?>
 
                 <hr>
                 <div class="container-fluid">
                     <?php if($_SESSION['user_role'] == "admin" || $_SESSION['user_role'] == "user"): ?>
                         <div class="row">
-                            <p class="pull-right"><a class="like" href="#"><span class="glyphicon glyphicon-thumbs-up"></span> Like</a></p>
-                        </div>
-                        <div class="row">
-                            <p class="pull-right"><a class="dislike" href="#"><span class="glyphicon glyphicon-thumbs-down"></span> Dislike</a></p>
-                        </div>
-                        <?php endif; ?>
-                        <div class="row">
-                            <p class="pull-right"><a href="loggin">Login to like this post</a></p>
-                        </div>
-                    <div class="row">
-                        <p class="pull-right">Likes: <span class="likes-count"><?php echo $post_likes ?></span></p>
-                    </div>
+                            <p class="pull-right"><a class="<?php echo userLikedPost($post_id) ? 'dislike' : 'like'; ?>" href="#"><span class="glyphicon glyphicon-thumbs-<?php echo userLikedPost($post_id) ? 'down' : 'up'; ?>"></span> <?php echo userLikedPost($post_id) ? 'dislike' : 'like'; ?></a></p>
+                        </div>  
+                            <?php else: ?>
+                            <div class="row">
+                                <p class="pull-right"><a href="loggin">Login to like this post</a></p>
+                            </div>
+                            <?php endif; ?>
+                            <div class="row">
+                                <p class="pull-right">Likes: <span class="likes-count"><?php echo $post_likes ?></span></p>
+                            </div>
                 </div>
                 
 
