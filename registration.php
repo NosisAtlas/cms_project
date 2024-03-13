@@ -43,7 +43,7 @@
                     $register_user_query = mysqli_query($connection, $query);
                     checkQuery($register_user_query);        
                     echo    "<div class='container alert alert-success' role='alert'>
-                                Your registration has been sent submitted!  <a href='index.php' class='btn btn-success'>Log in to your account</a>
+                                Your registration has been sent submitted!  <a href='./loggin' class='btn btn-success'>Log in to your account</a>
                             </div>"; 
                        
                 }
