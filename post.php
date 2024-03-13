@@ -123,7 +123,7 @@
                 <div class="container-fluid">
                     <?php if($_SESSION['user_role'] == "admin" || $_SESSION['user_role'] == "user"): ?>
                         <div class="row">
-                            <p class="pull-right"><a class="<?php echo userLikedPost($post_id) ? 'dislike' : 'like'; ?>" href="#"><span class="glyphicon glyphicon-thumbs-<?php echo userLikedPost($post_id) ? 'down' : 'up'; ?>"></span> <?php echo userLikedPost($post_id) ? 'dislike' : 'like'; ?></a></p>
+                            <p class="pull-right"><a data-toggle="tooltip" data-placement="top" title="<?php echo userLikedPost($post_id) ? 'I liked this before' : 'Want to like it?'; ?>" class="<?php echo userLikedPost($post_id) ? 'dislike' : 'like'; ?>" href="#"><span class="glyphicon glyphicon-thumbs-<?php echo userLikedPost($post_id) ? 'down' : 'up'; ?>"></span> <?php echo userLikedPost($post_id) ? 'dislike' : 'like'; ?></a></p>
                         </div>  
                             <?php else: ?>
                             <div class="row">
