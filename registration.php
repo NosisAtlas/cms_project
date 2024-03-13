@@ -6,6 +6,21 @@
     
 
     <?php 
+        // Setting language
+        if(isset($_GET['lang'])){
+            $_SESSION['lang'] = $_GET['lang'];
+            if(isset($_SESSION['lang']) && $_SESSION['lang'] == $_GET['lang']){
+                echo "<script type='javascript'>location.reload()</script>";
+            }
+        }
+
+        if(isset($_SESSION['lang'])){
+            include "icludes/languages" . $_SESSION['lang'] . ".php";
+        }else{
+            include "icludes/languages/en.php";
+        }
+        
+        // Registrating
         if(isset($_POST['register'])){
             $username = $_POST['username'];
             $user_email = $_POST['email'];
@@ -54,7 +69,14 @@
  
     <!-- Page Content -->
     <div class="container">
-    
+    <form action="" method="get" class="navbar-form navbar-right" id="lang_form">
+        <div class="form-group">
+            <select class="form-control" name="lang" onchange="changeLang()" >
+                <option value="en">English</option>
+                <option value="kr">Korean</option>
+            </select>
+        </div>
+    </form>
 <section id="login">
     <div class="container">
         <div class="row">
@@ -87,6 +109,10 @@
 
         <hr>
 
-
+<script>
+    function changeLang(){
+        document.getElementById('lang_form').submit()
+    }
+</script>
 
 <?php include "includes/footer.php";?>
