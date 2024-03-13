@@ -94,7 +94,14 @@
         //Creating query
         function query($query){
             global $connection;
-            return mysqli_query($connection, $query);
+            $result = mysqli_query($connection, $query);
+            checkQuery($result);
+            return $result;
+        }
+
+        // Fetching records
+        function fetchRecords($result){
+            return mysqli_fetch_array($result);
         }
 
         // Checcking if user is logged in
@@ -118,6 +125,19 @@
             return mysqli_num_rows($result) >= 1 ? $user['user_id'] : false;
         }
         
+        function is_admin(){
+            // global $connection;
+            if(isLoggedIn()){
+                $result = query("SELECT user_role FROM users WHERE user_id = " . $_SESSION['user_id'] . "");
+                $row = fetchRecords($result);
+                if($row['user_role'] == 'admin'){
+                    return true;
+                }else{
+                    return false;
+                }
+            }
+            return false;
+        }
         
 
     //////////////////////////////////////////////////////////////////////
@@ -682,6 +702,7 @@
             $db_user_role = $row['user_role'];
             
             if (password_verify($password,$db_user_password)) {
+                // Setting sessions
                 $_SESSION['user_id'] = $db_user_id;
                 $_SESSION['username'] = $db_username;
                 $_SESSION['user_email'] = $db_user_email;
