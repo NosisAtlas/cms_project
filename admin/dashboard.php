@@ -119,9 +119,8 @@
                     $select_all_published_posts = mysqli_query($connection, $query);
                     $posts_published_count = mysqli_num_rows($select_all_published_posts);
                     // Count unapproved comments
-                    $query = "SELECT* FROM comments WHERE  comment_status = 'unapproved'";
-                    $select_all_unapproved_comments = mysqli_query($connection, $query);
-                    $comments_unapproved_count = mysqli_num_rows($select_all_unapproved_comments);
+                    $comments_approved_count = count_records(get_all_user_approved_posts_comments());
+                    $comments_unapproved_count = count_records(get_all_user_unapproved_posts_comments());
                 ?>
                 <div class="row">
                     <!-- Google Chart Js script -->
@@ -135,7 +134,7 @@
                             <?php 
                                 //
                                 $element_txt = ['All Posts', 'Draft Posts', 'Published Posts', 'Comments', 'Pending Comments', 'Categories'];
-                                $element_count = [$posts_count, $posts_draft_count, $posts_published_count, $comments_count, $comments_unapproved_count, $categories_count];
+                                $element_count = [$posts_count, $posts_draft_count, $posts_published_count, $comments_approved_count, $comments_unapproved_count, $categories_count];
                                 for($i = 0; $i < count($element_txt); $i++ ){
                                     echo "['{$element_txt[$i]}'" . "," . "{$element_count[$i]}],";
                                 }

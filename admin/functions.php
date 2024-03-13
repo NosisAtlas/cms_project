@@ -171,6 +171,16 @@
             return query("SELECT* FROM categories WHERE cat_user_id=".loggedInUserId()."");
         }
 
+        // Getting all user unapproved comments
+        function get_all_user_unapproved_posts_comments(){
+            return query("SELECT * FROM comments WHERE comment_user_id=".loggedInUserId()." AND comment_status='unapproved'");
+        }
+
+        // Getting all user approved comments
+        function get_all_user_approved_posts_comments(){
+            return query("SELECT * FROM comments WHERE comment_user_id=".loggedInUserId()." AND comment_status='approved'");
+        }
+
     //////////////////////////////////////////////////////////////////////
 
     // Finding specific category
