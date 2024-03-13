@@ -49,11 +49,12 @@
                         }else if($pageName == $loggin){
                             $loggin_class = "active";
                         }
+                        
                         if(isset($_SESSION['user_role'])){
                             if($_SESSION['user_role'] == 'admin'){
                                 echo "<li class='$admin_class'><a href='admin'>Admin</a></li>";                         
                             }else{
-                                echo "";    
+                                echo "<li class=''><a href='#'>Dashboard</a></li>";    
                             }
                         }else{
                             echo "<li class='$contact_class'><a href='./contact'>Contact</a></li>";

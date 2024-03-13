@@ -1,8 +1,4 @@
 <?php  include "includes/header.php"; ?>
-<?php 
-        if(!isset($_SESSION['user_id'])){
-            
-?>
 
     <!-- Navigation -->
     
@@ -94,8 +90,3 @@
 
 
 <?php include "includes/footer.php";?>
-<?php
-    }else{
-        header('Location: index.php');
-    }
-?>
