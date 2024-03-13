@@ -31,7 +31,12 @@
         <label for="post_author">Post Author</label>
         <select class="form-select form-control" name="post_author" id="post_author">
             <?php 
-                $query = "SELECT * FROM users";
+                $query = "";
+                if(is_admin()){
+                    $query = "SELECT * FROM users";
+                }else{
+                    $query = "SELECT * FROM users WHERE user_id = {$_SESSION['user_id']}";
+                }
                 $select_users = mysqli_query($connection, $query);
                 checkQuery($select_users);
                 // Displaying categ data
