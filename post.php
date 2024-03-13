@@ -197,6 +197,7 @@
 <?php include 'includes/footer.php' ?>
 <script>
    $(document).ready(function(){
+   $("[data-toggle='tootltip']").tooltip();
     var post_id = <?php echo $post_id_url; ?>;
     var user_id = <?php echo $_SESSION['user_id']; ?>;
     var updates_post_likes = <?php echo $update_post_likes; ?>;
