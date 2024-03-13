@@ -26,7 +26,7 @@
                 <!-- /.row -->
                 
                 <div class="row">
-                    <div class="col-lg-3 col-md-6">
+                    <div class="col-lg-4 col-md-6">
                         <div class="panel panel-primary">
                             <div class="panel-heading">
                                 <div class="row">
@@ -52,7 +52,7 @@
                             </a>
                         </div>
                     </div>
-                    <div class="col-lg-3 col-md-6">
+                    <div class="col-lg-4 col-md-6">
                         <div class="panel panel-green">
                             <div class="panel-heading">
                                 <div class="row">
@@ -78,35 +78,8 @@
                             </a>
                         </div>
                     </div>
-                    <div class="col-lg-3 col-md-6">
-                        <div class="panel panel-yellow">
-                            <div class="panel-heading">
-                                <div class="row">
-                                    <div class="col-xs-3">
-                                        <i class="fa fa-user fa-5x"></i>
-                                    </div>
-                                    <div class="col-xs-9 text-right">
-                                        <?php 
-                                            // Count users
-                                            $query = "SELECT* FROM users";
-                                            $select_all_users = mysqli_query($connection, $query);
-                                            $users_count = mysqli_num_rows($select_all_users);
-                                        ?>
-                                        <div class='huge'><?php echo $users_count ?></div>
-                                        <div> Users</div>
-                                    </div>
-                                </div>
-                            </div>
-                            <a href="users.php">
-                                <div class="panel-footer">
-                                    <span class="pull-left">View Details</span>
-                                    <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
-                                    <div class="clearfix"></div>
-                                </div>
-                            </a>
-                        </div>
-                    </div>
-                    <div class="col-lg-3 col-md-6">
+                    
+                    <div class="col-lg-4 col-md-6">
                         <div class="panel panel-red">
                             <div class="panel-heading">
                                 <div class="row">
@@ -166,8 +139,8 @@
                             ['Data', 'Count'],
                             <?php 
                                 //
-                                $element_txt = ['All Posts', 'Draft Posts', 'Published Posts', 'Comments', 'Pending Comments', 'Users', 'users Role User', 'Categories'];
-                                $element_count = [$posts_count, $posts_draft_count, $posts_published_count, $comments_count, $comments_unapproved_count, $users_count, $users_user_count, $categories_count];
+                                $element_txt = ['All Posts', 'Draft Posts', 'Published Posts', 'Comments', 'Pending Comments', 'Categories'];
+                                $element_count = [$posts_count, $posts_draft_count, $posts_published_count, $comments_count, $comments_unapproved_count, $categories_count];
                                 for($i = 0; $i < count($element_txt); $i++ ){
                                     echo "['{$element_txt[$i]}'" . "," . "{$element_count[$i]}],";
                                 }
