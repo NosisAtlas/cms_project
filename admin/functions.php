@@ -138,6 +138,15 @@
             }
             return false;
         }
+
+        // Get username
+        function get_username(){
+            if(isLoggedIn()){
+                if(isset($_SESSION['username'])){
+                    echo strtoupper($_SESSION['username']);
+                };
+            }
+        }
         
 
     //////////////////////////////////////////////////////////////////////

@@ -3,6 +3,13 @@
     <div id="wrapper">
         <!-- Navigation -->
         <?php include 'includes/admin_navigation.php' ?>
+        <?php 
+            if($_SESSION['user_role'] == 'user'){
+            // Redirect to home page or handle unauthorized access
+            header("Location: ../404_page.php");
+            exit();
+            }
+        ?>
 
         <div id="page-wrapper">
             <div class="container-fluid">
@@ -14,9 +21,7 @@
                             Welcome to admin DASHBOARD
                             <small>
                                 <?php 
-                                    if(isset($_SESSION['username'])){
-                                        echo strtoupper($_SESSION['username']);
-                                    }; 
+                                    get_username();
                                 ?>
                             </small>
                         </h1>                        
