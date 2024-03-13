@@ -18,26 +18,99 @@
     }
 ?>
 
+<?php 
+    
+    // Updating user data query
+    if(isset($_POST['update_profile'])){
+        $username = $_POST['username'];
+        $user_password = $_POST['user_password'];
+        $user_firstname = $_POST['user_firstname'];
+        $user_lastname = $_POST['user_lastname'];
+        $user_email = $_POST['user_email'];
+
+        // Checking if password is provided
+        if(!empty($user_password)) {
+            // Hash the password
+            $hashFormat = "$2y$10$";
+            $salt = "iusesomeordinarypasss24";
+            $hashFandSalt = $hashFormat . $salt;
+            $encriptPassword = crypt($user_password, $hashFandSalt);
+            // Include password update in the query
+            $password_update = "user_password = '{$encriptPassword}', ";
+        }else if(empty($user_password)){
+            $password_update = "";
+        }
+
+        // Check if new image uploaded
+        if(!empty($_FILES['image']['name'])) {
+            $user_img = $_FILES['image']['name'];
+            $user_img_temp = $_FILES['image']['tmp_name'];
+            move_uploaded_file($user_img_temp, "../admin/imgs/$user_img");
+        }
+
+        // Updating user data query
+        $query = "UPDATE users SET ";
+        $query .= "username = '{$username}', ";
+        $query .= $password_update;
+        $query .= "user_firstname = '{$user_firstname}', ";
+        $query .= "user_lastname = '{$user_lastname}', ";
+        $query .= "user_email = '{$user_email}', ";
+        $query .= "user_img = '{$user_img}' ";
+        $query .= "WHERE user_id = {$user_id}";
+
+        $update_user_query = mysqli_query($connection, $query);
+        checkQuery($update_user_query);
+        // Setting the new session data
+        $new_username = $username;
+        $new_user_firstname = $user_firstname;
+        $new_user_lastname = $user_lastname;
+        // Setting sessions
+        $_SESSION['username'] =$new_username;
+        $_SESSION['user_firstname'] =$new_user_firstname;
+        $_SESSION['user_lastname'] =$new_user_lastname;
+        // Check if the query was successful
+        if($update_user_query) {
+            // Display success message with a link to the updated post
+           $_SESSION['profile_update_msg'] = "<div class='alert alert-success' role='alert'>
+                    Profile updated successfully! <a href='./dashboard.php' class='btn btn-success'>Go to dashboard</a>
+                </div>";
+        } else {
+            // Display error message
+            $_SESSION['profile_update_msg'] = "<div class='alert alert-danger' role='alert'>
+                    Failed to update profile. Please try again.
+                </div>";
+        }
+        redirect('./profile.php');
+        $_SESSION['profile_update_msg'] = "";
+
+    }
+?>
+
     <div id="wrapper">
 
+        
         <!-- Navigation -->
         <?php include 'includes/admin_navigation.php' ?>
 
         <div id="page-wrapper">
 
             <div class="container-fluid">
-
                 <!-- Page Heading -->
                 <div class="row">
                     <div class="col-lg-12">
                         <h1 class="page-header">
-                            Welcome to admin Users
+                            Welcome to dashboard
                             <small><?php
                                 if(isset($_SESSION['username'])){
                                     echo strtoupper($_SESSION['username']);
                                 } ?>
                             </small>
                         </h1>
+                        <?php 
+                            if(isset($_SESSION['profile_update_msg'])){
+                                echo $_SESSION['profile_update_msg'];
+                            }
+                        ?>
                        <form action="" method="post" enctype="multipart/form-data">
                             <div class="form-group">
                                 <label for="username">Username</label>
@@ -90,68 +163,4 @@
 
   <?php include "includes/admin_footer.php" ?>
 
-  <?php 
-    
-    // Updating user data query
-    if(isset($_POST['update_profile'])){
-        $username = $_POST['username'];
-        $user_password = $_POST['user_password'];
-        $user_firstname = $_POST['user_firstname'];
-        $user_lastname = $_POST['user_lastname'];
-        $user_email = $_POST['user_email'];
-
-        // Checking if password is provided
-        if(!empty($user_password)) {
-            // Hash the password
-            $hashFormat = "$2y$10$";
-            $salt = "iusesomeordinarypasss24";
-            $hashFandSalt = $hashFormat . $salt;
-            $encriptPassword = crypt($user_password, $hashFandSalt);
-            // Include password update in the query
-            $password_update = "user_password = '{$encriptPassword}', ";
-        }else if(empty($user_password)){
-            $password_update = "";
-        }
-
-        // Check if new image uploaded
-        if(!empty($_FILES['image']['name'])) {
-            $user_img = $_FILES['image']['name'];
-            $user_img_temp = $_FILES['image']['tmp_name'];
-            move_uploaded_file($user_img_temp, "../admin/imgs/$user_img");
-        }
-
-        // Updating user data query
-        $query = "UPDATE users SET ";
-        $query .= "username = '{$username}', ";
-        $query .= $password_update;
-        $query .= "user_firstname = '{$user_firstname}', ";
-        $query .= "user_lastname = '{$user_lastname}', ";
-        $query .= "user_email = '{$user_email}', ";
-        $query .= "user_img = '{$user_img}' ";
-        $query .= "WHERE user_id = {$user_id}";
-
-        $update_user_query = mysqli_query($connection, $query);
-        checkQuery($update_user_query);
-        // Setting the new session data
-        $new_username = $username;
-        $new_user_firstname = $user_firstname;
-        $new_user_lastname = $user_lastname;
-        // Setting sessions
-        $_SESSION['username'] =$new_username;
-        $_SESSION['user_firstname'] =$new_user_firstname;
-        $_SESSION['user_lastname'] =$new_user_lastname;
-        // Check if the user role is being changed to "user"
-        if(isset($_SESSION['username'])){
-            $user_role = $_SESSION['user_role'];
-            if($user_role == 'user') {
-                // Destroy the session
-                session_destroy();
-                // Redirect the user to the index page
-                header("Location: ../index.php");
-                exit(); // Stop further execution
-            }else if($user_role == 'admin'){
-                header("Location: ./");
-            }
-        }
-    }
-?>
+ 
