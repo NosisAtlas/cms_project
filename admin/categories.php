@@ -13,9 +13,13 @@
                 <div class="row">
                     <div class="col-lg-12">
                         <h1 class="page-header">
-                            Welcome to admin DASHBOARD
-                            <small>John</small>
-                        </h1>
+                            Welcome to user DASHBOARD
+                            <small>
+                                <?php 
+                                    get_username();
+                                ?>
+                            </small>
+                        </h1>  
 
                         <!-- Form for adding categs -->
                         <div class="col-xs-6">
@@ -24,6 +28,7 @@
                                 insertCategories();
                             ?>
                             <form action="" method="post">
+                                <input type="hidden" value="<?php echo $_SESSION['user_id']; ?>" name="cat_user_id">
                                 <div class="form-group">
                                     <label for="cat-title">Add Category</label>
                                     <input class="form-control" type="text" name="cat_title">

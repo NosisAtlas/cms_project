@@ -211,11 +211,12 @@
         // Adding categ data to db
         if(isset($_POST['submit'])){
             $cat_title = $_POST['cat_title'];
+            $cat_user_id = $_POST['cat_user_id'];
             if($cat_title == "" || empty($cat_title)){
                 echo "This field should not be empty";
             }else{
-                $query = "INSERT INTO categories(cat_title)";
-                $query .= "VALUES('{$cat_title}')";
+                $query = "INSERT INTO categories(cat_title, cat_user_id)";
+                $query .= "VALUES('{$cat_title}', '{$cat_user_id}')";
 
                 $create_category_query = mysqli_query($connection, $query);
                 checkQuery($create_category_query);
