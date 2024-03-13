@@ -6,10 +6,10 @@
 <?php
     // Redirecting the users with user role 
     if(isset($_SESSION['user_role'])){
-        if($_SESSION['user_role'] == 'user'){
-            header("Location: ../index.php");
-            exit();
-        }
+        // if($_SESSION['user_role'] == 'user'){
+        //     header("Location: ./dashboard.php");
+        //     exit();
+        // }
     }else{
          // Redirect to home page or handle unauthorized access
          header("Location: ../404_page.php");

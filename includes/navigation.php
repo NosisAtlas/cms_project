@@ -54,7 +54,7 @@
                             if($_SESSION['user_role'] == 'admin'){
                                 echo "<li class='$admin_class'><a href='admin'>Admin</a></li>";                         
                             }else{
-                                echo "<li class=''><a href='#'>Dashboard</a></li>";    
+                                echo "<li class=''><a href='./admin/dashboard.php'>Dashboard</a></li>";    
                             }
                         }else{
                             echo "<li class='$contact_class'><a href='./contact'>Contact</a></li>";
