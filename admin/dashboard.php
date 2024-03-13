@@ -110,21 +110,18 @@
 
                 <?php
                     // Count draft posts
-                    $query = "SELECT* FROM posts WHERE  post_status = 'draft'";
+                    $query = "SELECT * FROM posts WHERE post_status = 'draft' AND post_user_id = {$_SESSION['user_id']}";
                     $select_all_draft_posts = mysqli_query($connection, $query);
                     $posts_draft_count = mysqli_num_rows($select_all_draft_posts);
                     // Count published posts
-                    $query = "SELECT* FROM posts WHERE  post_status = 'published'";
+                    $query = "SELECT * FROM posts WHERE post_status = 'published' AND post_user_id = {$_SESSION['user_id']}";
+
                     $select_all_published_posts = mysqli_query($connection, $query);
                     $posts_published_count = mysqli_num_rows($select_all_published_posts);
                     // Count unapproved comments
                     $query = "SELECT* FROM comments WHERE  comment_status = 'unapproved'";
                     $select_all_unapproved_comments = mysqli_query($connection, $query);
                     $comments_unapproved_count = mysqli_num_rows($select_all_unapproved_comments);
-                    // Count users with role user
-                    $query = "SELECT* FROM users WHERE  user_role = 'user'";
-                    $select_all_user_users = mysqli_query($connection, $query);
-                    $users_user_count = mysqli_num_rows($select_all_user_users);
                 ?>
                 <div class="row">
                     <!-- Google Chart Js script -->
