@@ -7,17 +7,17 @@
 
     <?php 
         // Setting language
-        if(isset($_GET['lang'])){
+        if(isset($_GET['lang']) && !empty($_GET['lang'])){
             $_SESSION['lang'] = $_GET['lang'];
-            if(isset($_SESSION['lang']) && $_SESSION['lang'] == $_GET['lang']){
+            if(isset($_SESSION['lang']) && $_SESSION['lang'] != $_GET['lang']){
                 echo "<script type='javascript'>location.reload()</script>";
             }
         }
 
         if(isset($_SESSION['lang'])){
-            include "icludes/languages" . $_SESSION['lang'] . ".php";
+            include "includes/languages/" . $_SESSION['lang'] . ".php";
         }else{
-            include "icludes/languages/en.php";
+            include "includes/languages/en.php";
         }
         
         // Registrating
@@ -72,8 +72,8 @@
     <form action="" method="get" class="navbar-form navbar-right" id="lang_form">
         <div class="form-group">
             <select class="form-control" name="lang" onchange="changeLang()" >
-                <option value="en">English</option>
-                <option value="kr">Korean</option>
+                <option value="en" <?php if(isset($_SESSION['lang']) && $_SESSION['lang'] == 'en'){ echo "selected";}  ?> >English</option>
+                <option value="kr" <?php if(isset($_SESSION['lang']) && $_SESSION['lang'] == 'kr'){ echo "selected";}  ?> >Korean</option>
             </select>
         </div>
     </form>
@@ -82,19 +82,19 @@
         <div class="row">
             <div class="col-xs-6 col-xs-offset-3">
                 <div class="form-wrap">
-                <h1>Register</h1>
+                <h1><?php echo _REGISTER; ?></h1>
                     <form role="form" action="registration.php" method="post" id="login-form" autocomplete="off">
                         <div class="form-group">
                             <label for="username" class="sr-only">username</label>
-                            <input type="text" name="username" id="username" class="form-control" placeholder="Enter Desired Username">
+                            <input type="text" name="username" id="username" class="form-control" placeholder="<?php echo _USERNAME; ?>">
                         </div>
                          <div class="form-group">
                             <label for="email" class="sr-only">Email</label>
-                            <input type="email" name="email" id="email" class="form-control" placeholder="somebody@example.com">
+                            <input type="email" name="email" id="email" class="form-control" placeholder="<?php echo _EMAIL; ?>">
                         </div>
                          <div class="form-group">
                             <label for="password" class="sr-only">Password</label>
-                            <input type="password" name="password" id="key" class="form-control" placeholder="Password">
+                            <input type="password" name="password" id="key" class="form-control" placeholder="<?php echo _PASSWORD; ?>">
                         </div>
                 
                         <input type="submit" name="register" id="btn-login" class="btn btn-custom btn-lg btn-block" value="Register">
