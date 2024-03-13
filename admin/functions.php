@@ -427,10 +427,14 @@
                         <td>{$comment_email}</td>
                         <td>{$comment_status}</td>
                         <td><a href='../post.php?post_id={$comment_post['id']}'>{$comment_post['title']}</a></td>
-                        <td>{$comment_date}</td>
-                        <td><a href='comments.php?approve_comment={$comment_id}'>Approve</a></td>
-                        <td><a href='comments.php?unapprove_comment={$comment_id}'>Unapprove</a></td>
-                        <td><a href='comments.php?delete={$comment_id}'>Delete</a></td>
+                        <td>{$comment_date}</td>";
+                        if(is_admin()){
+                            echo "<td><a href='comments.php?approve_comment={$comment_id}'>Approve</a></td>
+                            <td><a href='comments.php?unapprove_comment={$comment_id}'>Unapprove</a></td>";
+                        }else{
+                            echo "";
+                        }
+                echo "<td><a href='comments.php?delete={$comment_id}'>Delete</a></td>
                     </tr>";
 
             }

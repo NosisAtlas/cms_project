@@ -8,9 +8,16 @@
                                     <td>Email</td>
                                     <th>Status</th>
                                     <th>In Response to</th>   
-                                    <th>Date</th>   
-                                    <th>Approve</th>
-                                    <th>Unapprove</th>
+                                    <th>Date</th>  
+                                    <?php
+                                        if(is_admin()){
+                                            echo "<th>Approve</th>
+                                            <th>Unapprove</th>";
+                                        }else{
+                                            echo "";
+                                        }
+                                    ?> 
+                                    
                                     <th>Actions</th>                                    
                                 </tr>
                             </thead>
