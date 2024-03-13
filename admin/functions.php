@@ -273,7 +273,12 @@
     // Displaying Posts
     function findAllPosts(){
         global $connection;
-        $query = "SELECT * FROM posts ORDER BY post_id DESC";
+        $query = "";
+        if(is_admin()){
+            $query = "SELECT * FROM posts ORDER BY post_id DESC";
+        }else{
+            $query = "SELECT * FROM posts WHERE post_user_id = {$_SESSION['user_id']} ORDER BY post_id DESC";
+        }
         $select_posts_admin = mysqli_query($connection, $query);
         // Displaying categ data
         while($row = mysqli_fetch_assoc($select_posts_admin)){
