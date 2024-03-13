@@ -398,7 +398,12 @@
     // Displaying All Comments in admin
     function findAllCommentsAndDisplayInAdmin(){
         global $connection;
-        $query = "SELECT * FROM comments";
+        $query = "";
+        if(is_admin()){
+            $query = "SELECT * FROM comments";
+        }else{
+            $query = "SELECT * FROM comments WHERE comment_user_id = {$_SESSION['user_id']}";
+        }
         $select_comments_admin = mysqli_query($connection, $query);
         // Checking if there are comments
         if(mysqli_num_rows($select_comments_admin) > 0) {
