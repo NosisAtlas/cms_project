@@ -36,9 +36,7 @@
                                     <div class="col-xs-9 text-right">
                                         <?php 
                                             // Count posts
-                                            $query = "SELECT* FROM posts";
-                                            $select_all_posts = mysqli_query($connection, $query);
-                                            $posts_count = mysqli_num_rows($select_all_posts);
+                                            $posts_count = count_records(get_all_user_posts());
                                         ?>
                                     <div class='huge'><?php echo $posts_count ?></div>
                                         <div>Posts</div>
@@ -64,9 +62,7 @@
                                     <div class="col-xs-9 text-right">
                                         <?php 
                                             // Count comments
-                                            $query = "SELECT* FROM comments";
-                                            $select_all_comments = mysqli_query($connection, $query);
-                                            $comments_count = mysqli_num_rows($select_all_comments);
+                                            $comments_count = count_records(get_all_user_comments());
                                         ?>
                                         <div class='huge'><?php echo $comments_count ?></div>
                                         <div>Comments</div>
