@@ -16,37 +16,39 @@
                 <ul class="nav navbar-nav">
 
                     <?php 
+                        $pageName = basename($_SERVER['PHP_SELF']);
+
                         $query = "SELECT * FROM categories LIMIT 5";
                         $select_all_categs_query = mysqli_query($connection, $query);
                         while($row = mysqli_fetch_assoc($select_all_categs_query)){
                             $cat_id = $row['cat_id'];
                             $cat_title = $row['cat_title'];
                             $category_class = "";
-                            $registration_class = "";
-                            $registration = 'registration.php';
-                            $loggin_class = "";
-                            $loggin = 'loggin.php';
-                            $contact_class = "";
-                            $contact = 'contact.php';
-                            $admin = "admin";
-                            $admin_class = "";
-                            $pageName = basename($_SERVER['PHP_SELF']);
-
+                            
                             if(isset($_GET['category']) && $_GET['category'] == $cat_id){
                                 $category_class = "active";
-                            }else if($pageName == $registration){
-                                $registration_class = "active";
-                            }else if($pageName == $contact){
-                                $contact_class = "active";
-                            }else if($pageName == $admin){
-                                $admin_class = "active";
-                            }else if($pageName == $loggin){
-                                $loggin_class = "active";
                             }
                             echo "<li class='$category_class'><a href='category.php?category={$cat_id}'>{$cat_title}</a></li>";
                         }
                     ?>           
                     <?php 
+                        $registration_class = "";
+                        $registration = 'registration.php';
+                        $loggin_class = "";
+                        $loggin = 'loggin.php';
+                        $contact_class = "";
+                        $contact = 'contact.php';
+                        $admin = "admin";
+                        $admin_class = "";
+                        if($pageName == $registration){
+                            $registration_class = "active";
+                        }else if($pageName == $contact){
+                            $contact_class = "active";
+                        }else if($pageName == $admin){
+                            $admin_class = "active";
+                        }else if($pageName == $loggin){
+                            $loggin_class = "active";
+                        }
                         if(isset($_SESSION['user_role'])){
                             if($_SESSION['user_role'] == 'admin'){
                                 echo "<li class='$admin_class'><a href='admin'>Admin</a></li>";                         
