@@ -676,16 +676,23 @@
             $db_user_id = $row['user_id'];
             $db_username = $row['username'];
             $db_user_password = $row['user_password'];
+            $db_user_email = $row['user_email'];
             $db_user_firstname = $row['user_firstname'];
             $db_user_lastname = $row['user_lastname'];
             $db_user_role = $row['user_role'];
-
+            
             if (password_verify($password,$db_user_password)) {
+                $_SESSION['user_id'] = $db_user_id;
                 $_SESSION['username'] = $db_username;
+                $_SESSION['user_email'] = $db_user_email;
                 $_SESSION['firstname'] = $db_user_firstname;
                 $_SESSION['lastname'] = $db_user_lastname;
                 $_SESSION['user_role'] = $db_user_role;
-                redirect("./admin");
+                if($_SESSION['user_role'] == "admin"){
+                    redirect("./admin");
+                }else{
+                    redirect("./");
+                }
             } else {
                 return false;
             }

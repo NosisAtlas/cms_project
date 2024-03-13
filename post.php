@@ -156,11 +156,11 @@
                     <form action="" role="form" method="post">
                         <div class="form-group">
                             <label for="comment_author">Author</label>
-                            <input class="form-control" type="text" name="comment_author">
+                            <input class="form-control" type="text" value="<?php echo isset($_SESSION['username']) ? $_SESSION['username'] : ''; ?>" name="comment_author">
                         </div>
                         <div class="form-group">
                             <label for="comment_email">Email</label>
-                            <input class="form-control" type="email" name="comment_email">
+                            <input class="form-control" type="email" value="<?php echo isset($_SESSION['email']) ? $_SESSION['email'] : ''; ?>" name="comment_email">
                         </div>
                         <div class="form-group">
                             <label for="comment_content">Content</label>
