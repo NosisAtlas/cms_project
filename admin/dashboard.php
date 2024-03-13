@@ -89,9 +89,7 @@
                                     <div class="col-xs-9 text-right">
                                         <?php 
                                             // Count categories
-                                            $query = "SELECT* FROM categories";
-                                            $select_all_categories = mysqli_query($connection, $query);
-                                            $categories_count = mysqli_num_rows($select_all_categories);
+                                            $categories_count = count_records(get_all_user_categories());
                                         ?>
                                         <div class='huge'><?php echo $categories_count ?></div>
                                         <div>Categories</div>
