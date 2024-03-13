@@ -13,6 +13,8 @@
                                                 $cat_title = $row['cat_title'];
                                         
                                     ?>
+                                    <input type="hidden" value="<?php echo $_SESSION['user_id']; ?>" name="cat_user_id">
+
                                     <input value="<?php if(isset($cat_title)){echo $cat_title;} ?>" class="form-control" type="text" name="cat_title">
                                     <?php 
                                             }
@@ -23,10 +25,11 @@
                                         // Updating categs query
                                         if(isset($_POST['update_category'])){
                                             $update_cat_title =  $_POST['cat_title'];
+                                            $cat_user_id =  $_SESSION['user_id'];
                                             if($update_cat_title == "" || empty($update_cat_title)){
                                                 echo "This field should not be empty";
                                             }else{
-                                                $query = "UPDATE categories SET cat_title = '{$update_cat_title}' WHERE cat_id = {$cat_id}";
+                                                $query = "UPDATE categories SET cat_title = '{$update_cat_title}' WHERE cat_id = {$cat_id} AND cat_user_id = {$cat_user_id}";
                                                 $update_categ_query = mysqli_query($connection, $query);
                                                 checkQuery($update_categ_query);
 

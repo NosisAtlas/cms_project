@@ -243,6 +243,25 @@
         }
     }
 
+    // Displaying Categs for specific user
+    function findAllUserCategories(){
+        global $connection;
+        $query = "SELECT * FROM categories WHERE cat_user_id = {$_SESSION['user_id']}";
+        $select_categs_admin = mysqli_query($connection, $query);
+        // Displaying categ data
+        while($row = mysqli_fetch_assoc($select_categs_admin)){
+            $cat_id = $row['cat_id'];
+            $cat_title = $row['cat_title'];
+            echo "
+            <tr>
+                <td>{$cat_id}</td>
+                <td>{$cat_title}</td>
+                <td><a href='categories.php?edit={$cat_id}'>Edit</a></td>
+                <td><a href='categories.php?delete={$cat_id}'>Delete</a></td>
+            </tr>";
+        }
+    }
+
     // Updating categs
     function updateCategory(){
         global $connection;
