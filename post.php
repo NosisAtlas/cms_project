@@ -118,12 +118,7 @@
                 <img class="img-responsive" src="imgs/<?php echo $post_img ?>" alt="">
                 <hr>
                 <p><?php echo $post_content ?></p>
-                <?php 
-                    // Free the memory associated with a result
-                    // mysqli_free_result($select_all_posts_query);
-                    // break; // Exit the loop
-                ?>
-
+               
                 <hr>
                 <div class="container-fluid">
                     <?php if($_SESSION['user_role'] == "admin" || $_SESSION['user_role'] == "user"): ?>
