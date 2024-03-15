@@ -290,36 +290,41 @@
             $query = "SELECT * FROM posts WHERE post_user_id = {$_SESSION['user_id']} ORDER BY post_id DESC";
         }
         $select_posts_admin = mysqli_query($connection, $query);
-        // Displaying categ data
-        while($row = mysqli_fetch_assoc($select_posts_admin)){
-            $post_id = $row['post_id'];
-            $post_author = $row['post_author'];
-            $post_title = $row['post_title'];
-            $post_date = $row['post_date'];
-            $post_img = $row['post_img'];
-            $post_content = $row['post_content'];
-            $post_tags = $row['post_tags'];
-            $post_status = $row['post_status'];
-            $post_comment_count = $row['post_comment_count'];
-            $post_views_count = $row['post_views_count'];
-            $post_category_id = $row['post_category_id'];
-        
-            echo "<tr>
-                    <th><input class='checkBoxes' type='checkbox' name='checkBoxArray[]' value='{$post_id}'></th>
-                    <td>{$post_id}</td>
-                    <td><a href='../post.php?post_id={$post_id}'><img class='img-fluid img-thumbnail' width='100' src='../imgs/{$post_img}' alt='post img'></a></td>
-                    <td><a href='../post.php?post_id={$post_id}'>{$post_title}</a></td>
-                    <td>{$post_author}</td>
-                    <td>" . findCategory($post_category_id) . "</td>
-                    <td>{$post_content}</td>
-                    <td>{$post_date}</td>
-                    <td>{$post_tags}</td>
-                    <td>{$post_status}</td>
-                    <td>{$post_comment_count}</td>
-                    <td>{$post_views_count}</td>
-                    <td><a class='btn btn-info' href='posts.php?source=edit_post&post_id={$post_id}'>Edit</a></td>
-                    <td><a class='btn btn-danger delete_link' rel='{$post_id}' href='javascript:void()' class='delete_link'>Delete</a></td>
-                </tr>";
+        if(mysqli_num_rows($select_posts_admin) > 0) {
+            // Displaying categ data
+            while($row = mysqli_fetch_assoc($select_posts_admin)){
+                $post_id = $row['post_id'];
+                $post_author = $row['post_author'];
+                $post_title = $row['post_title'];
+                $post_date = $row['post_date'];
+                $post_img = $row['post_img'];
+                $post_content = $row['post_content'];
+                $post_tags = $row['post_tags'];
+                $post_status = $row['post_status'];
+                $post_comment_count = $row['post_comment_count'];
+                $post_views_count = $row['post_views_count'];
+                $post_category_id = $row['post_category_id'];
+            
+                echo "<tr>
+                        <th><input class='checkBoxes' type='checkbox' name='checkBoxArray[]' value='{$post_id}'></th>
+                        <td>{$post_id}</td>
+                        <td><a href='../post.php?post_id={$post_id}'><img class='img-fluid img-thumbnail' width='100' src='../imgs/{$post_img}' alt='post img'></a></td>
+                        <td><a href='../post.php?post_id={$post_id}'>{$post_title}</a></td>
+                        <td>{$post_author}</td>
+                        <td>" . findCategory($post_category_id) . "</td>
+                        <td>{$post_content}</td>
+                        <td>{$post_date}</td>
+                        <td>{$post_tags}</td>
+                        <td>{$post_status}</td>
+                        <td>{$post_comment_count}</td>
+                        <td>{$post_views_count}</td>
+                        <td><a class='btn btn-info' href='posts.php?source=edit_post&post_id={$post_id}'>Edit</a></td>
+                        <td><a class='btn btn-danger delete_link' rel='{$post_id}' href='javascript:void()' class='delete_link'>Delete</a></td>
+                    </tr>";
+            }
+        }else{
+             // Displaying a message if no comments are found
+             echo "<h4>No posts found!</h4>";
         }
     }
 
