@@ -348,6 +348,25 @@
             $post_img_temp = $_FILES['image']['tmp_name'];
 
             $post_content = $_POST['post_content'];
+
+            // Remove <p> tags that are not followed by another tag or content
+            $post_content = preg_replace('/<p[^>]*>(?:\s|&nbsp;|<br\s*\/?>)*<\/p>/', '', $post_content);
+            
+            // Remove <p> tags with only whitespace inside
+            $post_content = preg_replace('/<p>\s*<\/p>/', '', $post_content);
+            
+            // Remove empty paragraphs with only whitespace
+            $post_content = preg_replace('/<p>\s*<\/p>/', '', $post_content);
+            
+            // Remove <p> tags with a single space inside
+            $post_content = preg_replace('/<p>\s*<\/p>/', '', $post_content);
+            
+            // Remove any remaining <p> tags that might not follow the previous patterns
+            $post_content = strip_tags($post_content, '<br><a><strong><em><ul><ol><li><img><blockquote>');
+            
+            // Optionally, you may trim the content to remove leading and trailing whitespace
+            $post_content = trim($post_content);
+                        
             $post_tags = $_POST['post_tags'];
             $post_status = $_POST['post_status'];
             // $post_comment_count = 7;
