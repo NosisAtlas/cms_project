@@ -535,13 +535,7 @@
             $delete_id =  $_GET['delete'];
             $comment_user_id = $_SESSION['user_id'];
 
-            $query = "";
-            if(is_admin()){
-                $query = "DELETE FROM comments WHERE comment_id = {$delete_id}";
-            }else{
-            $comment_user_id = $_SESSION['user_id'];
-                $query = "DELETE FROM comments WHERE comment_id = {$delete_id} AND comment_user_id = {$comment_user_id}";
-            }
+            $query = "DELETE FROM comments WHERE comment_id = {$delete_id}";
             $delete_comment_query = mysqli_query($connection, $query);
             checkQuery($delete_comment_query);
             // Refresh the page
