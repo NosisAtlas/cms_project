@@ -312,7 +312,7 @@
                         <td><a href='../post.php?post_id={$post_id}'>{$post_title}</a></td>
                         <td>{$post_author}</td>
                         <td>" . findCategory($post_category_id) . "</td>
-                        <td>{$post_content}</td>
+                        <td>" .strip_tags($post_content). "</td>
                         <td>{$post_date}</td>
                         <td>{$post_tags}</td>
                         <td>{$post_status}</td>
@@ -348,10 +348,6 @@
             $post_img_temp = $_FILES['image']['tmp_name'];
 
             $post_content = $_POST['post_content'];
-            
-            // Optionally, you may trim the content to remove leading and trailing whitespace
-            $post_content = strip_tags($post_content);
-
             $post_tags = $_POST['post_tags'];
             $post_status = $_POST['post_status'];
             // $post_comment_count = 7;
