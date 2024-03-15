@@ -84,7 +84,7 @@
                                     <th>Title</th>
                                     <th>Author</th>
                                     <th>Category</th>
-                                    <td>Content</td>
+                                    <th>Content</th>
                                     <th>Date</th>
                                     <th>Tags</th>
                                     <th>Status</th>
