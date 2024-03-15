@@ -499,6 +499,7 @@
         if(isset($_POST['create_comment'])){
             $comment_author = $_POST['comment_author'];
             $comment_post_id = $post_id_url;
+            $comment_user_id = $_SESSION['user_id'];
             $comment_author = $_POST['comment_author'];
             $comment_content = $_POST['comment_content'];
             $comment_email = $_POST['comment_email'];
@@ -512,8 +513,8 @@
             ){
                 echo "The fields should not be empty";
             }else{
-                $query = "INSERT INTO comments(comment_post_id, comment_author, comment_content, comment_email, comment_status, comment_date)";
-                $query .= "VALUES({$comment_post_id},'{$comment_author}','{$comment_content}','{$comment_email}','{$comment_status}',now())";
+                $query = "INSERT INTO comments(comment_post_id, comment_user_id, comment_author, comment_content, comment_email, comment_status, comment_date)";
+                $query .= "VALUES({$comment_post_id}, {$comment_user_id},'{$comment_author}','{$comment_content}','{$comment_email}','{$comment_status}',now())";
                 $create_comment_query = mysqli_query($connection, $query);
                 checkQuery($create_comment_query);
                 // Update comments count
@@ -532,7 +533,15 @@
         global $connection;
         if(isset($_GET['delete'])){
             $delete_id =  $_GET['delete'];
-            $query = "DELETE FROM comments WHERE comment_id = {$delete_id}";
+            $comment_user_id = $_SESSION['user_id'];
+
+            $query = "";
+            if(is_admin()){
+                $query = "DELETE FROM comments WHERE comment_id = {$delete_id}";
+            }else{
+            $comment_user_id = $_SESSION['user_id'];
+                $query = "DELETE FROM comments WHERE comment_id = {$delete_id} AND comment_user_id = {$comment_user_id}";
+            }
             $delete_comment_query = mysqli_query($connection, $query);
             checkQuery($delete_comment_query);
             // Refresh the page

@@ -81,18 +81,18 @@
                         $send_update_post_views_query = mysqli_query($connection, $view_post_query);
                         checkQuery($send_update_post_views_query);
                     
-                    // Displaying posts from Db 
-                    $query = "SELECT * FROM posts WHERE post_id = $post_id_url";
-                    $select_all_posts_query = mysqli_query($connection, $query);
-                    while($row = mysqli_fetch_assoc($select_all_posts_query)){
-                        $post_id = $row['post_id'];
-                        $post_title = $row['post_title'];
-                        $post_author = $row['post_author'];
-                        $post_date = $row['post_date'];
-                        $post_img = $row['post_img'];
-                        $post_content = $row['post_content'];
-                        $post_likes = $row['likes'];
-                        $update_post_likes = $post_likes;
+                        // Displaying posts from Db 
+                        $query = "SELECT * FROM posts WHERE post_id = $post_id_url";
+                        $select_all_posts_query = mysqli_query($connection, $query);
+                        while($row = mysqli_fetch_assoc($select_all_posts_query)){
+                            $post_id = $row['post_id'];
+                            $post_title = $row['post_title'];
+                            $post_author = $row['post_author'];
+                            $post_date = $row['post_date'];
+                            $post_img = $row['post_img'];
+                            $post_content = $row['post_content'];
+                            $post_likes = $row['likes'];
+                            $update_post_likes = $post_likes;
                     ?>
                     
 
