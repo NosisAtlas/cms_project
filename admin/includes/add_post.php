@@ -81,3 +81,16 @@
     </div>
 </form>
 
+<script>
+        CKEDITOR.on('instanceReady', function (ev) {
+            ev.editor.on('key', function (event) {
+                if (event.data.keyCode === 13) { // Check if Enter key is pressed
+                    event.cancel(); // Prevent default action
+                }
+            });
+        });
+
+// Configuration to set Enter key behavior to insert line breaks
+CKEDITOR.config.enterMode = CKEDITOR.ENTER_BR;
+
+    </script>
