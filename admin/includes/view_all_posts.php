@@ -28,6 +28,7 @@
                     while($row = mysqli_fetch_array($select_post_to_clone)){
                         $post_id = $row['post_id'];
                         $post_category_id = $row['post_category_id'];
+                        $post_user_id = $row['post_user_id'];
                         $post_title = $row['post_title'];
                         $post_author = $row['post_author'];
                         $post_date = date('d-m-y');
@@ -36,8 +37,8 @@
                         $post_tags = $row['post_tags'];
                         $post_status = 'draft';
                     }
-                    $query = "INSERT INTO posts (post_category_id, post_title, post_author, post_date, post_img, post_content, post_tags, post_comment_count, post_status) ";
-                    $query .= "VALUES ({$post_category_id}, '{$post_title}', '{$post_author}', now(), '{$post_img}', '{$post_content}', '{$post_tags}', 0, '{$post_status}')";
+                    $query = "INSERT INTO posts (post_category_id, post_user_id,post_title, post_author, post_date, post_img, post_content, post_tags, post_comment_count, post_status) ";
+                    $query .= "VALUES ({$post_category_id}, {$post_user_id},'{$post_title}', '{$post_author}', now(), '{$post_img}', '{$post_content}', '{$post_tags}', 0, '{$post_status}')";
 
 
                     $create_post_query = mysqli_query($connection, $query);

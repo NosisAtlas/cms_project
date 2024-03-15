@@ -1,23 +1,63 @@
 <?php  include "includes/header.php"; ?>
+<!-- Navigation -->    
+<?php  include "includes/navigation.php"; ?>
 
-
-    <!-- Navigation -->
     
-    <?php  include "includes/navigation.php"; ?>
+<?php 
+    // Sending emails for forgot pass
+    //Import PHPMailer classes into the global namespace
+    //These must be at the top of your script, not inside a function
+    use PHPMailer\PHPMailer\PHPMailer;
+    use PHPMailer\PHPMailer\SMTP;
+    use PHPMailer\PHPMailer\Exception;
+
+    //Load Composer's autoloader
+    require 'vendor/autoload.php';
+    
+            
+                    /**
+                    *
+                    * configure PHPMailer
+                    *
+                    *
+                    */
+
+                    //Create an instance; passing `true` enables exceptions
+                    $mail = new PHPMailer(true);
+                    //Server settings
+                    // $mail->SMTPDebug = SMTP::DEBUG_SERVER;                      //Enable verbose debug output
+                    $mail->isSMTP();                                            //Send using SMTP
+                    $mail->Host       = 'sandbox.smtp.mailtrap.io';                     //Set the SMTP server to send through
+                    $mail->SMTPAuth   = true;                                   //Enable SMTP authentication
+                    $mail->Username   = 'e8b8dfc05dae4f';                     //SMTP username
+                    $mail->Password   = 'f116d7a93bb9d5';                               //SMTP password
+                    $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;            //Enable implicit TLS encryption
+                    $mail->Port       = 587;                                    
+                    $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
+                    $mail->CharSet    = 'UTF-8';
+?>
+
     
 
     <?php             
         // Checking the submit
         if(isset($_POST['submit'])){
-            $to = "fz.farhane109@gmail.com";
+            $to = "nosis@atlas.com";
             $contact_subject = $_POST['subject'];
             // use wordwrap() if lines are longer than 70 characters
             $contact_body = wordwrap($_POST['body'], 70);
-            $header = "From: " . $_POST['email'];
+            $header = $_POST['email'];
 
             $contact_subject = mysqli_real_escape_string($connection, $contact_subject);
             $header = mysqli_real_escape_string($connection, $header);
             $contact_body = mysqli_real_escape_string($connection, $contact_body);
+            //Recipients
+            $mail->setFrom($header, 'Mailer');
+            $mail->addAddress('support@cms.com', 'Admin');     //Add a recipient
+            $mail->isHTML(true);                                  //Set email format to HTML
+            $mail->Subject = $contact_subject;
+            //Content
+            $mail->Body    = $contact_body . "<br> From: " . $header;
 
             // Validating data
             if($contact_subject == "" || empty($contact_subject) ||
@@ -29,12 +69,20 @@
                     </div>";
             }else{
                 // send email
-                mail($to, $contact_subject,$contact_body, $header);
-                // echo success message
-                echo "<div class='container alert alert-success' role='alert'>
+                // mail($to, $contact_subject,$contact_body, $header);
+                if($mail->send()){
+                    $emailSent = true;
+                    // echo success message
+                    echo "<div class='container alert alert-success' role='alert'>
                         Your contact request has been submitted.
-                    </div>";
+                        </div>";
+                }else{
+                    // echo error message
+                    echo "<div class='container alert alert-danger' role='alert'>
+                        Your contact request failed submition.
+                        </div>";
                 }
+            }     
         }
     ?>
     

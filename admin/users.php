@@ -12,9 +12,13 @@
                 <!-- Page Heading -->
                 <div class="row">
                     <div class="col-lg-12">
-                        <h1 class="page-header">
-                            Welcome to admin Users
-                            <small>John</small>
+                    <h1 class="page-header">
+                            Welcome to admin DASHBOARD
+                            <small>
+                                <?php 
+                                    get_username();
+                                ?>
+                            </small>
                         </h1>
                         <?php 
                             if(isset($_GET['source'])){

@@ -48,15 +48,15 @@
                 }else{
                     //
                 }
+            }else{
+                header('Location: ../login_error_page.php');
+                exit(); // Stop further execution
             }
-        }else{
-            header('Location: ../login_error_page.php');
-            exit(); // Stop further execution
         }
         
         // If username or password is incorrect, redirect to index.php
         // echo "Denied";
-        header('Location: ../index.php');
-        exit(); // Stop further execution
+        // header('Location: ../index.php');
+        // exit(); // Stop further execution
     }
 ?>

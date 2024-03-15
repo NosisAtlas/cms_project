@@ -68,12 +68,24 @@
         $_SESSION['username'] =$new_username;
         $_SESSION['user_firstname'] =$new_user_firstname;
         $_SESSION['user_lastname'] =$new_user_lastname;
+        $_SESSION['profile_update_msg']="";
         // Check if the query was successful
         if($update_user_query) {
-            // Display success message with a link to the updated post
-           $_SESSION['profile_update_msg'] = "<div class='alert alert-success' role='alert'>
-                    Profile updated successfully! <a href='./dashboard.php' class='btn btn-success'>Go to dashboard</a>
+            if(is_admin()){
+                // Display success message with a link to the updated post
+                $_SESSION['profile_update_msg'] = "<div class='alert alert-success' role='alert'>
+                Profile updated successfully! <a href='./index.php' class='btn btn-success'>Go to dashboard</a>
                 </div>";
+            }else{
+                // Display success message with a link to the updated post
+                $_SESSION['profile_update_msg'] = "<div class='alert alert-success' role='alert'>
+                Profile updated successfully! <a href='./dashboard.php' class='btn btn-success'>Go to dashboard</a>
+                </div>";
+            }
+            // Display success message with a link to the updated post
+        //    $_SESSION['profile_update_msg'] = "<div class='alert alert-success' role='alert'>
+        //             Profile updated successfully! <a href='./dashboard.php' class='btn btn-success'>Go to dashboard</a>
+        //         </div>";
         } else {
             // Display error message
             $_SESSION['profile_update_msg'] = "<div class='alert alert-danger' role='alert'>
@@ -81,7 +93,7 @@
                 </div>";
         }
         redirect('./profile.php');
-        $_SESSION['profile_update_msg'] = "";
+        $_SESSION['profile_update_msg'] = NULL;
 
     }
 ?>
@@ -98,12 +110,12 @@
                 <!-- Page Heading -->
                 <div class="row">
                     <div class="col-lg-12">
-                        <h1 class="page-header">
-                            Welcome to dashboard
-                            <small><?php
-                                if(isset($_SESSION['username'])){
-                                    echo strtoupper($_SESSION['username']);
-                                } ?>
+                    <h1 class="page-header">
+                            Welcome to admin DASHBOARD
+                            <small>
+                                <?php 
+                                    get_username();
+                                ?>
                             </small>
                         </h1>
                         <?php 

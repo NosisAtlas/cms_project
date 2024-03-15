@@ -328,7 +328,13 @@
         global $connection;
         // Adding categ data to db
         if(isset($_POST['create_post'])){
-            $post_author = $_POST['post_author'];
+            $post_author_id = $_POST['post_author'];
+            $query = "SELECT * FROM users WHERE user_id = {$post_author_id}";
+            $select_post_author = mysqli_query($connection, $query);
+            $post_author ="";
+            while($row = mysqli_fetch_assoc($select_post_author)){
+                $post_author = $row['username'];
+            }
             $post_title = $_POST['post_title'];
             $post_date = date('d-m-y');
 
@@ -344,9 +350,9 @@
 
             // Processing img
             move_uploaded_file($post_img_temp, "../imgs/$post_img");
+            var_dump($post_author);
     
             if($post_title == "" || empty($post_title) ||
-                $post_author == "" || empty($post_author) ||
                 $post_date == "" || empty($post_date) ||
                 $post_img == "" || empty($post_img) ||
                 $post_content == "" || empty($post_content) ||
@@ -355,15 +361,18 @@
                 $post_category_id == "" || empty($post_category_id)
             ){
                 echo "The fields should not be empty";
-            }else{
-                $query = "INSERT INTO posts (post_category_id, post_title, post_author, post_date, post_img, post_content, post_tags, post_comment_count, post_status) ";
-                $query .= "VALUES ({$post_category_id}, '{$post_title}', '{$post_author}', now(), '{$post_img}', '{$post_content}', '{$post_tags}', 0, '{$post_status}')";
+            }else if(                $post_author == "" || empty($post_author)            ){
+                echo "The author empty" . $post_author;
+            }
+            else{
+                $query = "INSERT INTO posts (post_category_id, post_user_id, post_title, post_author, post_date, post_img, post_content, post_tags, post_comment_count, post_status) ";
+                $query .= "VALUES ({$post_category_id}, {$post_author_id},'{$post_title}', '{$post_author}', now(), '{$post_img}', '{$post_content}', '{$post_tags}', 0, '{$post_status}')";
 
 
                 $create_post_query = mysqli_query($connection, $query);
                 checkQuery($create_post_query);
                 echo    "<div class='alert alert-success' role='alert'>
-                                User created successfully !  <a href='posts.php' class='btn btn-success'>View posts</a>
+                                Post created successfully !  <a href='posts.php' class='btn btn-success'>View posts</a>
                             </div>"; 
             }
         }
@@ -776,7 +785,8 @@
                     redirect("./");
                 }
             } else {
-                return false;
+                header('Location: ./login_error_page.php');
+                exit(); // Stop further execution
             }
         }
         return true;

@@ -16,7 +16,7 @@
                     Sorry, wrong credentials has occured, couldn't login using the submitted credentials!
                 </div>
                 <div class="error-actions">
-                    <a href="index.php" class="btn btn-primary btn-lg"><span class="glyphicon glyphicon-home"></span>
+                    <a href="loggin.php" class="btn btn-primary btn-lg"><span class="glyphicon glyphicon-home"></span>
                         Try login again </a><a href="registration.php" class="btn btn-default btn-lg"><span class="glyphicon glyphicon-user"></span> Register </a>
                 </div>
             </div>

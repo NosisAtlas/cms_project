@@ -1,18 +1,25 @@
 <?php 
     // Check if the update_post form was submitted
     if(isset($_POST['update_post'])){
-        // Get the form data
-        $post_author = $_POST['post_author'];
-        $post_title = $_POST['post_title'];
+            $post_author_id = $_POST['post_author'];
+            $query = "SELECT * FROM users WHERE user_id = {$post_author_id}";
+            $select_post_author = mysqli_query($connection, $query);
+            $post_author ="";
+            while($row = mysqli_fetch_assoc($select_post_author)){
+                $post_author = $row['username'];
+            }
+            $post_title = $_POST['post_title'];
+            $post_date = date('d-m-y');
 
-        // Getting image
-        $post_img = $_FILES['image']['name'];
-        $post_img_temp = $_FILES['image']['tmp_name'];
+            // Getting image
+            $post_img = $_FILES['image']['name'];
+            $post_img_temp = $_FILES['image']['tmp_name'];
 
-        $post_content = $_POST['post_content'];
-        $post_tags = $_POST['post_tags'];
-        $post_status = $_POST['post_status'];
-        $post_category_id = $_POST['post_category'];
+            $post_content = $_POST['post_content'];
+            $post_tags = $_POST['post_tags'];
+            $post_status = $_POST['post_status'];
+            // $post_comment_count = 7;
+            $post_category_id = $_POST['post_category_id'];
 
         // Processing img
         move_uploaded_file($post_img_temp, "../imgs/$post_img");
@@ -29,6 +36,7 @@
         // Updating post data query
         $query = "UPDATE posts SET ";
         $query .= "post_category_id = '{$post_category_id}', ";
+        $query .= "post_user_id = '{$post_author_id}', ";
         $query .= "post_title = '{$post_title}',";
         $query .= "post_author = '{$post_author}', ";
         $query .= "post_img = '{$post_img}', ";
@@ -83,7 +91,7 @@
     <!-- Post Category -->
     <div class="form-group">
         <label for="post_category">Post Category</label><br>
-        <select class="form-select form-control" name="post_category" id="post_category">
+        <select class="form-select form-control" name="post_category_id" id="post_category">
             <?php 
                 $query = "SELECT * FROM categories";
                 $select_categs = mysqli_query($connection, $query);
@@ -115,7 +123,7 @@
                     $user_id = $row['user_id'];
                     $user_username = $row['username'];
             ?>
-                <option value="<?php echo $user_username; ?>" <?php if($user_username === $post_author) echo 'selected'; ?>><?php echo $user_username; ?></option>
+                <option value="<?php echo $user_id; ?>" <?php if($user_username === $post_author) echo 'selected'; ?>><?php echo $user_username; ?></option>
             <?php } ?>
         </select>
     </div>

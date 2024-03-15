@@ -41,10 +41,10 @@
                 checkQuery($select_users);
                 // Displaying categ data
                 while($row = mysqli_fetch_assoc($select_users)){
-                    $user_id = $row['cat_id'];
+                    $user_id = $row['user_id'];
                     $user_username = $row['username'];
             ?>
-                <option value="<?php echo $user_username; ?>">
+                <option value="<?php echo $user_id; ?>">
                     <?php echo $user_username; ?>
                 </option>
 
