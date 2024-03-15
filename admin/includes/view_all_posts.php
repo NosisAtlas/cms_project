@@ -36,6 +36,7 @@
                         $post_content = $row['post_content'];
                         $post_tags = $row['post_tags'];
                         $post_status = 'draft';
+                        $post_title .= " copy";
                     }
                     $query = "INSERT INTO posts (post_category_id, post_user_id,post_title, post_author, post_date, post_img, post_content, post_tags, post_comment_count, post_status) ";
                     $query .= "VALUES ({$post_category_id}, {$post_user_id},'{$post_title}', '{$post_author}', now(), '{$post_img}', '{$post_content}', '{$post_tags}', 0, '{$post_status}')";
